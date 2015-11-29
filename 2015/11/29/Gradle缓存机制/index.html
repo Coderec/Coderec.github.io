@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C++,Sublime," />
+  <meta name="keywords" content="Gradle," />
 
 
 
@@ -51,16 +51,19 @@
 
 
 
-<meta name="description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
+<meta name="description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sublime Text 3搭建绿色C++编译环境">
-<meta property="og:url" content="http://coderec.github.io/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/index.html">
+<meta property="og:title" content="Gradle缓存机制">
+<meta property="og:url" content="http://coderec.github.io/2015/11/29/Gradle缓存机制/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
-<meta property="og:updated_time" content="2015-11-27T16:20:38.000Z">
+<meta property="og:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg">
+<meta property="og:updated_time" content="2015-11-29T13:11:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sublime Text 3搭建绿色C++编译环境">
-<meta name="twitter:description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
+<meta name="twitter:title" content="Gradle缓存机制">
+<meta name="twitter:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
 
 
 
@@ -72,7 +75,7 @@
   };
 </script>
 
-  <title> Sublime Text 3搭建绿色C++编译环境 | Coderec's Blog </title>
+  <title> Gradle缓存机制 | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -233,7 +236,7 @@
             
             
               
-                Sublime Text 3搭建绿色C++编译环境
+                Gradle缓存机制
               
             
           </h1>
@@ -242,8 +245,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-23T13:16:38+08:00" content="2015-11-23">
-              2015-11-23
+            <time itemprop="dateCreated" datetime="2015-11-29T21:07:00+08:00" content="2015-11-29">
+              2015-11-29
             </time>
           </span>
 
@@ -252,8 +255,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/配置记录/" itemprop="url" rel="index">
-                    <span itemprop="name">配置记录</span>
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
                   </a>
                 </span>
 
@@ -268,8 +271,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/23/Sublime-Text-3搭建绿色C-编译环境/" itemprop="commentsCount"></span>
+                <a href="/2015/11/29/Gradle缓存机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/29/Gradle缓存机制/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -288,12 +291,28 @@
       
 
       
-        <span itemprop="articleBody"><p>因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。</p>
-<p>需要：<br>  1.mingw绿色免安装版（实际上我找了一个晚上也没找到，至少都是需要设置下环境变量path的）<br>  2.sublime text 3免安装版<br>首先：<br>  1.拿到subime，<br>  2.将下载好的mingw“免安装版”拷贝到sublime根目录下<br>  3.进入sublime-tools-build system-new build system,设置编译系统的配置文件，并保存文件名C++.sublime-build</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          "<span class="attribute">path</span>": <span class="value"><span class="string">"G:/Sublime Text 3_x64(Python and CPP)/MinGW/bin"</span></span>,</span><br><span class="line">          "<span class="attribute">cmd</span>": <span class="value">[<span class="string">"g++.exe"</span>, <span class="string">"$&#123;file&#125;"</span>, <span class="string">"-o"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;"</span>]</span>,</span><br><span class="line">          "<span class="attribute">file_regex</span>": <span class="value"><span class="string">"^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$"</span></span>,</span><br><span class="line">          "<span class="attribute">working_dir</span>": <span class="value"><span class="string">"$&#123;file_path&#125;"</span></span>,</span><br><span class="line">          "<span class="attribute">selector</span>": <span class="value"><span class="string">"source.c, source.c++"</span></span>,</span><br><span class="line">          "<span class="attribute">encoding</span>":<span class="value"><span class="string">"UTF-8"</span></span>,    </span><br><span class="line">          "<span class="attribute">encoding</span>": <span class="value"><span class="string">"cp936"</span></span>,</span><br><span class="line">          "<span class="attribute">variants</span>":</span><br><span class="line">          <span class="value">[</span><br><span class="line">               &#123;</span><br><span class="line">                    "<span class="attribute">name</span>": <span class="value"><span class="string">"Run"</span></span>,</span><br><span class="line">                   </span><br><span class="line">                    "<span class="attribute">cmd</span>": <span class="value">[ <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;.exe"</span>]</span>,</span><br><span class="line">                    "<span class="attribute">shell</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">                 "<span class="attribute">cmd</span>" : <span class="value">[<span class="string">"start"</span>, <span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125; &amp;&amp;echo. &amp; pause &amp;&amp; exit"</span>]</span><br><span class="line">               </span>&#125;</span><br><span class="line">          ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-<p>  4.说明1：文件中第一行path参数是区别于网上其他教程的，<strong>请将path参数设置为sublime目录下mingw文件夹的bin目录</strong>，该参数的意思就是在执行cmd编译之前将系统环境变量暂时改变为设置的值，cmd执行结束后在取消修改，因此<strong>不需要在系统中设置环境变量了</strong><br>  5.说明2：sublime官方文档上说\${packages}可以用来表示packages这个目录但是如果我在path中设置使用\${packages}，sublime貌似没能识别，也因此我没能全部使用相对路径，也因此<strong>每次改变sublime的路径后一定要修改此处的path参数</strong></p>
-<p>对于第五条，如何才能真正做到，在换了sublime路径后仍然不必更改path参数，这个问题，希望有人可以给我解答，</p>
-<p>这里介绍的最起码无需麻烦的在系统中设置环境变量了。当然，如果真的有无需配置环境变量即可使用的编译环境，就无需配置path参数了</p>
+        <span itemprop="articleBody"><p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg" alt=""></p>
+<h2 id="Gradle是什么">Gradle是什么</h2><p>Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。<br><a id="more"></a><br>Gradle官网用户指南：<a href="https://docs.gradle.org/current/userguide/userguide.html" target="_blank" rel="external">Gradle UserGuide</a></p>
+<h2 id="Gradle的缓存机制">Gradle的缓存机制</h2><p>注：以下示例中假设已有一个Gradle的task，名为warProduct。</p>
+<h3 id="1-脚本缓存">1.脚本缓存</h3><p>为了提高响应速度，默认情况下Gradle会缓存所有已编译的脚本。包括所有构建脚本、初始化脚本和其他脚本。</p>
+<p>以构建脚本为例，在第一次运行构建脚本时， Gradle 会创建.gradle目录，用于存放已编译的脚本。在下次运行构建脚本时， 如果该脚本自它编译后没有被修改，Gradle 会使用这个已编译的脚本。否则该脚本会重新编译，并把最新版本存在缓存中。</p>
+<p>在实际使用中，如果不想使用这种缓存机制，可以通过–recompile-scripts选项运行 Gradle ，这样会丢弃缓存的脚本，然后重新编译脚本并将其存在缓存中。我们可以用这种方式强制重新编译脚本。</p>
+<blockquote>
+<p>示例<br>gradle warProduct –recompile-scripts</p>
+</blockquote>
+<p>参考链接：<br>Gradle命令行选项：<a href="https://docs.gradle.org/current/userguide/gradle_command_line.html" target="_blank" rel="external">gradle command line</a></p>
+<h3 id="2-task缓存">2.task缓存</h3><p>同样是为了提高速度，Gradle对于内建类型task，也即built-in tasks，也使用了缓存。（自定义task只要指定了输入输出路径，也会使用缓存）</p>
+<p>使用缓存的效果如下所示：</p>
+<blockquote>
+<p>第一次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg" alt=""><br>第二次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg" alt=""></p>
+</blockquote>
+<p>每当一个built-in task第一次执行之前，Gradle会对task的输入做一次快照，然后执行这个task，在其成功执行后，Gradle会对task的输出做一次快照。Gradle会缓存这俩快照直到该task下次执行。</p>
+<p>在该task下次执行之前，Gradle会对其输入在此进行快照，然后与缓存中的快照对比，如果相同，Gradle则认为该task是up-to-date的，然后跳过执行，直接输出缓存中的快照，如果不同，Gradle会执行该task并再次进行快照更新缓存。</p>
+<p>在实际使用中，如果不想使用这种缓存机制，可以调用TaskOutputs.upToDateWhen()方法。只有满足此方法提供的条件，Gradle才会认为task是up-to-date的。因此我们只需要将条件设为false即可。</p>
+<blockquote>
+<p>示例<br>warProduct.getOutputs().upToDateWhen( {return false} )</p>
+</blockquote>
+<p>参考链接：<br>Gradle文档：<a href="https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks" target="_blank" rel="external">Skipping tasks that are up-to-date</a></p>
 </span>
       
     </div>
@@ -302,9 +321,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/C/" rel="tag">#C++</a>
-          
-            <a href="/tags/Sublime/" rel="tag">#Sublime</a>
+            <a href="/tags/Gradle/" rel="tag">#Gradle</a>
           
         </div>
       
@@ -313,13 +330,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2015/11/28/什么是Spring-Data-JPA？/" rel="next" title="什么是Spring Data JPA？ ">
+                <i class="fa fa-chevron-left"></i> 什么是Spring Data JPA？ 
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/11/23/Git-merge与rebase使用区别/" rel="prev" title="Git merge与rebase使用区别">
-                Git merge与rebase使用区别 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -369,8 +386,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/23/Sublime-Text-3搭建绿色C-编译环境/"
-           data-title="Sublime Text 3搭建绿色C++编译环境" data-url="http://coderec.github.io/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/">
+      <div class="ds-thread" data-thread-key="2015/11/29/Gradle缓存机制/"
+           data-title="Gradle缓存机制" data-url="http://coderec.github.io/2015/11/29/Gradle缓存机制/">
       </div>
     
   </div>
@@ -486,7 +503,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle是什么"><span class="nav-number">1.</span> <span class="nav-text">Gradle是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle的缓存机制"><span class="nav-number">2.</span> <span class="nav-text">Gradle的缓存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-脚本缓存"><span class="nav-number">2.1.</span> <span class="nav-text">1.脚本缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-task缓存"><span class="nav-number">2.2.</span> <span class="nav-text">2.task缓存</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
