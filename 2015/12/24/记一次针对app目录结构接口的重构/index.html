@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Gradle," />
+  <meta name="keywords" content="接口设计,重构," />
 
 
 
@@ -51,19 +51,18 @@
 
 
 
-<meta name="description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="description" content="记录一次对现有app目录结构接口的重构，合理的重构让我们的代码更加优美和简洁，也让我们的项目更加容易维护。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gradle缓存机制">
-<meta property="og:url" content="http://coderec.github.io/2015/11/29/Gradle缓存机制/index.html">
+<meta property="og:title" content="记一次针对app目录结构接口的重构">
+<meta property="og:url" content="http://coderec.github.io/2015/12/24/记一次针对app目录结构接口的重构/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg">
-<meta property="og:updated_time" content="2015-11-29T13:11:48.000Z">
+<meta property="og:description" content="记录一次对现有app目录结构接口的重构，合理的重构让我们的代码更加优美和简洁，也让我们的项目更加容易维护。">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezaw9wf48nj20kb06p75p.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3jw1ezatgnhz09j20e30jz0uz.jpg">
+<meta property="og:updated_time" content="2015-12-24T09:55:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gradle缓存机制">
-<meta name="twitter:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="twitter:title" content="记一次针对app目录结构接口的重构">
+<meta name="twitter:description" content="记录一次对现有app目录结构接口的重构，合理的重构让我们的代码更加优美和简洁，也让我们的项目更加容易维护。">
 
 
 
@@ -75,7 +74,7 @@
   };
 </script>
 
-  <title> Gradle缓存机制 | Coderec's Blog </title>
+  <title> 记一次针对app目录结构接口的重构 | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -246,7 +245,7 @@
             
             
               
-                Gradle缓存机制
+                记一次针对app目录结构接口的重构
               
             
           </h1>
@@ -255,8 +254,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-29T21:07:00+08:00" content="2015-11-29">
-              2015-11-29
+            <time itemprop="dateCreated" datetime="2015-12-24T17:45:59+08:00" content="2015-12-24">
+              2015-12-24
             </time>
           </span>
 
@@ -265,8 +264,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
+                  <a href="/categories/工作笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">工作笔记</span>
                   </a>
                 </span>
 
@@ -281,8 +280,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/29/Gradle缓存机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/29/Gradle缓存机制/" itemprop="commentsCount"></span>
+                <a href="/2015/12/24/记一次针对app目录结构接口的重构/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/24/记一次针对app目录结构接口的重构/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -301,28 +300,42 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg" alt=""></p>
-<h2 id="Gradle是什么">Gradle是什么</h2><p>Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。<br><a id="more"></a><br>Gradle官网用户指南：<a href="https://docs.gradle.org/current/userguide/userguide.html" target="_blank" rel="external">Gradle UserGuide</a></p>
-<h2 id="Gradle的缓存机制">Gradle的缓存机制</h2><p>注：以下示例中假设已有一个Gradle的task，名为warProduct。</p>
-<h3 id="1-脚本缓存">1.脚本缓存</h3><p>为了提高响应速度，默认情况下Gradle会缓存所有已编译的脚本。包括所有构建脚本、初始化脚本和其他脚本。</p>
-<p>以构建脚本为例，在第一次运行构建脚本时， Gradle 会创建.gradle目录，用于存放已编译的脚本。在下次运行构建脚本时， 如果该脚本自它编译后没有被修改，Gradle 会使用这个已编译的脚本。否则该脚本会重新编译，并把最新版本存在缓存中。</p>
-<p>在实际使用中，如果不想使用这种缓存机制，可以通过–recompile-scripts选项运行 Gradle ，这样会丢弃缓存的脚本，然后重新编译脚本并将其存在缓存中。我们可以用这种方式强制重新编译脚本。</p>
-<blockquote>
-<p>示例<br>gradle warProduct –recompile-scripts</p>
-</blockquote>
-<p>参考链接：<br>Gradle命令行选项：<a href="https://docs.gradle.org/current/userguide/gradle_command_line.html" target="_blank" rel="external">gradle command line</a></p>
-<h3 id="2-task缓存">2.task缓存</h3><p>同样是为了提高速度，Gradle对于内建类型task，也即built-in tasks，也使用了缓存。（自定义task只要指定了输入输出路径，也会使用缓存）</p>
-<p>使用缓存的效果如下所示：</p>
-<blockquote>
-<p>第一次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg" alt=""><br>第二次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg" alt=""></p>
-</blockquote>
-<p>每当一个built-in task第一次执行之前，Gradle会对task的输入做一次快照，然后执行这个task，在其成功执行后，Gradle会对task的输出做一次快照。Gradle会缓存这俩快照直到该task下次执行。</p>
-<p>在该task下次执行之前，Gradle会对其输入在此进行快照，然后与缓存中的快照对比，如果相同，Gradle则认为该task是up-to-date的，然后跳过执行，直接输出缓存中的快照，如果不同，Gradle会执行该task并再次进行快照更新缓存。</p>
-<p>在实际使用中，如果不想使用这种缓存机制，可以调用TaskOutputs.upToDateWhen()方法。只有满足此方法提供的条件，Gradle才会认为task是up-to-date的。因此我们只需要将条件设为false即可。</p>
-<blockquote>
-<p>示例<br>warProduct.getOutputs().upToDateWhen( {return false} )</p>
-</blockquote>
-<p>参考链接：<br>Gradle文档：<a href="https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks" target="_blank" rel="external">Skipping tasks that are up-to-date</a></p>
+        <span itemprop="articleBody"><p><img src="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezaw9wf48nj20kb06p75p.jpg" alt="重构"><br>记录一次对现有app目录结构接口的重构，合理的重构让我们的代码更加优美和简洁，也让我们的项目更加容易维护。</p>
+<a id="more"></a>
+<h2 id="引子">引子</h2><p>在web开发中，针对app的后端接口设计是有别于传统网页接口设计的。之所以存在这种差异，主要有以下几点原因：</p>
+<ol>
+<li>数据量<br>按需返回，app需要哪些数据就返回哪些数据。如果返回多余的数据，很明显会浪费流量，但是更重要的会影响传输效率与响应时间。</li>
+<li>接口数量<br>app更希望一个页面对应一个接口，而传统网页则要求不高，此处主要是考虑到http传输效率。众所周知http包会包括多个数据头，真正需要的数据可能还不及数据头大，因此接口减少，有利于提高传输效率。</li>
+<li>接口版本控制<br>随着app不断迭代发版，app使用的新旧接口变化，后端需要面对如何应对管理的问题。（一种方法：使用参数中带版本信息，请求通过filter时进行解析然后分发）</li>
+</ol>
+<h2 id="背景">背景</h2><p>后端：RESTful接口<br>app：包括ios、android<br>接口数据结构：Json</p>
+<p>当前app首页以及目录结构接口返回结构：</p>
+<p><img src="http://ww3.sinaimg.cn/large/6b7b34d3jw1ezatgnhz09j20e30jz0uz.jpg" alt="兼职端app：先锋"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"success"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"msg"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//安卓 icon</span></span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//ios icon</span></span><br><span class="line">            <span class="string">"id"</span>: <span class="number">801</span>,                  <span class="comment">//图标id </span></span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"任务分配"</span>         <span class="comment">//图标title</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,</span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,</span><br><span class="line">            <span class="string">"id"</span>: <span class="number">802</span>,</span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"分餐点"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="重构原因">重构原因</h2><ol>
+<li><strong>缺少部分数据</strong><br>很简单，在返回结构中加上所需数据就好。</li>
+<li><strong>实现后端控制跳转</strong></li>
+</ol>
+<ul>
+<li>app中点击菜单或者图标会跳转到对应的目录或者页面，目前app采用的方式是在代码中写死路径。</li>
+<li>现在考虑在返回结构中加上url，这样每个菜单或图标根据此url进行跳转</li>
+<li>此举可以降低app代码的耦合度，并且，若有修改跳转url的需要，只需后端修改即可，无需重新发版</li>
+</ul>
+<ol>
+<li><strong>实现后端访问统计</strong><br>对于现在web服务来说，经常会有统计访问量、统计访问来源等信息的需求。</li>
+</ol>
+<ul>
+<li>前端统计<br>主要使用不同厂商提供的统计服务，例如百度、友盟、flurry、google analytics</li>
+<li>后端统计<br>通过后台代码进行统计，合理入库并提供展示。使用后端统计意味着需要：<pre><code><span class="bullet">* </span>前端在每次请求时都要携带特定参数用于统计，因此应该合理设计参数以减小对于传输效率的影响。
+<span class="bullet">* </span>后端需要在每次接到请求时将对应统计参数进行解析处理
+</code></pre></li>
+</ul>
+<h2 id="重构结果">重构结果</h2><ol>
+<li>通过将跳转控制剥离到后端，降低app代码设计的耦合性</li>
+<li>加入访问统计，日后可以分析用户行为</li>
+<li>将接口结构与请求参数规范化，易于维护</li>
+</ol>
+<h2 id="重构后接口">重构后接口</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"success"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"msg"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//安卓 icon</span></span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//ios icon</span></span><br><span class="line">            <span class="string">"id"</span>: <span class="number">801</span>,                  <span class="comment">//图标id </span></span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"任务分配"</span>         <span class="comment">//图标title</span></span><br><span class="line">            <span class="string">"badge"</span>: <span class="number">1</span>,                 <span class="comment">//小红点之类的标记</span></span><br><span class="line">            <span class="string">"url"</span>: <span class="string">"http://www.baidu.com"</span>   <span class="comment">//跳转url</span></span><br><span class="line">            <span class="string">"isHome"</span>: <span class="number">1</span>                 <span class="comment">//是否首页显示</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//安卓 icon</span></span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//ios icon</span></span><br><span class="line">            <span class="string">"id"</span>: <span class="number">801</span>,                  <span class="comment">//图标id </span></span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"任务分配"</span>         <span class="comment">//图标title</span></span><br><span class="line">            <span class="string">"badge"</span>: <span class="number">1</span>,                 <span class="comment">//小红点之类的标记</span></span><br><span class="line">            <span class="string">"url"</span>: <span class="string">"redScarf://www.baidu.com"</span>   <span class="comment">//跳转url(自定义协议用于app内部跳转)</span></span><br><span class="line">            <span class="string">"isHome"</span>: <span class="number">1</span>                 <span class="comment">//是否首页显示</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </span>
       
     </div>
@@ -331,7 +344,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Gradle/" rel="tag">#Gradle</a>
+            <a href="/tags/接口设计/" rel="tag">#接口设计</a>
+          
+            <a href="/tags/重构/" rel="tag">#重构</a>
           
         </div>
       
@@ -340,17 +355,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/28/什么是Spring-Data-JPA？/" rel="next" title="什么是Spring Data JPA？ ">
-                <i class="fa fa-chevron-left"></i> 什么是Spring Data JPA？ 
+              <a href="/2015/12/18/Hibernate-Validator学习笔记/" rel="next" title="Hibernate Validator学习笔记">
+                <i class="fa fa-chevron-left"></i> Hibernate Validator学习笔记
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/18/Hibernate-Validator学习笔记/" rel="prev" title="Hibernate Validator学习笔记">
-                Hibernate Validator学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -400,8 +411,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/29/Gradle缓存机制/"
-           data-title="Gradle缓存机制" data-url="http://coderec.github.io/2015/11/29/Gradle缓存机制/">
+      <div class="ds-thread" data-thread-key="2015/12/24/记一次针对app目录结构接口的重构/"
+           data-title="记一次针对app目录结构接口的重构" data-url="http://coderec.github.io/2015/12/24/记一次针对app目录结构接口的重构/">
       </div>
     
   </div>
@@ -524,7 +535,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle是什么"><span class="nav-number">1.</span> <span class="nav-text">Gradle是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle的缓存机制"><span class="nav-number">2.</span> <span class="nav-text">Gradle的缓存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-脚本缓存"><span class="nav-number">2.1.</span> <span class="nav-text">1.脚本缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-task缓存"><span class="nav-number">2.2.</span> <span class="nav-text">2.task缓存</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构原因"><span class="nav-number">3.</span> <span class="nav-text">重构原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构结果"><span class="nav-number">4.</span> <span class="nav-text">重构结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构后接口"><span class="nav-number">5.</span> <span class="nav-text">重构后接口</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
