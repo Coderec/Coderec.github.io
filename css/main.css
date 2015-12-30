@@ -448,6 +448,7 @@ td {
 html,
 body {
   height: 100%;
+  background-image: url("http://ww4.sinaimg.cn/large/6b7b34d3jw1ezhrmta2xhj21kw0zkag1.jpg");
 }
 .container {
   position: relative;
@@ -1514,7 +1515,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #1d128e;
+  background: #4dc444;
 }
 .sidebar-nav {
   margin: 0 0 20px;
