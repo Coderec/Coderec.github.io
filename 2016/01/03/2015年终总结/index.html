@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Gradle," />
+  <meta name="keywords" content="个人总结,年度总结," />
 
 
 
@@ -57,19 +57,17 @@
 
 
 
-<meta name="description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="description" content="0x01 概述2015年，结束了4年的大学2015年，开始了人生的第一份工作2015年，上半年还忙着高层建筑给排水设计2015年，下半年已忙着代码上线修复bug2015年，发生了很多事，也有了身份和心态的转变但总的来讲，2015年，让自己变得更好">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gradle缓存机制">
-<meta property="og:url" content="http://coderec.github.io/2015/11/29/Gradle缓存机制/index.html">
+<meta property="og:title" content="2015年终总结">
+<meta property="og:url" content="http://coderec.github.io/2016/01/03/2015年终总结/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg">
-<meta property="og:updated_time" content="2015-12-25T02:50:07.000Z">
+<meta property="og:description" content="0x01 概述2015年，结束了4年的大学2015年，开始了人生的第一份工作2015年，上半年还忙着高层建筑给排水设计2015年，下半年已忙着代码上线修复bug2015年，发生了很多事，也有了身份和心态的转变但总的来讲，2015年，让自己变得更好">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1ezmqypf3zqj20si0ekdoq.jpg">
+<meta property="og:updated_time" content="2016-01-03T15:56:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gradle缓存机制">
-<meta name="twitter:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="twitter:title" content="2015年终总结">
+<meta name="twitter:description" content="0x01 概述2015年，结束了4年的大学2015年，开始了人生的第一份工作2015年，上半年还忙着高层建筑给排水设计2015年，下半年已忙着代码上线修复bug2015年，发生了很多事，也有了身份和心态的转变但总的来讲，2015年，让自己变得更好">
 
 
 
@@ -87,7 +85,7 @@
   };
 </script>
 
-  <title> Gradle缓存机制 | Coderec's Blog </title>
+  <title> 2015年终总结 | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -252,7 +250,7 @@
             
             
               
-                Gradle缓存机制
+                2015年终总结
               
             
           </h1>
@@ -264,8 +262,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-29T21:07:00+08:00" content="2015-11-29">
-              2015-11-29
+            <time itemprop="dateCreated" datetime="2016-01-03T22:35:05+08:00" content="2016-01-03">
+              2016-01-03
             </time>
           </span>
 
@@ -278,8 +276,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
+                  <a href="/categories/个人总结/" itemprop="url" rel="index">
+                    <span itemprop="name">个人总结</span>
                   </a>
                 </span>
 
@@ -294,8 +292,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/29/Gradle缓存机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/29/Gradle缓存机制/" itemprop="commentsCount"></span>
+                <a href="/2016/01/03/2015年终总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/03/2015年终总结/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -305,7 +303,7 @@
 
           
           
-             <span id="/2015/11/29/Gradle缓存机制/" class="leancloud_visitors" data-flag-title="Gradle缓存机制">
+             <span id="/2016/01/03/2015年终总结/" class="leancloud_visitors" data-flag-title="2015年终总结">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -325,30 +323,30 @@
       
 
       
-        <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg" alt=""></p>
-<h2 id="Gradle是什么">Gradle是什么</h2><p>Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。</p>
+        <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1ezmqypf3zqj20si0ekdoq.jpg" alt="image"></p>
+<h2 id="0x01_概述">0x01 概述</h2><p>2015年，结束了4年的大学<br>2015年，开始了人生的第一份工作<br>2015年，上半年还忙着高层建筑给排水设计<br>2015年，下半年已忙着代码上线修复bug<br>2015年，发生了很多事，也有了身份和心态的转变<br>但总的来讲，2015年，让自己变得更好</p>
 <a id="more"></a>
-<p>Gradle官网用户指南：<a href="https://docs.gradle.org/current/userguide/userguide.html" target="_blank" rel="external">Gradle UserGuide</a></p>
-<h2 id="Gradle的缓存机制">Gradle的缓存机制</h2><p>注：以下示例中假设已有一个Gradle的task，名为warProduct。</p>
-<h3 id="1-脚本缓存">1.脚本缓存</h3><p>为了提高响应速度，默认情况下Gradle会缓存所有已编译的脚本。包括所有构建脚本、初始化脚本和其他脚本。</p>
-<p>以构建脚本为例，在第一次运行构建脚本时， Gradle 会创建.gradle目录，用于存放已编译的脚本。在下次运行构建脚本时， 如果该脚本自它编译后没有被修改，Gradle 会使用这个已编译的脚本。否则该脚本会重新编译，并把最新版本存在缓存中。</p>
-<p>在实际使用中，如果不想使用这种缓存机制，可以通过–recompile-scripts选项运行 Gradle ，这样会丢弃缓存的脚本，然后重新编译脚本并将其存在缓存中。我们可以用这种方式强制重新编译脚本。</p>
-<blockquote>
-<p>示例<br>gradle warProduct –recompile-scripts</p>
-</blockquote>
-<p>参考链接：<br>Gradle命令行选项：<a href="https://docs.gradle.org/current/userguide/gradle_command_line.html" target="_blank" rel="external">gradle command line</a></p>
-<h3 id="2-task缓存">2.task缓存</h3><p>同样是为了提高速度，Gradle对于内建类型task，也即built-in tasks，也使用了缓存。（自定义task只要指定了输入输出路径，也会使用缓存）</p>
-<p>使用缓存的效果如下所示：</p>
-<blockquote>
-<p>第一次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg" alt=""><br>第二次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg" alt=""></p>
-</blockquote>
-<p>每当一个built-in task第一次执行之前，Gradle会对task的输入做一次快照，然后执行这个task，在其成功执行后，Gradle会对task的输出做一次快照。Gradle会缓存这俩快照直到该task下次执行。</p>
-<p>在该task下次执行之前，Gradle会对其输入在此进行快照，然后与缓存中的快照对比，如果相同，Gradle则认为该task是up-to-date的，然后跳过执行，直接输出缓存中的快照，如果不同，Gradle会执行该task并再次进行快照更新缓存。</p>
-<p>在实际使用中，如果不想使用这种缓存机制，可以调用TaskOutputs.upToDateWhen()方法。只有满足此方法提供的条件，Gradle才会认为task是up-to-date的。因此我们只需要将条件设为false即可。</p>
-<blockquote>
-<p>示例<br>warProduct.getOutputs().upToDateWhen( {return false} )</p>
-</blockquote>
-<p>参考链接：<br>Gradle文档：<a href="https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks" target="_blank" rel="external">Skipping tasks that are up-to-date</a></p>
+<h2 id="0x02_结束了的四年">0x02 结束了的四年</h2><p>大学，四年，终究还是一不留神就过去了。<br>我的大学，和最普通的大学生一样。不是学霸，不是学渣，因为玩游戏同时挂掉高数大物，因为兴趣通宵编程。<br>大学前，我不看球，我不知道什么编程，我不认识现在珍惜的这么多同学。</p>
+<p>对于四年大学生活，我想说的只有感谢。<br>她给了我足够的时间浪费，给我足够的时间了解，给我足够的时间学习，最重要的，给了我足够的时间去思考。<br>浪费时间去堕落与空虚，抓紧时间去了解自己的兴趣与学习，以及充足的时间去思考自己想要什么。  </p>
+<p>当然，对于大学的挚友们，我想说的也是感谢。<br>不论是带给我的正能量，亦或是带我一起入坑游戏，再或是一起谈心或是旅行游荡，我相信，我之所以是今天的我，离不开大家的帮助与影响。</p>
+<p>对于这结束了的四年，遗憾是有的。连200的奖学金都没拿过有木有……<br>但是最让我感到值得的是，我用四年的时间，找到了自己的兴趣，明确了自己的目标。<br>无论如何，四年时间，还是结束了。</p>
+<h2 id="0x03_开始了的半年">0x03 开始了的半年</h2><p>自己找房、自己找面试、找工作、自己赚钱自己花。<br>从大学生变为工作狗，积极的心态，多学、多做，一只菜鸟渴望成长。</p>
+<p>工作的半年，最应该感谢的；<br>是同学的帮助，让我没有吃到苦，找到房子前一直在蹭住；<br>是上司的教导，让我明确学习的方向与方法；<br>是同事的宽容，容忍我犯得低级错误；</p>
+<p>开始了的半年，成功从环工人转型为程序猿，换了自己的第一个Mac。<br>积极工作、努力学习、不断前进，坚持-&gt;胜利。</p>
+<h2 id="0x04_知识提升">0x04 知识提升</h2><ol>
+<li>深入学习了Git版本控制的原理与使用</li>
+<li>构建管理工具Gradle</li>
+<li>Java Web开发常用框架技术：JavaMail、HttpClient、Apache Poi、Hibernate Validator、Spring Data JPA</li>
+<li>对整洁代码以及代码重构有了更深的感悟</li>
+</ol>
+<h2 id="0x05_2016计划">0x05 2016计划</h2><ol>
+<li>学习上要按照既定计划，先广后精，将用的到的技术都进行了解并可以使用，而后在进行深入。</li>
+<li>工作上要多思考业务场景，使代码稳定，兼容性提高。</li>
+<li>生活上，多读书，去除码农属性；重新拿起画笔，无聊涂鸦也是一种不错的娱乐方式。</li>
+</ol>
+<h2 id="0x06_后记">0x06 后记</h2><p>2015年末，与在北京的同学聚了聚，感慨有些人变了，有些人还是老样子。</p>
+<p>想想自己，应该也是变化了吧。从环境工程成功转型为代码农民工，从迷茫不定到坚定不移，有了奋斗的目标，日子确实是越过越好了。</p>
+<p>2016，还要继续加油。</p>
 
       
     </div>
@@ -357,7 +355,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Gradle/" rel="tag">#Gradle</a>
+            <a href="/tags/个人总结/" rel="tag">#个人总结</a>
+          
+            <a href="/tags/年度总结/" rel="tag">#年度总结</a>
           
         </div>
       
@@ -366,17 +366,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/28/什么是Spring-Data-JPA？/" rel="next" title="什么是Spring Data JPA？ ">
-                <i class="fa fa-chevron-left"></i> 什么是Spring Data JPA？ 
+              <a href="/2015/12/24/记一次针对app目录结构接口的重构/" rel="next" title="记一次针对app目录结构接口的重构">
+                <i class="fa fa-chevron-left"></i> 记一次针对app目录结构接口的重构
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/18/Hibernate-Validator学习笔记/" rel="prev" title="Hibernate Validator学习笔记">
-                Hibernate Validator学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -425,8 +421,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/29/Gradle缓存机制/"
-           data-title="Gradle缓存机制" data-url="http://coderec.github.io/2015/11/29/Gradle缓存机制/">
+      <div class="ds-thread" data-thread-key="2016/01/03/2015年终总结/"
+           data-title="2015年终总结" data-url="http://coderec.github.io/2016/01/03/2015年终总结/">
       </div>
     
   </div>
@@ -550,7 +546,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle是什么"><span class="nav-number">1.</span> <span class="nav-text">Gradle是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle的缓存机制"><span class="nav-number">2.</span> <span class="nav-text">Gradle的缓存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-脚本缓存"><span class="nav-number">2.1.</span> <span class="nav-text">1.脚本缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-task缓存"><span class="nav-number">2.2.</span> <span class="nav-text">2.task缓存</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01_概述"><span class="nav-number">1.</span> <span class="nav-text">0x01 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02_结束了的四年"><span class="nav-number">2.</span> <span class="nav-text">0x02 结束了的四年</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03_开始了的半年"><span class="nav-number">3.</span> <span class="nav-text">0x03 开始了的半年</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04_知识提升"><span class="nav-number">4.</span> <span class="nav-text">0x04 知识提升</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05_2016计划"><span class="nav-number">5.</span> <span class="nav-text">0x05 2016计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06_后记"><span class="nav-number">6.</span> <span class="nav-text">0x06 后记</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
