@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JPA,Java,Spring," />
+  <meta name="keywords" content="FindBugs,Gradle," />
 
 
 
@@ -57,17 +57,19 @@
 
 
 
-<meta name="description" content="Spring Data项目简介Spring Data项目致力于为开发者提供持续、熟悉、基于Spring编程模型的数据访问方案，同时，也保留底层数据存储的特性，例如关系型与非关系型数据库的不同特点。">
+<meta name="description" content="什么是FindBugs？作为程序猴子，哪个没有被虫子困扰过，每次debug都是一次痛苦的过程。如果有一个工具可以帮我们找到那些跟我捉迷藏的bug，这个世界岂不是会变得很美好？OK，FindBugs来了，它就是那个让世界变得更加美好的工具。FindBugs是一个java静态分析工具，它检查类或者JAR文件，有了FindBugs，无需运行运行程序即可找到潜在的Bug。当然，它无法找到所有bug（完美的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="什么是Spring Data JPA？ ">
-<meta property="og:url" content="http://coderec.github.io/2015/11/28/什么是Spring-Data-JPA？/index.html">
+<meta property="og:title" content="在Gradle中使用FindBugs">
+<meta property="og:url" content="http://coderec.github.io/2016/01/05/在Gradle中使用FindBugs/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="Spring Data项目简介Spring Data项目致力于为开发者提供持续、熟悉、基于Spring编程模型的数据访问方案，同时，也保留底层数据存储的特性，例如关系型与非关系型数据库的不同特点。">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3gw1eyfclsxz3yj20oy0amaag.jpg">
-<meta property="og:updated_time" content="2015-12-25T02:50:47.000Z">
+<meta property="og:description" content="什么是FindBugs？作为程序猴子，哪个没有被虫子困扰过，每次debug都是一次痛苦的过程。如果有一个工具可以帮我们找到那些跟我捉迷藏的bug，这个世界岂不是会变得很美好？OK，FindBugs来了，它就是那个让世界变得更加美好的工具。FindBugs是一个java静态分析工具，它检查类或者JAR文件，有了FindBugs，无需运行运行程序即可找到潜在的Bug。当然，它无法找到所有bug（完美的">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezoll33qxaj20jt08jt9c.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezonkyhohlj20zo0f7q96.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezoo1istt9j20pg05675r.jpg">
+<meta property="og:updated_time" content="2016-01-05T07:59:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="什么是Spring Data JPA？ ">
-<meta name="twitter:description" content="Spring Data项目简介Spring Data项目致力于为开发者提供持续、熟悉、基于Spring编程模型的数据访问方案，同时，也保留底层数据存储的特性，例如关系型与非关系型数据库的不同特点。">
+<meta name="twitter:title" content="在Gradle中使用FindBugs">
+<meta name="twitter:description" content="什么是FindBugs？作为程序猴子，哪个没有被虫子困扰过，每次debug都是一次痛苦的过程。如果有一个工具可以帮我们找到那些跟我捉迷藏的bug，这个世界岂不是会变得很美好？OK，FindBugs来了，它就是那个让世界变得更加美好的工具。FindBugs是一个java静态分析工具，它检查类或者JAR文件，有了FindBugs，无需运行运行程序即可找到潜在的Bug。当然，它无法找到所有bug（完美的">
 
 
 
@@ -85,7 +87,7 @@
   };
 </script>
 
-  <title> 什么是Spring Data JPA？  | Coderec's Blog </title>
+  <title> 在Gradle中使用FindBugs | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -250,7 +252,7 @@
             
             
               
-                什么是Spring Data JPA？ 
+                在Gradle中使用FindBugs
               
             
           </h1>
@@ -262,8 +264,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-28T00:08:12+08:00" content="2015-11-28">
-              2015-11-28
+            <time itemprop="dateCreated" datetime="2016-01-05T14:15:09+08:00" content="2016-01-05">
+              2016-01-05
             </time>
           </span>
 
@@ -292,8 +294,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/28/什么是Spring-Data-JPA？/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/28/什么是Spring-Data-JPA？/" itemprop="commentsCount"></span>
+                <a href="/2016/01/05/在Gradle中使用FindBugs/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/05/在Gradle中使用FindBugs/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -303,7 +305,7 @@
 
           
           
-             <span id="/2015/11/28/什么是Spring-Data-JPA？/" class="leancloud_visitors" data-flag-title="什么是Spring Data JPA？ ">
+             <span id="/2016/01/05/在Gradle中使用FindBugs/" class="leancloud_visitors" data-flag-title="在Gradle中使用FindBugs">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -323,25 +325,20 @@
       
 
       
-        <p><img src="http://ww3.sinaimg.cn/large/6b7b34d3gw1eyfclsxz3yj20oy0amaag.jpg" alt=""></p>
-<h2 id="Spring_Data项目简介">Spring Data项目简介</h2><p>Spring Data项目致力于为开发者提供持续、熟悉、基于Spring编程模型的数据访问方案，同时，也保留底层数据存储的特性，例如关系型与非关系型数据库的不同特点。</p>
+        <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezoll33qxaj20jt08jt9c.jpg" alt="image"></p>
+<h2 id="什么是FindBugs？">什么是FindBugs？</h2><p>作为程序猴子，哪个没有被虫子困扰过，每次debug都是一次痛苦的过程。如果有一个工具可以帮我们找到那些跟我捉迷藏的bug，这个世界岂不是会变得很美好？<br>OK，FindBugs来了，它就是那个让世界变得更加美好的工具。<br>FindBugs是一个java静态分析工具，它检查类或者JAR文件，有了FindBugs，无需运行运行程序即可找到潜在的Bug。当然，它无法找到所有bug（完美的工具总是存在梦里），但目前的FindBugs已经足够强大，可以找出绝大多数潜在问题了。    </p>
 <a id="more"></a>
-<p>Spring Data项目包含多个子项目，包括关系型、非关系型数据库访问技术，Spring Data JPA只是Spring Data项目的一个子项目。用来对JPA提供支持，使得基于JPA的实现更加简单。</p>
-<h2 id="JPA简介">JPA简介</h2><p>JPA——Java Persistence API，是伴随JDK5.0一起推出的持久化API；JPA为Java开发者提供一种实体/关系映射方案来管理Java程序中的关系型数据。</p>
-<p>JPA提供一套标准的注解、接口以及JPQL（Java持久化查询语言），这使得开发可以面对统一接口。</p>
-<p><strong>JPA只是一套标准，JPA不提供实现。</strong></p>
-<p>参考文档：<a href="http://docs.oracle.com/javaee/5/tutorial/doc/bnbpz.html" target="_blank" rel="external">JDK5文档-JPA</a></p>
-<h2 id="JPA与Hibernate等ORM框架的关系">JPA与Hibernate等ORM框架的关系</h2><p>JPA作为Java标准已经被行业接受，因此一些ORM框架对JPA提供了支持，也即为JPA提供了实现（JPA Provider）。比如Hibernate、EclipseJPA、OpenJPA。</p>
-<p>JPA与这些ORM框架的关系可总结如下：</p>
-<ol>
-<li>JPA无法独立工作<br>JPA只是一套标准，相当于没有实现类的接口，因此，没有JPA Provider，JPA本身是无法工作的。</li>
-<li>Hibernate是JPA Provider之一<br>Hibernate是JPA Provider中功能很强的一个，从功能上来讲Hibernate已经是JPA的超集了。</li>
-<li>JPA的优势在与易切换ORM框架<br>JPA作为抽象出来的接口的优势就在于，如果选择使用JPA进行开发，可以很容易的切换JPA Provider。假设在某些场景，Hibernate性能表现不好，完全可以切换到另外一种支持JPA的ORM框架，比如EclipseJPA。</li>
-</ol>
-<p>如果还没有搞懂JPA与Hibernate的关系，下面的文章分析的很透彻：<a href="http://blog-tothought.rhcloud.com//post/2" target="_blank" rel="external">JPA与hibernate的关系</a></p>
-<h2 id="Spring_Data_JPA">Spring Data JPA</h2><p>Spring Data JPA致力于明显提高实现JPA的效率，使用Spring Data JPA甚至可以不必编写逻辑代码即可完成数据访问操作。</p>
-<p>Spring Data JPA提供一些特性，看起来确实很吸引人，比如借助其‘通过解析方法名创建查询’的特性，开发者不必写查询语句即可完成所需功能。</p>
-<p>了解这些之后，就可以开始搭建一个Spring Data JPA项目进行实践了。</p>
+<h2 id="配置FindBugs">配置FindBugs</h2><p>一个拥有如此强大功能的工具，它的配置确是十分简单。FindBugs几乎是开箱即用，无需配置即可进行代码审计。<br>不过，它也支持自定义配置，可以自定义需要检查的类或文件，也可以自定义不进行检查的类或文件。<br>自定义的核心就是Filter File(xml文件)的配置。我们既可以指定该文件为需要检查的也可以指定其为忽略检查的。<br>这里只介绍Filter File的配置，其他内容见附录FindBugs文档链接。<br>首先来看一个示例配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">FindBugsFilter</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">Match</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Class</span> <span class="attribute">name</span>=<span class="value">"com.foobar.ClassNotToBeAnalyzed"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">Match</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="tag">&lt;<span class="title">Match</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Class</span> <span class="attribute">name</span>=<span class="value">"com.foobar.ClassWithSomeBugsMatched"</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Bug</span> <span class="attribute">code</span>=<span class="value">"DE,UrF,SIC"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">Match</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">&lt;!-- Match all XYZ violations. --&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">Match</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Bug</span> <span class="attribute">code</span>=<span class="value">"XYZ"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">Match</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">&lt;!-- Match all doublecheck violations in these methods of "AnotherClass". --&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">Match</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Class</span> <span class="attribute">name</span>=<span class="value">"com.foobar.AnotherClass"</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Or</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">Method</span> <span class="attribute">name</span>=<span class="value">"nonOverloadedMethod"</span> /&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">Method</span> <span class="attribute">name</span>=<span class="value">"frob"</span> <span class="attribute">params</span>=<span class="value">"int,java.lang.String"</span> <span class="attribute">returns</span>=<span class="value">"void"</span> /&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="title">Method</span> <span class="attribute">name</span>=<span class="value">"blat"</span> <span class="attribute">params</span>=<span class="value">""</span> <span class="attribute">returns</span>=<span class="value">"boolean"</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="title">Or</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Bug</span> <span class="attribute">code</span>=<span class="value">"DC"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">Match</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">&lt;!-- A method with a dead local store false positive (medium priority). --&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">Match</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Class</span> <span class="attribute">name</span>=<span class="value">"com.foobar.MyClass"</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Method</span> <span class="attribute">name</span>=<span class="value">"someMethod"</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Bug</span> <span class="attribute">pattern</span>=<span class="value">"DLS_DEAD_LOCAL_STORE"</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">Priority</span> <span class="attribute">value</span>=<span class="value">"2"</span> /&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">Match</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">&lt;!-- All bugs in test classes, except for JUnit-specific bugs --&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">Match</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">Class</span> <span class="attribute">name</span>=<span class="value">"~.*\.*Test"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">Not</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">Bug</span> <span class="attribute">code</span>=<span class="value">"IJU"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">Not</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">Match</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">FindBugsFilter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>话不多说，直接看文件。除了根级FindBugsFilter元素外，都是使用Match元素进行匹配的设置，而Match元素中仅有几种属性而已，因此，只要了解这些属性之后，即可随意配置自己需要的Filter File了。（别忘了，FindBugs开箱即用，即使没有Filter File也是可以直接审计的 : ） )</p>
+<p>匹配类型如下所示：</p>
+<p><img src="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezonkyhohlj20zo0f7q96.jpg" width="750" height="400" align="center"></p>
+<p><strong>PS:</strong><br>如果在name等支持regex的属性中使用“~”开头，会被解析为javaRegexPattern<br>考虑到通配符是匹配所有元素，因此<code>.\*</code>应该加在首部，以及and/or的尾部来保证substring的匹配</p>
+<h2 id="Gradle中使用FindBugs插件">Gradle中使用FindBugs插件</h2><p>Gradle本身就已经支持了FindBugs插件，因此我们只需要很简单的几步配置即可gradle findbugsMain进行代码审计了。<br>首先，官方示例配置如下<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">"java"</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">"findbugs"</span></span><br><span class="line"></span><br><span class="line">findbugs &#123;</span><br><span class="line">    toolVersion = <span class="string">"2.0.1"</span></span><br><span class="line">    sourceSets = [sourceSets.main]</span><br><span class="line">    ignoreFailures = <span class="literal">true</span></span><br><span class="line">    reportsDir = file(<span class="string">"$project.buildDir/findbugsReports"</span>)</span><br><span class="line">    effort = <span class="string">"max"</span></span><br><span class="line">    reportLevel = <span class="string">"high"</span></span><br><span class="line">    visitors = [<span class="string">"FindSqlInjection"</span>, <span class="string">"SwitchFallthrough"</span>]</span><br><span class="line">    omitVisitors = [<span class="string">"FindNonShortCircuit"</span>]</span><br><span class="line">    includeFilter = file(<span class="string">"$rootProject.projectDir/config/findbugs/includeFilter.xml"</span>)</span><br><span class="line">    excludeFilter = file(<span class="string">"$rootProject.projectDir/config/findbugs/excludeFilter.xml"</span>)</span><br><span class="line">    excludeBugsFilter = file(<span class="string">"$rootProject.projectDir/config/findbugs/excludeBugsFilter.xml"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里说下常用配置属性的意义：</p>
+<p><img src="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezoo1istt9j20pg05675r.jpg" width="750" height="160" align="center"></p>
+<h2 id="附录">附录</h2><p>想必有了上述两者的配置说明，大家已经可以自己配置想要的Findbugs并使用了。<br>如果觉得不够，例如想尝试下FindBugs的注解等特性，大家可以参照文档深入研究。<br>下面附上几个文档的链接：</p>
+<p><a href="http://findbugs.sourceforge.net/bugDescriptions.html" target="_blank" rel="external">Bug类型：FindBugs Bug Descriptions(http://findbugs.sourceforge.net/bugDescriptions.html)</a><br><a href="http://findbugs.sourceforge.net/manual/" target="_blank" rel="external">FindBugs Manul(http://findbugs.sourceforge.net/manual/)</a><br><a href="https://docs.gradle.org/current/userguide/findbugs_plugin.html" target="_blank" rel="external">Gradle Findbugs插件用户指南(https://docs.gradle.org/current/userguide/findbugs_plugin.html)</a></p>
 
       
     </div>
@@ -350,11 +347,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JPA/" rel="tag">#JPA</a>
+            <a href="/tags/FindBugs/" rel="tag">#FindBugs</a>
           
-            <a href="/tags/Java/" rel="tag">#Java</a>
-          
-            <a href="/tags/Spring/" rel="tag">#Spring</a>
+            <a href="/tags/Gradle/" rel="tag">#Gradle</a>
           
         </div>
       
@@ -363,17 +358,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/24/GitHub-Hexo搭建独立博客/" rel="next" title="GitHub+Hexo搭建独立博客">
-                <i class="fa fa-chevron-left"></i> GitHub+Hexo搭建独立博客
+              <a href="/2016/01/04/IntelliJ-Idea-常用配置/" rel="next" title="IntelliJ Idea 常用配置">
+                <i class="fa fa-chevron-left"></i> IntelliJ Idea 常用配置
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/11/29/Gradle缓存机制/" rel="prev" title="Gradle缓存机制">
-                Gradle缓存机制 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -422,8 +413,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/28/什么是Spring-Data-JPA？/"
-           data-title="什么是Spring Data JPA？ " data-url="http://coderec.github.io/2015/11/28/什么是Spring-Data-JPA？/">
+      <div class="ds-thread" data-thread-key="2016/01/05/在Gradle中使用FindBugs/"
+           data-title="在Gradle中使用FindBugs" data-url="http://coderec.github.io/2016/01/05/在Gradle中使用FindBugs/">
       </div>
     
   </div>
@@ -547,7 +538,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring_Data项目简介"><span class="nav-number">1.</span> <span class="nav-text">Spring Data项目简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JPA简介"><span class="nav-number">2.</span> <span class="nav-text">JPA简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JPA与Hibernate等ORM框架的关系"><span class="nav-number">3.</span> <span class="nav-text">JPA与Hibernate等ORM框架的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring_Data_JPA"><span class="nav-number">4.</span> <span class="nav-text">Spring Data JPA</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是FindBugs？"><span class="nav-number">1.</span> <span class="nav-text">什么是FindBugs？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置FindBugs"><span class="nav-number">2.</span> <span class="nav-text">配置FindBugs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle中使用FindBugs插件"><span class="nav-number">3.</span> <span class="nav-text">Gradle中使用FindBugs插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
