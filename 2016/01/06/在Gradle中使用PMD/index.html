@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C++,Sublime," />
+  <meta name="keywords" content="Gradle,PMD," />
 
 
 
@@ -57,16 +57,19 @@
 
 
 
-<meta name="description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
+<meta name="description" content="什么是PMD？与FindBugs类似，PMD也是一款Java代码静态检查工具。它可以做到检查Java代码中是否含有未使用的变量、是否含有空的抓取块、是否含有不必要的对象等。PMD与FindBugs最主要的区别是PMD检查源文件，而FindBugs检查字节码。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sublime Text 3搭建绿色C++编译环境">
-<meta property="og:url" content="http://coderec.github.io/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/index.html">
+<meta property="og:title" content="在Gradle中使用PMD">
+<meta property="og:url" content="http://coderec.github.io/2016/01/06/在Gradle中使用PMD/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
-<meta property="og:updated_time" content="2015-11-27T16:20:38.000Z">
+<meta property="og:description" content="什么是PMD？与FindBugs类似，PMD也是一款Java代码静态检查工具。它可以做到检查Java代码中是否含有未使用的变量、是否含有空的抓取块、是否含有不必要的对象等。PMD与FindBugs最主要的区别是PMD检查源文件，而FindBugs检查字节码。">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/6b7b34d3jw1ezpjs888doj20sd0d1gmo.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezprkuh6ssj206w0g8q4a.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3jw1ezpsp2ziu4j20m4056jsl.jpg">
+<meta property="og:updated_time" content="2016-01-06T07:17:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sublime Text 3搭建绿色C++编译环境">
-<meta name="twitter:description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
+<meta name="twitter:title" content="在Gradle中使用PMD">
+<meta name="twitter:description" content="什么是PMD？与FindBugs类似，PMD也是一款Java代码静态检查工具。它可以做到检查Java代码中是否含有未使用的变量、是否含有空的抓取块、是否含有不必要的对象等。PMD与FindBugs最主要的区别是PMD检查源文件，而FindBugs检查字节码。">
 
 
 
@@ -84,7 +87,7 @@
   };
 </script>
 
-  <title> Sublime Text 3搭建绿色C++编译环境 | Coderec's Blog </title>
+  <title> 在Gradle中使用PMD | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +252,7 @@
             
             
               
-                Sublime Text 3搭建绿色C++编译环境
+                在Gradle中使用PMD
               
             
           </h1>
@@ -261,8 +264,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-23T13:16:38+08:00" content="2015-11-23">
-              2015-11-23
+            <time itemprop="dateCreated" datetime="2016-01-06T10:00:09+08:00" content="2016-01-06">
+              2016-01-06
             </time>
           </span>
 
@@ -275,8 +278,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/配置记录/" itemprop="url" rel="index">
-                    <span itemprop="name">配置记录</span>
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
                   </a>
                 </span>
 
@@ -291,8 +294,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/23/Sublime-Text-3搭建绿色C-编译环境/" itemprop="commentsCount"></span>
+                <a href="/2016/01/06/在Gradle中使用PMD/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/06/在Gradle中使用PMD/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -302,7 +305,7 @@
 
           
           
-             <span id="/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/" class="leancloud_visitors" data-flag-title="Sublime Text 3搭建绿色C++编译环境">
+             <span id="/2016/01/06/在Gradle中使用PMD/" class="leancloud_visitors" data-flag-title="在Gradle中使用PMD">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -322,12 +325,18 @@
       
 
       
-        <p>因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。</p>
-<p>需要：<br>  1.mingw绿色免安装版（实际上我找了一个晚上也没找到，至少都是需要设置下环境变量path的）<br>  2.sublime text 3免安装版<br>首先：<br>  1.拿到subime，<br>  2.将下载好的mingw“免安装版”拷贝到sublime根目录下<br>  3.进入sublime-tools-build system-new build system,设置编译系统的配置文件，并保存文件名C++.sublime-build</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          "<span class="attribute">path</span>": <span class="value"><span class="string">"G:/Sublime Text 3_x64(Python and CPP)/MinGW/bin"</span></span>,</span><br><span class="line">          "<span class="attribute">cmd</span>": <span class="value">[<span class="string">"g++.exe"</span>, <span class="string">"$&#123;file&#125;"</span>, <span class="string">"-o"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;"</span>]</span>,</span><br><span class="line">          "<span class="attribute">file_regex</span>": <span class="value"><span class="string">"^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$"</span></span>,</span><br><span class="line">          "<span class="attribute">working_dir</span>": <span class="value"><span class="string">"$&#123;file_path&#125;"</span></span>,</span><br><span class="line">          "<span class="attribute">selector</span>": <span class="value"><span class="string">"source.c, source.c++"</span></span>,</span><br><span class="line">          "<span class="attribute">encoding</span>":<span class="value"><span class="string">"UTF-8"</span></span>,    </span><br><span class="line">          "<span class="attribute">encoding</span>": <span class="value"><span class="string">"cp936"</span></span>,</span><br><span class="line">          "<span class="attribute">variants</span>":</span><br><span class="line">          <span class="value">[</span><br><span class="line">               &#123;</span><br><span class="line">                    "<span class="attribute">name</span>": <span class="value"><span class="string">"Run"</span></span>,</span><br><span class="line">                   </span><br><span class="line">                    "<span class="attribute">cmd</span>": <span class="value">[ <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;.exe"</span>]</span>,</span><br><span class="line">                    "<span class="attribute">shell</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">                 "<span class="attribute">cmd</span>" : <span class="value">[<span class="string">"start"</span>, <span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125; &amp;&amp;echo. &amp; pause &amp;&amp; exit"</span>]</span><br><span class="line">               </span>&#125;</span><br><span class="line">          ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-<p>  4.说明1：文件中第一行path参数是区别于网上其他教程的，<strong>请将path参数设置为sublime目录下mingw文件夹的bin目录</strong>，该参数的意思就是在执行cmd编译之前将系统环境变量暂时改变为设置的值，cmd执行结束后在取消修改，因此<strong>不需要在系统中设置环境变量了</strong><br>  5.说明2：sublime官方文档上说\${packages}可以用来表示packages这个目录但是如果我在path中设置使用\${packages}，sublime貌似没能识别，也因此我没能全部使用相对路径，也因此<strong>每次改变sublime的路径后一定要修改此处的path参数</strong></p>
-<p>对于第五条，如何才能真正做到，在换了sublime路径后仍然不必更改path参数，这个问题，希望有人可以给我解答，</p>
-<p>这里介绍的最起码无需麻烦的在系统中设置环境变量了。当然，如果真的有无需配置环境变量即可使用的编译环境，就无需配置path参数了</p>
+        <p><img src="http://ww2.sinaimg.cn/large/6b7b34d3jw1ezpjs888doj20sd0d1gmo.jpg" alt="image"></p>
+<h2 id="什么是PMD？">什么是PMD？</h2><p>与FindBugs类似，PMD也是一款Java代码静态检查工具。它可以做到检查Java代码中是否含有未使用的变量、是否含有空的抓取块、是否含有不必要的对象等。<br>PMD与FindBugs最主要的区别是PMD检查源文件，而FindBugs检查字节码。</p>
+<a id="more"></a>
+<h2 id="PMD匹配模式">PMD匹配模式</h2><p>与FindBugs一样，PMD也允许自定义匹配模式。<br>虽然提供自定义功能，但是其自带的一系列规则也已经基本够用，自带规则如下：</p>
+<p><img src="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezprkuh6ssj206w0g8q4a.jpg" alt="image"></p>
+<p>以上每个xml中都定义了若干规范，如需查看只需下载源码包，在<code>pmd-java/src/main/resources/rulesets/java/</code>目录下即可找到。<br>PMD提供两种方式定义匹配模式，java代码或者XPath表达式。如果真的有自定义匹配模式的需求，可以到官网查看编写文档（链接见附录）  </p>
+<h2 id="Gradle中使用PMD插件">Gradle中使用PMD插件</h2><p>Gradle中同样集成了PMD插件。执行检测也只需要<code>gradle pmdMain</code></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">"java"</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">"pmd"</span></span><br><span class="line"></span><br><span class="line">pmd &#123;</span><br><span class="line">    toolVersion = <span class="string">"5.4.1"</span></span><br><span class="line">    sourceSets = [sourceSets.main]</span><br><span class="line">    ignoreFailures = <span class="literal">true</span></span><br><span class="line">    reportsDir = file(<span class="string">"$project.buildDir/findbugsReports"</span>)</span><br><span class="line">    targetJdk = <span class="number">1.8</span></span><br><span class="line">    ruleSets = [<span class="string">"basic"</span>, <span class="string">"braces"</span>]</span><br><span class="line">    ruleSetFiles = files(<span class="string">"config/pmd/myRuleSet.xml"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>属性说明：</p>
+<p><img src="http://ww3.sinaimg.cn/large/6b7b34d3jw1ezpsp2ziu4j20m4056jsl.jpg" alt="image"></p>
+<p><strong>PS：</strong><br>如果不指定，Gradle默认使用basic.xml中的匹配，basic.xml详见源码包中<code>pmd-java/src/main/resources/rulesets/java/basic.xml</code></p>
+<h2 id="附录">附录</h2><p><a href="http://www.oschina.net/question/129540_23043" target="_blank" rel="external">常用 Java 静态代码分析工具的分析与比较 (http://www.oschina.net/question/129540_23043)</a><br><a href="https://pmd.github.io/pmd-5.4.1/customizing/howtowritearule.html" target="_blank" rel="external">如何编写PMD规则 (https://pmd.github.io/pmd-5.4.1/customizing/howtowritearule.html)</a></p>
 
       
     </div>
@@ -336,9 +345,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/C/" rel="tag">#C++</a>
+            <a href="/tags/Gradle/" rel="tag">#Gradle</a>
           
-            <a href="/tags/Sublime/" rel="tag">#Sublime</a>
+            <a href="/tags/PMD/" rel="tag">#PMD</a>
           
         </div>
       
@@ -347,13 +356,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/01/05/在Gradle中使用FindBugs/" rel="next" title="在Gradle中使用FindBugs">
+                <i class="fa fa-chevron-left"></i> 在Gradle中使用FindBugs
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/11/23/Git-merge与rebase使用区别/" rel="prev" title="Git merge与rebase使用区别">
-                Git merge与rebase使用区别 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -402,8 +411,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/23/Sublime-Text-3搭建绿色C-编译环境/"
-           data-title="Sublime Text 3搭建绿色C++编译环境" data-url="http://coderec.github.io/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/">
+      <div class="ds-thread" data-thread-key="2016/01/06/在Gradle中使用PMD/"
+           data-title="在Gradle中使用PMD" data-url="http://coderec.github.io/2016/01/06/在Gradle中使用PMD/">
       </div>
     
   </div>
@@ -527,7 +536,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是PMD？"><span class="nav-number">1.</span> <span class="nav-text">什么是PMD？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PMD匹配模式"><span class="nav-number">2.</span> <span class="nav-text">PMD匹配模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle中使用PMD插件"><span class="nav-number">3.</span> <span class="nav-text">Gradle中使用PMD插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
