@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Gradle," />
+  <meta name="keywords" content="SpringMVC," />
 
 
 
@@ -57,19 +57,17 @@
 
 
 
-<meta name="description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gradle缓存机制">
-<meta property="og:url" content="http://coderec.github.io/2015/11/29/Gradle缓存机制/index.html">
+<meta property="og:title" content="MultipartFile的使用小结">
+<meta property="og:url" content="http://coderec.github.io/2016/01/21/MultipartFile的使用小结/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg">
-<meta property="og:updated_time" content="2015-12-25T02:50:07.000Z">
+<meta property="og:description">
+<meta property="og:image" content="http://ww3.sinaimg.cn/mw690/6b7b34d3jw1f07706ujw9j21460k8abp.jpg">
+<meta property="og:updated_time" content="2016-01-21T08:23:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gradle缓存机制">
-<meta name="twitter:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="twitter:title" content="MultipartFile的使用小结">
+<meta name="twitter:description">
 
 
 
@@ -87,7 +85,7 @@
   };
 </script>
 
-  <title> Gradle缓存机制 | Coderec's Blog </title>
+  <title> MultipartFile的使用小结 | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -252,7 +250,7 @@
             
             
               
-                Gradle缓存机制
+                MultipartFile的使用小结
               
             
           </h1>
@@ -264,8 +262,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-29T21:07:00+08:00" content="2015-11-29">
-              2015-11-29
+            <time itemprop="dateCreated" datetime="2016-01-21T15:56:41+08:00" content="2016-01-21">
+              2016-01-21
             </time>
           </span>
 
@@ -294,8 +292,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/29/Gradle缓存机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/29/Gradle缓存机制/" itemprop="commentsCount"></span>
+                <a href="/2016/01/21/MultipartFile的使用小结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/21/MultipartFile的使用小结/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -305,7 +303,7 @@
 
           
           
-             <span id="/2015/11/29/Gradle缓存机制/" class="leancloud_visitors" data-flag-title="Gradle缓存机制">
+             <span id="/2016/01/21/MultipartFile的使用小结/" class="leancloud_visitors" data-flag-title="MultipartFile的使用小结">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -325,30 +323,43 @@
       
 
       
-        <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg" alt=""></p>
-<h2 id="Gradle是什么">Gradle是什么</h2><p>Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。</p>
+        <p><img src="http://ww3.sinaimg.cn/mw690/6b7b34d3jw1f07706ujw9j21460k8abp.jpg" alt="image"></p>
 <a id="more"></a>
-<p>Gradle官网用户指南：<a href="https://docs.gradle.org/current/userguide/userguide.html" target="_blank" rel="external">Gradle UserGuide</a></p>
-<h2 id="Gradle的缓存机制">Gradle的缓存机制</h2><p>注：以下示例中假设已有一个Gradle的task，名为warProduct。</p>
-<h3 id="1-脚本缓存">1.脚本缓存</h3><p>为了提高响应速度，默认情况下Gradle会缓存所有已编译的脚本。包括所有构建脚本、初始化脚本和其他脚本。</p>
-<p>以构建脚本为例，在第一次运行构建脚本时， Gradle 会创建.gradle目录，用于存放已编译的脚本。在下次运行构建脚本时， 如果该脚本自它编译后没有被修改，Gradle 会使用这个已编译的脚本。否则该脚本会重新编译，并把最新版本存在缓存中。</p>
-<p>在实际使用中，如果不想使用这种缓存机制，可以通过–recompile-scripts选项运行 Gradle ，这样会丢弃缓存的脚本，然后重新编译脚本并将其存在缓存中。我们可以用这种方式强制重新编译脚本。</p>
-<blockquote>
-<p>示例<br>gradle warProduct –recompile-scripts</p>
-</blockquote>
-<p>参考链接：<br>Gradle命令行选项：<a href="https://docs.gradle.org/current/userguide/gradle_command_line.html" target="_blank" rel="external">gradle command line</a></p>
-<h3 id="2-task缓存">2.task缓存</h3><p>同样是为了提高速度，Gradle对于内建类型task，也即built-in tasks，也使用了缓存。（自定义task只要指定了输入输出路径，也会使用缓存）</p>
-<p>使用缓存的效果如下所示：</p>
-<blockquote>
-<p>第一次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg" alt=""><br>第二次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg" alt=""></p>
-</blockquote>
-<p>每当一个built-in task第一次执行之前，Gradle会对task的输入做一次快照，然后执行这个task，在其成功执行后，Gradle会对task的输出做一次快照。Gradle会缓存这俩快照直到该task下次执行。</p>
-<p>在该task下次执行之前，Gradle会对其输入在此进行快照，然后与缓存中的快照对比，如果相同，Gradle则认为该task是up-to-date的，然后跳过执行，直接输出缓存中的快照，如果不同，Gradle会执行该task并再次进行快照更新缓存。</p>
-<p>在实际使用中，如果不想使用这种缓存机制，可以调用TaskOutputs.upToDateWhen()方法。只有满足此方法提供的条件，Gradle才会认为task是up-to-date的。因此我们只需要将条件设为false即可。</p>
-<blockquote>
-<p>示例<br>warProduct.getOutputs().upToDateWhen( {return false} )</p>
-</blockquote>
-<p>参考链接：<br>Gradle文档：<a href="https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks" target="_blank" rel="external">Skipping tasks that are up-to-date</a></p>
+<h2 id="1-_MultipartFile类型转File类型">1. MultipartFile类型转File类型</h2><p>想要将MultipartFile类型转为File类型可以使用MultipartFile提供的方法：<br><code>void MultipartFile.transferTo(File dest) throws IOException, IllegalStateException</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">File destFile = <span class="keyword">new</span> File(<span class="string">"tmp/source/destFile"</span>);</span><br><span class="line"><span class="keyword">if</span> (!fileSourcePath.exists()) &#123;</span><br><span class="line">    fileSourcePath.mkdirs();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 将MultipartFile存到临时文件中</span></span><br><span class="line">mulFileSource.transferTo(destFile);</span><br></pre></td></tr></table></figure>
+<h2 id="2-_File类型转Multipartfile">2. File类型转Multipartfile</h2><p>MultipartFile接口有两个常用实现类，MockMultipartFile和CommonsMultipartFile。</p>
+<ul>
+<li><p><strong>使用MockMultipartFile</strong><br>看名字就知道MockMultipartFile主要用于测试用途，但是相对CommonsMultipartFile来说，创建相当简便。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">File file = <span class="keyword">new</span> File(<span class="string">"/Users/coderec/Desktop/haha.jpg"</span>);</span><br><span class="line">MultipartFile mulFile = <span class="keyword">new</span> MockMultipartFile(</span><br><span class="line">	<span class="string">"haha.jpg"</span>,        <span class="comment">//文件名</span></span><br><span class="line">	<span class="string">"haha.jpg"</span>,        <span class="comment">//originalName 相当于上传文件在客户机上的文件名</span></span><br><span class="line">	ContentType.APPLICATION_OCTET_STREAM.toString(),    <span class="comment">//文件类型</span></span><br><span class="line">	<span class="keyword">new</span> FileInputStream(file)                           <span class="comment">//文件流</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用CommonsMultipartFile</strong><br>与MockMultipartFile相比，CommonsMultipartFile仅仅有一个构造方法：<br><code>CommonsMultipartFile(FileItem fileItem)</code><br>因此，若要使用CommonsMultipartFile来创建MultipartFile就一定要使用FileItem。通过FileItem将File转化为MultipartFile的过程如下伪代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">File file = <span class="keyword">new</span> File(<span class="string">"temp/fileItem/haha.jpg"</span>);</span><br><span class="line"><span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">    file.mkdirs();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 创建fileItem，具体方法参见第三节</span></span><br><span class="line">FileItem fileItem = <span class="keyword">new</span> ...;</span><br><span class="line"><span class="comment">// 将File内容写入fileItem,使用org.apache.commons.io.IOUtils</span></span><br><span class="line">IOUtils.copy(<span class="keyword">new</span> FileInputStream(file), fileItem.getOutputStream());</span><br><span class="line"><span class="comment">// 创建multipartfile</span></span><br><span class="line">MultipartFile multipartFile = <span class="keyword">new</span> CommonsMultipartFile(fileItem);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="3-_如何创建FileItem？">3. 如何创建FileItem？</h2><p>FileItem接口只有一个实现类：DiskFileItem</p>
+<ul>
+<li><p><strong>直接使用DiskFileItem创建</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建fileItem</span></span><br><span class="line">FileItem fileItem = <span class="keyword">new</span> DiskFileItem(</span><br><span class="line">    <span class="string">"file"</span>,                             <span class="comment">// 表单参数名</span></span><br><span class="line">    ContentType.APPLICATION_OCTET_STREAM.toString(),    <span class="comment">// 文件类型</span></span><br><span class="line">    <span class="keyword">false</span>,                              <span class="comment">// 是否为表单格式</span></span><br><span class="line">    RandomKeyUtils.genRandomKey() + <span class="string">".jpg"</span>,             <span class="comment">// 文件名</span></span><br><span class="line">    <span class="number">10240</span>,                              <span class="comment">// 超过多少byte存在磁盘上</span></span><br><span class="line">    <span class="keyword">new</span> file(<span class="string">"tmp/fileItem/"</span>)           <span class="comment">// 文件存储位置</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用DiskFileItemFactory创建</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 小于5M文件都在内存中,否则存入硬盘</span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> tmpFileSize = <span class="number">5242880</span>;</span><br><span class="line"><span class="comment">// 设置临时文件大小以及临时文件存储路径</span></span><br><span class="line">DiskFileItemFactory fileItemFactory = <span class="keyword">new</span> DiskFileItemFactory(tmpFileSize, <span class="keyword">new</span> file(<span class="string">"tmp/fileItem/"</span>));</span><br><span class="line"><span class="comment">// 创建fileItem</span></span><br><span class="line">FileItem fileItem = fileItemFactory.createItem(</span><br><span class="line">    <span class="string">"file"</span>,                                 <span class="comment">// 表单参数名</span></span><br><span class="line">    ContentType.APPLICATION_OCTET_STREAM.toString(),    <span class="comment">// 文件类型</span></span><br><span class="line">    <span class="keyword">false</span>,                                  <span class="comment">// 是否为表单格式</span></span><br><span class="line">    RandomKeyUtils.genRandomKey() + <span class="string">".jpg"</span>  <span class="comment">// 文件名</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="4-_DiskFileItem产生的临时文件处理">4. DiskFileItem产生的临时文件处理</h2><ul>
+<li><strong>使用内存存储，不写入硬盘</strong><br>在创建FileItem时，可以设定一个较大的文件大小，使文件不被写入硬盘，就不会产生临时文件的问题。不过这不是一个正确的解决问题的方式。而且，也会受到内存大小限制。</li>
+<li><strong>使用FileCleaningTracker</strong><br>在使用DiskFileItemFactory时，应该会发现其有一个<code>void setFileCleaningTracker(FileCleaningTracker pTracker)</code>方法，此方法就是为临时文件设置监听线程，一旦发现临时文件被垃圾回收，就会清除临时文件。<br>我们可以通过FileCleanerCleanup监听器以及ServletContext获得监听线程FileCleaningTracker。  </li>
+</ul>
+<p>为FileItem设置监听的过程如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FileCleaningTracker fileCleaningTracker</span><br><span class="line">    = FileCleanerCleanup.getFileCleaningTracker(servletContext);</span><br><span class="line">DiskFileItemFactory factory</span><br><span class="line">    = <span class="keyword">new</span> DiskFileItemFactory(<span class="number">10240</span>, File(<span class="string">"tmp/fileItem/"</span>);</span><br><span class="line">factory.setFileCleaningTracker(fileCleaningTracker);</span><br></pre></td></tr></table></figure></p>
+<p>在不需要监听线程FileCleaningTracker时，应该将其停止。可以在web.xml中进行如下配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">web-app</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="title">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">listener-class</span>&gt;</span></span><br><span class="line">      org.apache.commons.fileupload.servlet.FileCleanerCleanup</span><br><span class="line">    <span class="tag">&lt;/<span class="title">listener-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">listener</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="title">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>获取ServletContext方法</strong></li>
+</ul>
+<ol>
+<li>普通Servlet中<br>使用HttpServletRequest<br><code>request.getSession().getServletContext()</code></li>
+<li>SpringMVC的Controller中<br>使用SpringMVC提供的方法<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();</span><br><span class="line">ServletContext servletContext = webApplicationContext.getServletContext();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="附录">附录</h2><p>FileItem由org.apache.commons.fileupload包提供；commons-fileupload版本：1.3.1</p>
 
       
     </div>
@@ -357,7 +368,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Gradle/" rel="tag">#Gradle</a>
+            <a href="/tags/SpringMVC/" rel="tag">#SpringMVC</a>
           
         </div>
       
@@ -366,17 +377,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/28/什么是Spring-Data-JPA？/" rel="next" title="什么是Spring Data JPA？ ">
-                <i class="fa fa-chevron-left"></i> 什么是Spring Data JPA？ 
+              <a href="/2016/01/06/在Gradle中使用PMD/" rel="next" title="在Gradle中使用PMD">
+                <i class="fa fa-chevron-left"></i> 在Gradle中使用PMD
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/18/Hibernate-Validator学习笔记/" rel="prev" title="Hibernate Validator学习笔记">
-                Hibernate Validator学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -425,8 +432,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/29/Gradle缓存机制/"
-           data-title="Gradle缓存机制" data-url="http://coderec.github.io/2015/11/29/Gradle缓存机制/">
+      <div class="ds-thread" data-thread-key="2016/01/21/MultipartFile的使用小结/"
+           data-title="MultipartFile的使用小结" data-url="http://coderec.github.io/2016/01/21/MultipartFile的使用小结/">
       </div>
     
   </div>
@@ -554,7 +561,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle是什么"><span class="nav-number">1.</span> <span class="nav-text">Gradle是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle的缓存机制"><span class="nav-number">2.</span> <span class="nav-text">Gradle的缓存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-脚本缓存"><span class="nav-number">2.1.</span> <span class="nav-text">1.脚本缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-task缓存"><span class="nav-number">2.2.</span> <span class="nav-text">2.task缓存</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-_MultipartFile类型转File类型"><span class="nav-number">1.</span> <span class="nav-text">1. MultipartFile类型转File类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-_File类型转Multipartfile"><span class="nav-number">2.</span> <span class="nav-text">2. File类型转Multipartfile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-_如何创建FileItem？"><span class="nav-number">3.</span> <span class="nav-text">3. 如何创建FileItem？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-_DiskFileItem产生的临时文件处理"><span class="nav-number">4.</span> <span class="nav-text">4. DiskFileItem产生的临时文件处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
