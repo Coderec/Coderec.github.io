@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Logback," />
+  <meta name="keywords" content="Apache POI," />
 
 
 
@@ -57,17 +57,17 @@
 
 
 
-<meta name="description" content="MDC（Mapped Diagnostic Context，映射调试上下文）是Logback提供的一种方便在多线程条件下记录日志的功能。使用MDC可以很方便的针对不同线程记录对应的日志信息。">
+<meta name="description" content="HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Logback MDC——日志记录的多线程支持">
-<meta property="og:url" content="http://coderec.github.io/2016/02/18/Logback-MDC——日志记录的多线程支持/index.html">
+<meta property="og:title" content="Apache POI框架中，HSSFCell的setCellType和setCellStyle的区别">
+<meta property="og:url" content="http://coderec.github.io/2016/02/27/Apache-POI框架中，HSSFCell的setCellType和setCellStyle的区别/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="MDC（Mapped Diagnostic Context，映射调试上下文）是Logback提供的一种方便在多线程条件下记录日志的功能。使用MDC可以很方便的针对不同线程记录对应的日志信息。">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/6b7b34d3jw1f13fuqmc8nj20lx09d0tq.jpg">
-<meta property="og:updated_time" content="2016-02-18T06:53:26.000Z">
+<meta property="og:description" content="HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3gw1f1e97gjmdqj20la09bt9i.jpg">
+<meta property="og:updated_time" content="2016-02-27T15:02:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Logback MDC——日志记录的多线程支持">
-<meta name="twitter:description" content="MDC（Mapped Diagnostic Context，映射调试上下文）是Logback提供的一种方便在多线程条件下记录日志的功能。使用MDC可以很方便的针对不同线程记录对应的日志信息。">
+<meta name="twitter:title" content="Apache POI框架中，HSSFCell的setCellType和setCellStyle的区别">
+<meta name="twitter:description" content="HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。">
 
 
 
@@ -85,7 +85,7 @@
   };
 </script>
 
-  <title> Logback MDC——日志记录的多线程支持 | Coderec's Blog </title>
+  <title> Apache POI框架中，HSSFCell的setCellType和setCellStyle的区别 | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -250,7 +250,7 @@
             
             
               
-                Logback MDC——日志记录的多线程支持
+                Apache POI框架中，HSSFCell的setCellType和setCellStyle的区别
               
             
           </h1>
@@ -262,8 +262,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-18T13:33:04+08:00" content="2016-02-18">
-              2016-02-18
+            <time itemprop="dateCreated" datetime="2016-02-27T22:10:16+08:00" content="2016-02-27">
+              2016-02-27
             </time>
           </span>
 
@@ -292,8 +292,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/02/18/Logback-MDC——日志记录的多线程支持/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/18/Logback-MDC——日志记录的多线程支持/" itemprop="commentsCount"></span>
+                <a href="/2016/02/27/Apache-POI框架中，HSSFCell的setCellType和setCellStyle的区别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/27/Apache-POI框架中，HSSFCell的setCellType和setCellStyle的区别/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -303,7 +303,7 @@
 
           
           
-             <span id="/2016/02/18/Logback-MDC——日志记录的多线程支持/" class="leancloud_visitors" data-flag-title="Logback MDC——日志记录的多线程支持">
+             <span id="/2016/02/27/Apache-POI框架中，HSSFCell的setCellType和setCellStyle的区别/" class="leancloud_visitors" data-flag-title="Apache POI框架中，HSSFCell的setCellType和setCellStyle的区别">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -323,23 +323,38 @@
       
 
       
-        <p><img src="http://ww2.sinaimg.cn/large/6b7b34d3jw1f13fuqmc8nj20lx09d0tq.jpg" alt="image"></p>
-<p>MDC（Mapped Diagnostic Context，映射调试上下文）是Logback提供的一种方便在多线程条件下记录日志的功能。使用MDC可以很方便的针对不同线程记录对应的日志信息。</p>
+        <p><img src="http://ww3.sinaimg.cn/large/6b7b34d3gw1f1e97gjmdqj20la09bt9i.jpg" alt="image"></p>
+<p>HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。</p>
 <a id="more"></a>
-<h2 id="一、MDC简介">一、MDC简介</h2><p>Logback的设计目标之一就是为了帮助人们对复杂系统进行审计和调试，而实际运行的系统很多都会处理多线程。以web系统为例，每个请求都是一个单独的线程，如果需要针对不同线程记录对应的日志信息，应该怎么解决？</p>
-<p>或许，我们可以为每一个线程配置不同的logger。但是这将导致logger数量大大增加，并且最终无法控制。</p>
-<p>那么，有没有一种轻量级的、简单方便的解决方案呢？</p>
-<p>有！那就是MDC。</p>
-<p>如果把每个线程比作路上的行人，那么MDC就是每个人身上的背包，用来保存其专属的信息。</p>
-<h2 id="二、MDC的使用">二、MDC的使用</h2><p>MDC类只有静态方法,开发者可以把信息放进一个MDC,之后用其他logback组件获取这些信息。MDC是基于每个线程进行管理的。子线程自动继承其父的MDC的一个副本。换言之，<strong>MDC是线程安全的</strong>。比如,当一个web应用接收到一个请求时,开发者可以向MDC里插入恰当的信息,比如用户ip、请求参数等等。Logback组件会自动在每个记录条目里包含这些信息。</p>
-<p>对于Servlet实现的web应用而言，针对每个请求进行特殊处理，采用filter的方式无疑最简单，以下就以一个简单filter演示MDC的使用。进行以下配置后，这次请求之内的日志输出都会带有MDC中存储的请求参数。</p>
-<p>filter代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response,</span><br><span class="line">                         FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        MDC.clear(); <span class="comment">// 避免线程池线程重用导致的数据混乱</span></span><br><span class="line">		</span><br><span class="line">	<span class="comment">// 将请求参数保存在MDC中</span></span><br><span class="line">	MDC.put(<span class="string">"utm_content"</span>, request.getParameter(<span class="string">"utm_content"</span>));</span><br><span class="line">        MDC.put(<span class="string">"utm_term"</span>, request.getParameter(<span class="string">"utm_term"</span>));</span><br><span class="line">        MDC.put(<span class="string">"utm_campaign"</span>, request.getParameter(<span class="string">"utm_campaign"</span>));</span><br><span class="line">        MDC.put(<span class="string">"utm_media"</span>, request.getParameter(<span class="string">"utm_media"</span>));</span><br><span class="line">        MDC.put(<span class="string">"utm_source"</span>, request.getParameter(<span class="string">"utm_source"</span>));</span><br><span class="line">        </span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>logback配置（%mdc是将MDC中所有信息输出，也可以使用%mdc{utm_media,utm_source}方式指定输出内容）</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">appender</span> <span class="attribute">name</span>=<span class="value">"CONSOLE"</span> <span class="attribute">class</span>=<span class="value">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">layout</span> <span class="attribute">class</span>=<span class="value">"ch.qos.logback.classic.PatternLayout"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="title">Pattern</span>&gt;</span>%d&#123;HH:mm:ss.SSS&#125; [%thread] %-5level - %mdc%n<span class="tag">&lt;/<span class="title">Pattern</span>&gt;</span> </span><br><span class="line">		<span class="tag">&lt;/<span class="title">layout</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">appender</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="title">root</span> <span class="attribute">value</span>=<span class="value">"debug"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">appender-ref</span> <span class="attribute">ref</span>=<span class="value">"CONSOLE"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="三、MDC原理">三、MDC原理</h2><p>在享受MDC带来的便利时，有没有想过它的实现原理是什么？</p>
-<p>其实只要熟悉多线程使用，大家很容易想到一个词，ThreadLocal！没错，其实MDC就是一个ThreadLocal的HashMap。</p>
-<p>具体实现并不复杂，大家可以跟踪一下MDC的源码即可，它的本体其实就是LogbackMDCAdapter这个类。</p>
+<h2 id="1-铺垫">1.铺垫</h2><ol>
+<li><p>HSSFCell类有两个属性与今天要说的方法有关</p>
+<ol>
+<li><p>int _cellType;     </p>
+<p> 存储单元格类型的int值</p>
+</li>
+<li><p>CellValueRecordInterface _record；</p>
+<p> 存储单元格数据的对象，包含单元格值与类型，对象内存储类型的属性也是int型。<br> CellValueRecordInterface只是一个接口，具体不同类型单元格存的也是不同类型的实现类。</p>
+</li>
+</ol>
+</li>
+<li><p>读取单元格时是如何获取单元格类型的</p>
+<pre><code>一般来说，判断单元格类型，我们使用HSSFCell的getCellType方法，此方法返回_cellType属性值。
+而在构造HSSFCell时，会根据_record的类型去为_cellType赋值。
+</code></pre></li>
+</ol>
+<h2 id="2-区别">2.区别</h2><p>通过跟踪源码的方式，对两种方法的不同总结如下</p>
+<ol>
+<li><p>setCellType</p>
+<p> setCellType方法实际上是修改了_cellType的值，并且将_record改为对应类型的CellValueRecordInterface实现类。</p>
+</li>
+<li><p>setCellSytle</p>
+<p> setCellSytle方法实际上只是修改了_record对象里保存类型的int型变量的值，但是没有修改_cellType的值。</p>
+</li>
+</ol>
+<p>简单地说，更加推荐使用setCellType方法，因为它将两处保存单元格类型的属性都修改为正确的值了；而setCellStyle没有对_cellType进行修改。</p>
+<p>如果在调用setCellStyle后，<strong>重新读取Excel文件之前</strong>，马上调用getCellType，就会发现得到的值并没有改变。</p>
+<p>注意到上文着重提到的<strong>“重新读取Excel文件之前”</strong>了吗？就像铺垫中说的，在重新读取单元格时，会根据_record类型为_cellType赋值，相当于将两个属性的值都修正了。</p>
+<p>但是，其实这两种方法在使用上可以忽略差别，因为我们基本上不会重复读取单元格进行修改。都是修改后关闭文件。</p>
 
       
     </div>
@@ -348,7 +363,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Logback/" rel="tag">#Logback</a>
+            <a href="/tags/Apache-POI/" rel="tag">#Apache POI</a>
           
         </div>
       
@@ -357,17 +372,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/31/解决使用Spring-Boot、Multipartfile上传文件路径错误问题/" rel="next" title="解决使用Spring Boot、Multipartfile上传文件路径错误问题">
-                <i class="fa fa-chevron-left"></i> 解决使用Spring Boot、Multipartfile上传文件路径错误问题
+              <a href="/2016/02/27/解决由Git-Submodule引起的merge冲突问题/" rel="next" title="解决由Git Submodule引起的merge冲突问题">
+                <i class="fa fa-chevron-left"></i> 解决由Git Submodule引起的merge冲突问题
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/02/18/Spring-Boot下配置Redis缓存/" rel="prev" title="Spring Boot下配置Redis缓存">
-                Spring Boot下配置Redis缓存 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -416,8 +427,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/02/18/Logback-MDC——日志记录的多线程支持/"
-           data-title="Logback MDC——日志记录的多线程支持" data-url="http://coderec.github.io/2016/02/18/Logback-MDC——日志记录的多线程支持/">
+      <div class="ds-thread" data-thread-key="2016/02/27/Apache-POI框架中，HSSFCell的setCellType和setCellStyle的区别/"
+           data-title="Apache POI框架中，HSSFCell的setCellType和setCellStyle的区别" data-url="http://coderec.github.io/2016/02/27/Apache-POI框架中，HSSFCell的setCellType和setCellStyle的区别/">
       </div>
     
   </div>
@@ -545,7 +556,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、MDC简介"><span class="nav-number">1.</span> <span class="nav-text">一、MDC简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、MDC的使用"><span class="nav-number">2.</span> <span class="nav-text">二、MDC的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、MDC原理"><span class="nav-number">3.</span> <span class="nav-text">三、MDC原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-铺垫"><span class="nav-number">1.</span> <span class="nav-text">1.铺垫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-区别"><span class="nav-number">2.</span> <span class="nav-text">2.区别</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
