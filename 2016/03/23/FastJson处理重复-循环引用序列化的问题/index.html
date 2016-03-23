@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Gradle," />
+  <meta name="keywords" content="FastJson,Java," />
 
 
 
@@ -57,19 +57,17 @@
 
 
 
-<meta name="description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gradle缓存机制">
-<meta property="og:url" content="http://coderec.github.io/2015/11/29/Gradle缓存机制/index.html">
+<meta property="og:title" content="FastJson处理重复/循环引用序列化的问题">
+<meta property="og:url" content="http://coderec.github.io/2016/03/23/FastJson处理重复-循环引用序列化的问题/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg">
-<meta property="og:updated_time" content="2016-03-09T09:42:07.000Z">
+<meta property="og:description">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1f26rn4ud1rj20rm0daab3.jpg">
+<meta property="og:updated_time" content="2016-03-23T08:54:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gradle缓存机制">
-<meta name="twitter:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="twitter:title" content="FastJson处理重复/循环引用序列化的问题">
+<meta name="twitter:description">
 
 
 
@@ -87,7 +85,7 @@
   };
 </script>
 
-  <title> Gradle缓存机制 | Coderec's Blog </title>
+  <title> FastJson处理重复/循环引用序列化的问题 | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -232,7 +230,7 @@
             
             
               
-                Gradle缓存机制
+                FastJson处理重复/循环引用序列化的问题
               
             
           </h1>
@@ -244,8 +242,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-29T21:07:00+08:00" content="2015-11-29">
-              2015-11-29
+            <time itemprop="dateCreated" datetime="2016-03-23T11:58:28+08:00" content="2016-03-23">
+              2016-03-23
             </time>
           </span>
 
@@ -258,8 +256,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
+                  <a href="/categories/工作笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">工作笔记</span>
                   </a>
                 </span>
 
@@ -274,8 +272,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/29/Gradle缓存机制/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/29/Gradle缓存机制/" itemprop="commentsCount"></span>
+                <a href="/2016/03/23/FastJson处理重复-循环引用序列化的问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/23/FastJson处理重复-循环引用序列化的问题/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -285,7 +283,7 @@
 
           
           
-             <span id="/2015/11/29/Gradle缓存机制/" class="leancloud_visitors" data-flag-title="Gradle缓存机制">
+             <span id="/2016/03/23/FastJson处理重复-循环引用序列化的问题/" class="leancloud_visitors" data-flag-title="FastJson处理重复/循环引用序列化的问题">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -305,30 +303,53 @@
       
 
       
-        <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg" width="700" height="397"></p>
-<h2 id="Gradle是什么">Gradle是什么</h2><p>Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。</p>
+        <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1f26rn4ud1rj20rm0daab3.jpg" width="700" height="397"></p>
 <a id="more"></a>
-<p>Gradle官网用户指南：<a href="https://docs.gradle.org/current/userguide/userguide.html" target="_blank" rel="external">Gradle UserGuide</a></p>
-<h2 id="Gradle的缓存机制">Gradle的缓存机制</h2><p>注：以下示例中假设已有一个Gradle的task，名为warProduct。</p>
-<h3 id="1-脚本缓存">1.脚本缓存</h3><p>为了提高响应速度，默认情况下Gradle会缓存所有已编译的脚本。包括所有构建脚本、初始化脚本和其他脚本。</p>
-<p>以构建脚本为例，在第一次运行构建脚本时， Gradle 会创建.gradle目录，用于存放已编译的脚本。在下次运行构建脚本时， 如果该脚本自它编译后没有被修改，Gradle 会使用这个已编译的脚本。否则该脚本会重新编译，并把最新版本存在缓存中。</p>
-<p>在实际使用中，如果不想使用这种缓存机制，可以通过–recompile-scripts选项运行 Gradle ，这样会丢弃缓存的脚本，然后重新编译脚本并将其存在缓存中。我们可以用这种方式强制重新编译脚本。</p>
+<h2 id="什么是重复/循环引用">什么是重复/循环引用</h2><p>简单说，重复引用就是一个集合/对象中的多个元素/属性同时引用同一对象，循环引用就是集合/对象中的多个元素/属性存在相互引用导致循环。</p>
+<p>举例说明</p>
+<ol>
+<li><p>重复引用  </p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Object&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Object obj = <span class="keyword">new</span> Object();</span><br><span class="line">list.add(obj);</span><br><span class="line">list.add(obj);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>循环引用</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 循环引用的特殊情况，自引用</span></span><br><span class="line">Map&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">map.put(<span class="string">"map"</span>,map);</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// map1引用了map2，而map2又引用map1，导致循环引用</span></span><br><span class="line">Map&lt;String,Object&gt; map1 = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">Map&lt;String,Object&gt; map2 = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">map1.put(<span class="string">"map"</span>,map2);</span><br><span class="line">map2.put(<span class="string">"map"</span>,map1);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="循环引用会触发的问题">循环引用会触发的问题</h2><p>暂时不说重复引用，单说循环引用。<br>一般来说，存在循环引用问题的集合/对象在序列化时（比如Json化），如果不加以处理，会触发StackOverflowError异常。  </p>
+<p>分析原因：</p>
 <blockquote>
-<p>示例<br>gradle warProduct –recompile-scripts</p>
+<p>当序列化引擎解析map1时，它发现这个对象持有一个map2的引用，转而去解析map2。解析map2时，发现他又持有map1的引用，又转回map1。如此产生StackOverflowError异常。</p>
 </blockquote>
-<p>参考链接：<br>Gradle命令行选项：<a href="https://docs.gradle.org/current/userguide/gradle_command_line.html" target="_blank" rel="external">gradle command line</a></p>
-<h3 id="2-task缓存">2.task缓存</h3><p>同样是为了提高速度，Gradle对于内建类型task，也即built-in tasks，也使用了缓存。（自定义task只要指定了输入输出路径，也会使用缓存）</p>
-<p>使用缓存的效果如下所示：</p>
+<h2 id="FastJson对重复/循环引用的处理">FastJson对重复/循环引用的处理</h2><p>首先，fastjson作为一款序列化引擎，不可避免的会遇到循环引用的问题，为了避免StackOverflowError异常，fastjson会对引用进行检测。</p>
 <blockquote>
-<p>第一次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg" alt=""><br>第二次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg" alt=""></p>
+<p>如果检测到存在重复/循环引用的情况，fastjson默认会以“引用标识”代替同一对象，而非继续循环解析导致StackOverflowError。</p>
 </blockquote>
-<p>每当一个built-in task第一次执行之前，Gradle会对task的输入做一次快照，然后执行这个task，在其成功执行后，Gradle会对task的输出做一次快照。Gradle会缓存这俩快照直到该task下次执行。</p>
-<p>在该task下次执行之前，Gradle会对其输入在此进行快照，然后与缓存中的快照对比，如果相同，Gradle则认为该task是up-to-date的，然后跳过执行，直接输出缓存中的快照，如果不同，Gradle会执行该task并再次进行快照更新缓存。</p>
-<p>在实际使用中，如果不想使用这种缓存机制，可以调用TaskOutputs.upToDateWhen()方法。只有满足此方法提供的条件，Gradle才会认为task是up-to-date的。因此我们只需要将条件设为false即可。</p>
+<p>以上文两例说明,查看json化后的输出</p>
+<ol>
+<li><p>重复引用 JSON.toJSONString(list)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;&#125;,				<span class="comment">//obj的实体</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"$ref"</span>: <span class="string">"$[0]"</span>		<span class="comment">//对obj的重复引用的处理</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>循环引用 JSON.toJSONString(map1)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">						<span class="comment">// map1的key:value对</span></span><br><span class="line">    <span class="string">"map"</span>: &#123;</span><br><span class="line">    						<span class="comment">// map2的key:value对</span></span><br><span class="line">        <span class="string">"map"</span>: &#123;</span><br><span class="line">        					<span class="comment">// 指向map1，对循环引用的处理</span></span><br><span class="line">            <span class="string">"$ref"</span>: <span class="string">".."</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>引用标识说明：</p>
 <blockquote>
-<p>示例<br>warProduct.getOutputs().upToDateWhen( {return false} )</p>
+<p>“$ref”:”..”    上一级<br>“$ref”:”@”    当前对象，也就是自引用<br>“$ref”:”$”    根对象<br>“$ref”:”$.children.0”    基于路径的引用，相当于root.getChildren().get(0)</p>
 </blockquote>
-<p>参考链接：<br>Gradle文档：<a href="https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks" target="_blank" rel="external">Skipping tasks that are up-to-date</a></p>
+<h2 id="关闭FastJson的引用检测">关闭FastJson的引用检测</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSON.toJSONString(object, SerializerFeature.DisableCircularReferenceDetect);</span><br></pre></td></tr></table></figure>
+<p>FastJson提供了SerializerFeature.DisableCircularReferenceDetect这个序列化选项，用来关闭引用检测。关闭引用检测后，重复引用对象时就不会被$ref代替，但是在循环引用时也会导致StackOverflowError异常。</p>
+<h2 id="避免重复引用序列化时显示$ref">避免重复引用序列化时显示$ref</h2><ol>
+<li><strong>在编码时，使用新对象为集合或对象赋值，而非使用同一对象</strong><br> 不要在多处引用同一个对象，这可以说是一种java编码规范，需要时刻注意。</li>
+<li><strong>不要关闭FastJson的引用检测来避免显示$ref</strong><br> 引用检测是FastJson提供的一种避免运行时异常的优良机制，如果为了避免在重复引用时显示$ref而关闭它，会有很大可能导致循环引用时发生StackOverflowError异常。这也是FastJson默认开启引用检测的原因。</li>
+</ol>
+<h2 id="避免重复/循环引用的正确姿势">避免重复/循环引用的正确姿势</h2><ol>
+<li><p>重复引用  </p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Object&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Object obj = <span class="keyword">new</span> Object();</span><br><span class="line">list.add(obj);</span><br><span class="line"><span class="comment">// 创建新的对象</span></span><br><span class="line">Object newObj = <span class="keyword">new</span> Object();</span><br><span class="line"><span class="comment">// 使用org.springframework.beans.BeansUtils复制属性值</span></span><br><span class="line">BeansUtils.copy(obj, newObj);</span><br><span class="line">list.add(obj);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>循环引用<br> 循环引用这种逻辑本身就不合理，需要在编码时注意避免，这是逻辑错误而非编码技巧。</p>
+</li>
+</ol>
 
       
     </div>
@@ -337,7 +358,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Gradle/" rel="tag">#Gradle</a>
+            <a href="/tags/FastJson/" rel="tag">#FastJson</a>
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
           
         </div>
       
@@ -346,17 +369,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/28/什么是Spring-Data-JPA？/" rel="next" title="什么是Spring Data JPA？ ">
-                <i class="fa fa-chevron-left"></i> 什么是Spring Data JPA？ 
+              <a href="/2016/03/09/ThreadPoolExecutor多线程使用总结/" rel="next" title="ThreadPoolExecutor多线程使用总结">
+                <i class="fa fa-chevron-left"></i> ThreadPoolExecutor多线程使用总结
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/18/Hibernate-Validator学习笔记/" rel="prev" title="Hibernate Validator学习笔记">
-                Hibernate Validator学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -405,8 +424,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/29/Gradle缓存机制/"
-           data-title="Gradle缓存机制" data-url="http://coderec.github.io/2015/11/29/Gradle缓存机制/">
+      <div class="ds-thread" data-thread-key="2016/03/23/FastJson处理重复-循环引用序列化的问题/"
+           data-title="FastJson处理重复/循环引用序列化的问题" data-url="http://coderec.github.io/2016/03/23/FastJson处理重复-循环引用序列化的问题/">
       </div>
     
   </div>
@@ -534,7 +553,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle是什么"><span class="nav-number">1.</span> <span class="nav-text">Gradle是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle的缓存机制"><span class="nav-number">2.</span> <span class="nav-text">Gradle的缓存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-脚本缓存"><span class="nav-number">2.1.</span> <span class="nav-text">1.脚本缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-task缓存"><span class="nav-number">2.2.</span> <span class="nav-text">2.task缓存</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是重复/循环引用"><span class="nav-number">1.</span> <span class="nav-text">什么是重复/循环引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环引用会触发的问题"><span class="nav-number">2.</span> <span class="nav-text">循环引用会触发的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FastJson对重复/循环引用的处理"><span class="nav-number">3.</span> <span class="nav-text">FastJson对重复/循环引用的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭FastJson的引用检测"><span class="nav-number">4.</span> <span class="nav-text">关闭FastJson的引用检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免重复引用序列化时显示$ref"><span class="nav-number">5.</span> <span class="nav-text">避免重复引用序列化时显示$ref</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免重复/循环引用的正确姿势"><span class="nav-number">6.</span> <span class="nav-text">避免重复/循环引用的正确姿势</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
