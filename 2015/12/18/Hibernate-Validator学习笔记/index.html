@@ -57,17 +57,20 @@
 
 
 
-<meta name="description" content="用Annotations给类或者类的属性加上约束(constraint)，在运行期检查属性值是很优雅的，Hibernate Validator是一个验证框架，不需要和Hibernate的其他部分绑定就可以使用。">
+<meta name="description" content="学习一款强大的运行期属性检查框架
+题图：from Google">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hibernate Validator学习笔记">
 <meta property="og:url" content="http://coderec.github.io/2015/12/18/Hibernate-Validator学习笔记/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="用Annotations给类或者类的属性加上约束(constraint)，在运行期检查属性值是很优雅的，Hibernate Validator是一个验证框架，不需要和Hibernate的其他部分绑定就可以使用。">
+<meta property="og:description" content="学习一款强大的运行期属性检查框架
+题图：from Google">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1ez3n0i5zxtj20r2091mxs.jpg">
-<meta property="og:updated_time" content="2016-03-09T09:41:48.000Z">
+<meta property="og:updated_time" content="2016-04-13T11:49:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hibernate Validator学习笔记">
-<meta name="twitter:description" content="用Annotations给类或者类的属性加上约束(constraint)，在运行期检查属性值是很优雅的，Hibernate Validator是一个验证框架，不需要和Hibernate的其他部分绑定就可以使用。">
+<meta name="twitter:description" content="学习一款强大的运行期属性检查框架
+题图：from Google">
 
 
 
@@ -304,8 +307,10 @@
 
       
         <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3jw1ez3n0i5zxtj20r2091mxs.jpg" width="700" height="397"></p>
-<p>用Annotations给类或者类的属性加上约束(constraint)，在运行期检查属性值是很优雅的，Hibernate Validator是一个验证框架，不需要和Hibernate的其他部分绑定就可以使用。</p>
+<p>学习一款强大的运行期属性检查框架</p>
+<p>题图：from Google</p>
 <a id="more"></a>
+<h2 id="引子">引子</h2><p>用Annotations给类或者类的属性加上约束(constraint)，在运行期检查属性值是很优雅的，Hibernate Validator是一个验证框架，不需要和Hibernate的其他部分绑定就可以使用。</p>
 <h2 id="Bean_Validation">Bean Validation</h2><blockquote>
 <p>Bean Validation 为 JavaBean 验证定义了相应的元数据模型和 API。缺省的元数据是 Java Annotations，通过使用 XML 可以对原有的元数据信息进行覆盖和扩展。在应用程序中，通过使用 Bean Validation 或是自己定义的约束（constraint），例如 @NotNull, @Max,就可以确保数据模型（JavaBean）的正确性。</p>
 </blockquote>
@@ -323,18 +328,60 @@
 <blockquote>
 <p><a id="code1">代码示例1</a></p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类级别约束，默认没有提供，此处为演示，若确实需要，应该自定义约束</span></span><br><span class="line"><span class="annotation">@checkUser</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Integer id;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//字段级约束，验证时不会调用getter方法</span></span><br><span class="line">	<span class="comment">//groups属性参见“校验组以及校验组序列”</span></span><br><span class="line">	<span class="annotation">@NotNull</span>(groups = <span class="string">"usernameGroup"</span>)</span><br><span class="line">	<span class="keyword">private</span> String username;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 校验完整的对象图，验证时会对Car对象同时进行校验</span><br><span class="line">	 * 对于集合也可以进行校验，但是会忽略对集合中null值的校验</span><br><span class="line">	 *</span><br><span class="line">	 * 例如：</span><br><span class="line">	 * <span class="doctag">@Valid</span></span><br><span class="line">	 * private List&lt;Car&gt; cars;</span><br><span class="line">	 *</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="annotation">@NotNull</span></span><br><span class="line">	<span class="annotation">@Valid</span></span><br><span class="line">	<span class="keyword">private</span> Car car;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> sex;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span></span>&#123;</span><br><span class="line">	    <span class="keyword">this</span>.id = id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getUsername</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> username;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUsername</span><span class="params">(String username)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.username = username;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> car;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCar</span><span class="params">(Car car)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.car = car;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//属性级约束，加在getter方法上</span></span><br><span class="line">    <span class="comment">//groups属性参见“校验组以及校验组序列”</span></span><br><span class="line">	<span class="annotation">@Max</span>(value = <span class="number">2</span>, groups = <span class="string">"sexGroup"</span>）</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSex</span><span class="params">()</span></span>&#123;</span><br><span class="line">	    <span class="keyword">return</span> sex;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSex</span><span class="params">(<span class="keyword">int</span> sex)</span></span>&#123;</span><br><span class="line">	    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>```<br>//类级别约束，默认没有提供，此处为演示，若确实需要，应该自定义约束<br>@checkUser<br>public class User implements Serializable {<br>    private Integer id;</p>
+<pre><code><span class="comment">//字段级约束，验证时不会调用getter方法</span>
+<span class="comment">//groups属性参见“校验组以及校验组序列”</span>
+<span class="annotation">@NotNull</span>(groups = <span class="string">"usernameGroup"</span>)
+<span class="keyword">private</span> String username;
+
+<span class="comment">/**
+ * 校验完整的对象图，验证时会对Car对象同时进行校验
+ * 对于集合也可以进行校验，但是会忽略对集合中null值的校验
+ *
+ * 例如：
+ * <span class="doctag">@Valid</span>
+ * private List&lt;Car&gt; cars;
+ *
+ */</span>
+<span class="annotation">@NotNull</span>
+<span class="annotation">@Valid</span>
+<span class="keyword">private</span> Car car;
+<span class="keyword">private</span> <span class="keyword">int</span> sex;
+
+<span class="keyword">public</span> <span class="function">Integer <span class="title">getId</span><span class="params">()</span></span>{
+    <span class="keyword">return</span> id;
+}
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span></span>{
+    <span class="keyword">this</span>.id = id;
+}
+<span class="keyword">public</span> <span class="function">String <span class="title">getUsername</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> username;
+}
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setUsername</span><span class="params">(String username)</span> </span>{
+    <span class="keyword">this</span>.username = username;
+}
+<span class="keyword">public</span> <span class="function">Car <span class="title">getCar</span><span class="params">()</span> </span>{
+    <span class="keyword">return</span> car;
+}
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setCar</span><span class="params">(Car car)</span> </span>{
+    <span class="keyword">this</span>.car = car;
+}
+
+<span class="comment">//属性级约束，加在getter方法上</span>
+<span class="comment">//groups属性参见“校验组以及校验组序列”</span>
+<span class="annotation">@Max</span>(value = <span class="number">2</span>, groups = <span class="string">"sexGroup"</span>）
+<span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getSex</span><span class="params">()</span></span>{
+    <span class="keyword">return</span> sex;
+}
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setSex</span><span class="params">(<span class="keyword">int</span> sex)</span></span>{
+    <span class="keyword">this</span>.sex = sex;
+}
+</code></pre><p>}<br>```</p>
 <h3 id="2-_校验约束">2. 校验约束</h3><p>Validator接口提供三种方法校验实体对象或者对象中的属性</p>
 <ul>
-<li><p>validate</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Set</span>&lt;<span class="type">ConstraintViolation</span>&lt;<span class="type">User</span>&gt;&gt; violations = validator.validate(user);</span><br><span class="line"><span class="type">Iterator</span> it = violations.<span class="keyword">iterator</span>();</span><br><span class="line"><span class="keyword">while</span>(it.hasNext()) &#123;</span><br><span class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(it.next().getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>validateProperty</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Set</span>&lt;<span class="type">ConstraintViolation</span>&lt;<span class="type">User</span>&gt;&gt; violations = validator.validateProperty(user, <span class="string">"username"</span>);</span><br><span class="line"><span class="type">Iterator</span> it = violations.<span class="keyword">iterator</span>();</span><br><span class="line"><span class="keyword">while</span>(it.hasNext()) &#123;</span><br><span class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(it.next().getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>validateValue</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Set</span>&lt;<span class="type">ConstraintViolation</span>&lt;<span class="type">User</span>&gt;&gt; violations = validator.validateValue(<span class="type">User</span>.class, <span class="string">"username"</span>, null);</span><br><span class="line"><span class="type">Iterator</span> it = violations.<span class="keyword">iterator</span>();</span><br><span class="line"><span class="keyword">while</span>(it.hasNext()) &#123;</span><br><span class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(it.next().getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>validate<br>```<br>Set\<constraintviolation<user>> violations = validator.validate(user);<br>Iterator it = violations.iterator();<br>while(it.hasNext()) {<br>  System.out.println(it.next().getMessage());<br>}<br>```</constraintviolation<user></li>
+<li>validateProperty<br>```<br>Set\<constraintviolation<user>> violations = validator.validateProperty(user, “username”);<br>Iterator it = violations.iterator();<br>while(it.hasNext()) {<br>  System.out.println(it.next().getMessage());<br>}<br>```</constraintviolation<user></li>
+<li>validateValue<br>```<br>Set\<constraintviolation<user>> violations = validator.validateValue(User.class, “username”, null);<br>Iterator it = violations.iterator();<br>while(it.hasNext()) {<br>  System.out.println(it.next().getMessage());<br>}<br>```</constraintviolation<user></li>
 </ul>
 <h3 id="3-_校验组以及校验组序列">3. 校验组以及校验组序列</h3><p>在使用约束时，可以定义其所属的校验组并定义其各组的校验顺序。hibernate validator可以通过注解形式和xml配置文件形式进行配置，出于去配置文件化的考虑，这里仅以注解形式的配置进行说明</p>
 <ul>
@@ -344,25 +391,30 @@
 </li>
 </ul>
 <blockquote>
-<p><a id="code2">代码示例2</a><br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义校验序列</span></span><br><span class="line"><span class="annotation">@GroupSequence</span>(&#123;Default.<span class="keyword">class</span>, <span class="string">"sexGroup"</span>, <span class="string">"usernameGroup"</span>&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">orderedChecks</span> &#123;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用指定校验序列来校验对象</span></span><br><span class="line">validator.validate(user, orderedChecks.<span class="keyword">class</span>);</span><br></pre></td></tr></table></figure></p>
+<p><a id="code2">代码示例2</a><br>```<br>//定义校验序列<br>@GroupSequence({Default.class, “sexGroup”, “usernameGroup”})<br>public interface orderedChecks {<br>}<br>//使用指定校验序列来校验对象<br>validator.validate(user, orderedChecks.class);<br>```</p>
 </blockquote>
 <ul>
 <li>重定义默认校验组</li>
 </ul>
-<ol>
+<ul>
 <li>Bean Validation Annotation<br>在类上使用@GroupSequence注解，如下<em><a href="#code3">代码示例3</a></em>中所示</li>
+</ul>
+<ol>
 <li>Hibernate Validator Annotation<br>在类上使用@GroupSequenceProvider注解，并自定义provider实现DefaultGroupSequenceProvider接口，详见附录hibernate validator文档2.3.2.2</li>
 </ol>
 <blockquote>
-<p><a id="code3">代码示例3</a><br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义校验序列</span></span><br><span class="line"><span class="annotation">@GroupSequence</span>(&#123;<span class="string">"sexGroup"</span>, <span class="string">"usernameGroup"</span>&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> &#123;</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用指定校验序列来校验对象,其实就是使用sexGroup和usernameGroup</span></span><br><span class="line">validator.validate(user, Default.<span class="keyword">class</span>);</span><br></pre></td></tr></table></figure></p>
+<p><a id="code3">代码示例3</a><br>```<br>//定义校验序列<br>@GroupSequence({“sexGroup”, “usernameGroup”})<br>public class User {<br>    …<br>}<br>//使用指定校验序列来校验对象,其实就是使用sexGroup和usernameGroup<br>validator.validate(user, Default.class);<br>```</p>
 </blockquote>
 <h3 id="4-_内置约束条件">4. 内置约束条件</h3><ol>
 <li>Bean Validate规定的约束条件<br>详见附录hibernate validator文档2.4.1</li>
 <li>Hibernate独有的约束条件<br>详见附录hibernate validator文档2.4.2</li>
 </ol>
-<h3 id="5-_多种方式创建validator实例">5. 多种方式创建validator实例</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ValidatorFactory <span class="literal">factory</span> = Validation.buildDefaultValidatorFactory();</span><br><span class="line">Validator validator = <span class="literal">factory</span>.getValidator();</span><br></pre></td></tr></table></figure>
-<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ValidatorFactory</span> validatorFactory = <span class="type">Validation</span>.byProvider( <span class="type">HibernateValidator</span>.class ) .configure<span class="literal">()</span></span><br><span class="line">        .buildValidatorFactory<span class="literal">()</span>;</span><br><span class="line"><span class="type">Validator</span> validator = validatorFactory.getValidator<span class="literal">()</span>;</span><br></pre></td></tr></table></figure>
-<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">ValidatorFactory</span> validatorFactory = <span class="type">Validation</span>.byDefaultProvider<span class="literal">()</span></span><br><span class="line">        .configure<span class="literal">()</span></span><br><span class="line">        .buildValidatorFactory<span class="literal">()</span>;</span><br><span class="line"><span class="type">Validator</span> validator = validatorFactory.getValidator<span class="literal">()</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="5-_多种方式创建validator实例">5. 多种方式创建validator实例</h3><p>```<br>ValidatorFactory factory = Validation.buildDefaultValidatorFactory();<br>Validator validator = factory.getValidator();</p>
+<p>```<br>```<br>ValidatorFactory validatorFactory = Validation.byProvider( HibernateValidator.class ) .configure()<br>        .buildValidatorFactory();<br>Validator validator = validatorFactory.getValidator();</p>
+<p>```</p>
+<p>```</p>
+<p>ValidatorFactory validatorFactory = Validation.byDefaultProvider()<br>        .configure()<br>        .buildValidatorFactory();<br>Validator validator = validatorFactory.getValidator();</p>
+<p>```</p>
 <h3 id="6-_自定义约束规则（不常用）">6. 自定义约束规则（不常用）</h3><p>步骤如下，详见附录hibernate validator文档3.1</p>
 <ul>
 <li><strong>创建约束标注</strong></li>
@@ -371,8 +423,9 @@
 </ul>
 <h3 id="7-_XML配置文件（不提倡）">7. XML配置文件（不提倡）</h3><p>详见附录hibernate validator文档4.1</p>
 <h3 id="8-_通过Configuration自定义验证失败提示信息等特性（不常用）">8. 通过Configuration自定义验证失败提示信息等特性（不常用）</h3><p>由于默认Validator基本满足日常使用，因此对此内容简介，详见附录hibernate validator文档5.1</p>
-<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Configuration</span>&lt;?&gt; config = <span class="type">Validation</span>.byDefaultProvider<span class="literal">()</span>.configure<span class="literal">()</span>; </span><br><span class="line"></span><br><span class="line">config.messageInterpolator(new <span class="type">MyMessageInterpolator</span><span class="literal">()</span>)</span><br><span class="line">    .traversableResolver( new <span class="type">MyTraversableResolver</span><span class="literal">()</span>) </span><br><span class="line">    .constraintValidatorFactory(new <span class="type">MyConstraintValidatorFactory</span><span class="literal">()</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">ValidatorFactory</span> factory = config.buildValidatorFactory<span class="literal">()</span>;</span><br><span class="line"><span class="type">Validator</span> validator = factory.getValidator<span class="literal">()</span>;</span><br></pre></td></tr></table></figure>
-<p>配置简单说明：</p>
+<p>```<br>Configuration\&lt;?> config = Validation.byDefaultProvider().configure(); </p>
+<p>config.messageInterpolator(new MyMessageInterpolator())<br>    .traversableResolver( new MyTraversableResolver())<br>    .constraintValidatorFactory(new MyConstraintValidatorFactory());</p>
+<p>ValidatorFactory factory = config.buildValidatorFactory();<br>Validator validator = factory.getValidator();<br>```<br>配置简单说明：</p>
 <ul>
 <li><strong>messageInterpolator</strong><br>验证失败提示信息解析 </li>
 <li><strong>traversableResolver</strong><br>某些情况下, 我们可能不应该去获取一个属性的状态。比如延迟加载的属性或者与JPA中涉及到关联关系的时候。当验证这两种情况的属性的时候,很可能会触发一次对数据库的查询.可以通过TraversableResolver接口来控制能否访问某一个属性。<br>Hibernate Validator默认提供两种实现，其中DefaultTraversableResolver<br>对isReachable()和isTraversable()俩方法永远返回true。<br>可以自定义实现TraversableResolver接口，重写两种方法，然后通过configuration配置validator</li>
@@ -591,7 +644,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean_Validation"><span class="nav-number">1.</span> <span class="nav-text">Bean Validation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate_Validator"><span class="nav-number">2.</span> <span class="nav-text">Hibernate Validator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-_约束级别"><span class="nav-number">2.1.</span> <span class="nav-text">1. 约束级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-_校验约束"><span class="nav-number">2.2.</span> <span class="nav-text">2. 校验约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-_校验组以及校验组序列"><span class="nav-number">2.3.</span> <span class="nav-text">3. 校验组以及校验组序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-_内置约束条件"><span class="nav-number">2.4.</span> <span class="nav-text">4. 内置约束条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-_多种方式创建validator实例"><span class="nav-number">2.5.</span> <span class="nav-text">5. 多种方式创建validator实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-_自定义约束规则（不常用）"><span class="nav-number">2.6.</span> <span class="nav-text">6. 自定义约束规则（不常用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-_XML配置文件（不提倡）"><span class="nav-number">2.7.</span> <span class="nav-text">7. XML配置文件（不提倡）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-_通过Configuration自定义验证失败提示信息等特性（不常用）"><span class="nav-number">2.8.</span> <span class="nav-text">8. 通过Configuration自定义验证失败提示信息等特性（不常用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-_hibernate_validator_独有的特性（区别于Bean_Validation）"><span class="nav-number">2.9.</span> <span class="nav-text">9. hibernate validator 独有的特性（区别于Bean Validation）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">3.</span> <span class="nav-text">附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean_Validation"><span class="nav-number">2.</span> <span class="nav-text">Bean Validation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hibernate_Validator"><span class="nav-number">3.</span> <span class="nav-text">Hibernate Validator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-_约束级别"><span class="nav-number">3.1.</span> <span class="nav-text">1. 约束级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-_校验约束"><span class="nav-number">3.2.</span> <span class="nav-text">2. 校验约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-_校验组以及校验组序列"><span class="nav-number">3.3.</span> <span class="nav-text">3. 校验组以及校验组序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-_内置约束条件"><span class="nav-number">3.4.</span> <span class="nav-text">4. 内置约束条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-_多种方式创建validator实例"><span class="nav-number">3.5.</span> <span class="nav-text">5. 多种方式创建validator实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-_自定义约束规则（不常用）"><span class="nav-number">3.6.</span> <span class="nav-text">6. 自定义约束规则（不常用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-_XML配置文件（不提倡）"><span class="nav-number">3.7.</span> <span class="nav-text">7. XML配置文件（不提倡）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-_通过Configuration自定义验证失败提示信息等特性（不常用）"><span class="nav-number">3.8.</span> <span class="nav-text">8. 通过Configuration自定义验证失败提示信息等特性（不常用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-_hibernate_validator_独有的特性（区别于Bean_Validation）"><span class="nav-number">3.9.</span> <span class="nav-text">9. hibernate validator 独有的特性（区别于Bean Validation）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

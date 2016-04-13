@@ -57,17 +57,20 @@
 
 
 
-<meta name="description">
+<meta name="description" content="彻底跟路径错误say拜拜！
+题图：from Google">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决使用Spring Boot、Multipartfile上传文件路径错误问题">
 <meta property="og:url" content="http://coderec.github.io/2016/01/31/解决使用Spring-Boot、Multipartfile上传文件路径错误问题/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description">
+<meta property="og:description" content="彻底跟路径错误say拜拜！
+题图：from Google">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1f0j2kpj930j20u00djt9v.jpg">
-<meta property="og:updated_time" content="2016-03-09T09:35:41.000Z">
+<meta property="og:updated_time" content="2016-04-13T11:44:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决使用Spring Boot、Multipartfile上传文件路径错误问题">
-<meta name="twitter:description">
+<meta name="twitter:description" content="彻底跟路径错误say拜拜！
+题图：from Google">
 
 
 
@@ -316,26 +319,63 @@
 
       
         <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1f0j2kpj930j20u00djt9v.jpg" width="700" height="397"></p>
+<p>彻底跟路径错误say拜拜！</p>
+<p>题图：from Google</p>
 <a id="more"></a>
 <h2 id="1-问题描述">1.问题描述</h2><ul>
 <li><strong>关键字：</strong> SpringMVC 4.2.4 、 Spring Boot 1.3.1 、Servlet 3.0 、文件上传</li>
 <li><strong>报错信息：</strong> <code>java.io.IOException: java.io.FileNotFoundException: /tmp/tomcat.273391201583741210.8080/work/Tomcat/localhost/ROOT/tmp/source/IMG_20160129_132623.jpg (No such file or directory)</code></li>
-<li><strong>问题源码：</strong> transferTo方法报错<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 前端传入mulFileSource</span></span><br><span class="line"><span class="comment">// 创建压缩前源文件</span></span><br><span class="line">File fileSourcePath = <span class="keyword">new</span> File(<span class="string">"tmp/source/"</span>);</span><br><span class="line">File fileSource = <span class="keyword">new</span> File(fileSourcePath, mulFileSource.getOriginalFilename());</span><br><span class="line"><span class="keyword">if</span> (!fileSourcePath.exists()) &#123;</span><br><span class="line">    fileSourcePath.mkdirs();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 将接收得图片暂存到临时文件中</span></span><br><span class="line">mulFileSource.transferTo(fileSource);</span><br></pre></td></tr></table></figure>
-</li>
+<li><strong>问题源码：</strong> transferTo方法报错<br>```java<br>// 前端传入mulFileSource<br>// 创建压缩前源文件<br>File fileSourcePath = new File(“tmp/source/“);<br>File fileSource = new File(fileSourcePath, mulFileSource.getOriginalFilename());<br>if (!fileSourcePath.exists()) {<br>  fileSourcePath.mkdirs();<br>}<br>// 将接收得图片暂存到临时文件中<br>mulFileSource.transferTo(fileSource);<br>```</li>
 </ul>
 <h2 id="2-问题分析">2.问题分析</h2><ul>
 <li>首先，看源码中文件定义，相对路径，预期路径应该是<code>项目路径/tmp/source/</code>，但是报错确是一个系统临时文件路径（tomcat的）。</li>
 <li>其次，由于是transferTo方法报错，因此应该是该方法写入文件时报错，因此，我们跟入方法源码。</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StandardMultipartHttpServletRequest</span> <span class="keyword">extends</span> <span class="title">AbstractMultipartHttpServletRequest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//中间代码省略</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * Spring MultipartFile adapter, wrapping a Servlet 3.0 Part object.</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="annotation">@SuppressWarnings</span>(<span class="string">"serial"</span>)</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StandardMultipartFile</span> <span class="keyword">implements</span> <span class="title">MultipartFile</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//中间代码省略</span></span><br><span class="line"></span><br><span class="line">		<span class="annotation">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transferTo</span><span class="params">(File dest)</span> <span class="keyword">throws</span> IOException, IllegalStateException </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.part.write(dest.getPath());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.catalina.core;</span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Adaptor to allow &#123;<span class="doctag">@link</span> FileItem&#125; objects generated by the package renamed</span><br><span class="line"> * commons-upload to be used by the Servlet 3.0 upload API that expects</span><br><span class="line"> * &#123;<span class="doctag">@link</span> Part&#125;s.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationPart</span> <span class="keyword">implements</span> <span class="title">Part</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//中间代码省略</span></span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(String fileName)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(fileName);</span><br><span class="line">        <span class="keyword">if</span> (!file.isAbsolute()) &#123;</span><br><span class="line">            file = <span class="keyword">new</span> File(location, fileName);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fileItem.write(file);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IOException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>```java<br>public class StandardMultipartHttpServletRequest extends AbstractMultipartHttpServletRequest {</p>
+<pre><code><span class="comment">//中间代码省略</span>
+
+<span class="comment">/**
+ * Spring MultipartFile adapter, wrapping a Servlet 3.0 Part object.
+ */</span>
+<span class="annotation">@SuppressWarnings</span>(<span class="string">"serial"</span>)
+<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StandardMultipartFile</span> <span class="keyword">implements</span> <span class="title">MultipartFile</span>, <span class="title">Serializable</span> </span>{
+
+    <span class="comment">//中间代码省略</span>
+
+    <span class="annotation">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">transferTo</span><span class="params">(File dest)</span> <span class="keyword">throws</span> IOException, IllegalStateException </span>{
+        <span class="keyword">this</span>.part.write(dest.getPath());
+    }
+}
+</code></pre><p>}<br>```</p>
+<p>```java<br>package org.apache.catalina.core;<br>/**</p>
+<ul>
+<li>Adaptor to allow {@link FileItem} objects generated by the package renamed</li>
+<li>commons-upload to be used by the Servlet 3.0 upload API that expects</li>
+<li><p>{@link Part}s.<br>*/<br>public class ApplicationPart implements Part {</p>
+<p> //中间代码省略</p>
+<p> @Override<br> public void write(String fileName) throws IOException {</p>
+<pre><code><span class="keyword">File</span> <span class="keyword">file</span> = <span class="keyword">new</span> <span class="keyword">File</span>(fileName);
+<span class="keyword">if</span> (!<span class="keyword">file</span>.isAbsolute()) {
+    <span class="keyword">file</span> = <span class="keyword">new</span> <span class="keyword">File</span>(location, fileName);
+}
+<span class="keyword">try</span> {
+    fileItem.<span class="keyword">write</span>(<span class="keyword">file</span>);
+} <span class="keyword">catch</span> (Exception e) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> IOException(e);
+}
+</code></pre><p> }<br>}<br>```</p>
 <ul>
 <li>源码一目了然，使用Servlet3.0的支持的上传文件功能时，如果我们没有使用绝对路径的话，transferTo方法会在相对路径前添加一个<code>location</code>路径，即：<code>file = new File(location, fileName);</code>。当然，这也影响了SpringMVC的Multipartfile的使用。</li>
 <li>由于我们创建的File在<code>项目路径/tmp/source/</code>，而transferTo方法预期写入的文件路径为<code>/tmp/tomcat.273391201583741210.8080/work/Tomcat/localhost/ROOT/tmp/source/</code>，我们并没有创建该目录，因此会抛出异常。</li>
 </ul>
+</li>
+</ul>
 <h2 id="3-问题解决方案">3.问题解决方案</h2><ol>
 <li><strong>使用绝对路径</strong></li>
-<li><strong>修改<code>location</code>的值</strong><br>这个<code>location</code>可以理解为临时文件目录，我们可以通过配置<code>location</code>的值，使其指向我们的项目路径，这样就解决了我们遇到的问题。<br>在Spring Boot下配置<code>location</code>，可以在<code>main()</code>方法所在文件中添加如下代码：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 文件上传临时路径</span><br><span class="line"> */</span></span><br><span class="line"> <span class="annotation">@Bean</span></span><br><span class="line"> <span class="function">MultipartConfigElement <span class="title">multipartConfigElement</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MultipartConfigFactory factory = <span class="keyword">new</span> MultipartConfigFactory();</span><br><span class="line">    factory.setLocation(<span class="string">"/app/pttms/tmp"</span>);</span><br><span class="line">    <span class="keyword">return</span> factory.createMultipartConfig();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><strong>修改<code>location</code>的值</strong><br>这个<code>location</code>可以理解为临时文件目录，我们可以通过配置<code>location</code>的值，使其指向我们的项目路径，这样就解决了我们遇到的问题。<br>在Spring Boot下配置<code>location</code>，可以在<code>main()</code>方法所在文件中添加如下代码：<br>```java<br>/**<ul>
+<li>文件上传临时路径<br>*/<br>@Bean<br>MultipartConfigElement multipartConfigElement() {<br>MultipartConfigFactory factory = new MultipartConfigFactory();<br>factory.setLocation(“/app/pttms/tmp”);<br>return factory.createMultipartConfig();<br>}<br>```</li>
+</ul>
 </li>
 </ol>
 

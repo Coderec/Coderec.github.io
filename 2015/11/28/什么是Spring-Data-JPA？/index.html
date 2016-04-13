@@ -57,17 +57,20 @@
 
 
 
-<meta name="description" content="Spring Data项目简介Spring Data项目致力于为开发者提供持续、熟悉、基于Spring编程模型的数据访问方案，同时，也保留底层数据存储的特性，例如关系型与非关系型数据库的不同特点。">
+<meta name="description" content="简单讲讲什么是Spring-Data-JPA
+题图：from Google">
 <meta property="og:type" content="article">
 <meta property="og:title" content="什么是Spring Data JPA？ ">
 <meta property="og:url" content="http://coderec.github.io/2015/11/28/什么是Spring-Data-JPA？/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="Spring Data项目简介Spring Data项目致力于为开发者提供持续、熟悉、基于Spring编程模型的数据访问方案，同时，也保留底层数据存储的特性，例如关系型与非关系型数据库的不同特点。">
+<meta property="og:description" content="简单讲讲什么是Spring-Data-JPA
+题图：from Google">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3gw1eyfclsxz3yj20oy0amaag.jpg">
-<meta property="og:updated_time" content="2016-03-09T09:42:35.000Z">
+<meta property="og:updated_time" content="2016-04-13T11:52:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="什么是Spring Data JPA？ ">
-<meta name="twitter:description" content="Spring Data项目简介Spring Data项目致力于为开发者提供持续、熟悉、基于Spring编程模型的数据访问方案，同时，也保留底层数据存储的特性，例如关系型与非关系型数据库的不同特点。">
+<meta name="twitter:description" content="简单讲讲什么是Spring-Data-JPA
+题图：from Google">
 
 
 
@@ -304,8 +307,10 @@
 
       
         <p><img src="http://ww3.sinaimg.cn/large/6b7b34d3gw1eyfclsxz3yj20oy0amaag.jpg" width="700" height="397"></p>
-<h2 id="Spring_Data项目简介">Spring Data项目简介</h2><p>Spring Data项目致力于为开发者提供持续、熟悉、基于Spring编程模型的数据访问方案，同时，也保留底层数据存储的特性，例如关系型与非关系型数据库的不同特点。</p>
+<p>简单讲讲什么是Spring-Data-JPA</p>
+<p>题图：from Google</p>
 <a id="more"></a>
+<h2 id="Spring_Data项目简介">Spring Data项目简介</h2><p>Spring Data项目致力于为开发者提供持续、熟悉、基于Spring编程模型的数据访问方案，同时，也保留底层数据存储的特性，例如关系型与非关系型数据库的不同特点。</p>
 <p>Spring Data项目包含多个子项目，包括关系型、非关系型数据库访问技术，Spring Data JPA只是Spring Data项目的一个子项目。用来对JPA提供支持，使得基于JPA的实现更加简单。</p>
 <h2 id="JPA简介">JPA简介</h2><p>JPA——Java Persistence API，是伴随JDK5.0一起推出的持久化API；JPA为Java开发者提供一种实体/关系映射方案来管理Java程序中的关系型数据。</p>
 <p>JPA提供一套标准的注解、接口以及JPQL（Java持久化查询语言），这使得开发可以面对统一接口。</p>
@@ -314,9 +319,9 @@
 <h2 id="JPA与Hibernate等ORM框架的关系">JPA与Hibernate等ORM框架的关系</h2><p>JPA作为Java标准已经被行业接受，因此一些ORM框架对JPA提供了支持，也即为JPA提供了实现（JPA Provider）。比如Hibernate、EclipseJPA、OpenJPA。</p>
 <p>JPA与这些ORM框架的关系可总结如下：</p>
 <ol>
-<li>JPA无法独立工作<br>JPA只是一套标准，相当于没有实现类的接口，因此，没有JPA Provider，JPA本身是无法工作的。</li>
-<li>Hibernate是JPA Provider之一<br>Hibernate是JPA Provider中功能很强的一个，从功能上来讲Hibernate已经是JPA的超集了。</li>
-<li>JPA的优势在与易切换ORM框架<br>JPA作为抽象出来的接口的优势就在于，如果选择使用JPA进行开发，可以很容易的切换JPA Provider。假设在某些场景，Hibernate性能表现不好，完全可以切换到另外一种支持JPA的ORM框架，比如EclipseJPA。</li>
+<li>JPA无法独立工作<br> JPA只是一套标准，相当于没有实现类的接口，因此，没有JPA Provider，JPA本身是无法工作的。</li>
+<li>Hibernate是JPA Provider之一<br> Hibernate是JPA Provider中功能很强的一个，从功能上来讲Hibernate已经是JPA的超集了。</li>
+<li>JPA的优势在与易切换ORM框架<br> JPA作为抽象出来的接口的优势就在于，如果选择使用JPA进行开发，可以很容易的切换JPA Provider。假设在某些场景，Hibernate性能表现不好，完全可以切换到另外一种支持JPA的ORM框架，比如EclipseJPA。</li>
 </ol>
 <p>如果还没有搞懂JPA与Hibernate的关系，下面的文章分析的很透彻：<a href="http://blog-tothought.rhcloud.com//post/2" target="_blank" rel="external">JPA与hibernate的关系</a></p>
 <h2 id="Spring_Data_JPA">Spring Data JPA</h2><p>Spring Data JPA致力于明显提高实现JPA的效率，使用Spring Data JPA甚至可以不必编写逻辑代码即可完成数据访问操作。</p>

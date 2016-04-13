@@ -57,17 +57,20 @@
 
 
 
-<meta name="description" content="HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。">
+<meta name="description" content="来看一看POI是怎么设置excel单元格类型的。
+题图：from Google">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Apache POI框架中，HSSFCell的setCellType和setCellStyle的区别">
 <meta property="og:url" content="http://coderec.github.io/2016/02/27/Apache-POI框架中，HSSFCell的setCellType和setCellStyle的区别/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。">
+<meta property="og:description" content="来看一看POI是怎么设置excel单元格类型的。
+题图：from Google">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3gw1f1e97gjmdqj20la09bt9i.jpg">
-<meta property="og:updated_time" content="2016-03-09T09:46:08.000Z">
+<meta property="og:updated_time" content="2016-04-13T11:44:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apache POI框架中，HSSFCell的setCellType和setCellStyle的区别">
-<meta name="twitter:description" content="HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。">
+<meta name="twitter:description" content="来看一看POI是怎么设置excel单元格类型的。
+题图：from Google">
 
 
 
@@ -304,12 +307,14 @@
 
       
         <p><img src="http://ww3.sinaimg.cn/large/6b7b34d3gw1f1e97gjmdqj20la09bt9i.jpg" width="700" height="397"></p>
-<p>HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。</p>
+<p>来看一看POI是怎么设置excel单元格类型的。</p>
+<p>题图：from Google</p>
 <a id="more"></a>
+<h2 id="引子">引子</h2><p>HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。</p>
 <h2 id="1-铺垫">1.铺垫</h2><ol>
 <li><p>HSSFCell类有两个属性与今天要说的方法有关</p>
 <ol>
-<li><p>int _cellType;     </p>
+<li><p>int _cellType;   </p>
 <p> 存储单元格类型的int值</p>
 </li>
 <li><p>CellValueRecordInterface _record；</p>
@@ -540,7 +545,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-铺垫"><span class="nav-number">1.</span> <span class="nav-text">1.铺垫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-区别"><span class="nav-number">2.</span> <span class="nav-text">2.区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-铺垫"><span class="nav-number">2.</span> <span class="nav-text">1.铺垫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-区别"><span class="nav-number">3.</span> <span class="nav-text">2.区别</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

@@ -57,19 +57,22 @@
 
 
 
-<meta name="description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="description" content="了解Gradle本身的缓存机制，更好的使用它。
+题图：from Google">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gradle缓存机制">
 <meta property="og:url" content="http://coderec.github.io/2015/11/29/Gradle缓存机制/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta property="og:description" content="了解Gradle本身的缓存机制，更好的使用它。
+题图：from Google">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg">
-<meta property="og:updated_time" content="2016-03-09T09:42:07.000Z">
+<meta property="og:updated_time" content="2016-04-13T11:50:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gradle缓存机制">
-<meta name="twitter:description" content="Gradle是什么Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。">
+<meta name="twitter:description" content="了解Gradle本身的缓存机制，更好的使用它。
+题图：from Google">
 
 
 
@@ -306,8 +309,10 @@
 
       
         <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg" width="700" height="397"></p>
-<h2 id="Gradle是什么">Gradle是什么</h2><p>Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。</p>
+<p>了解Gradle本身的缓存机制，更好的使用它。</p>
+<p>题图：from Google</p>
 <a id="more"></a>
+<h2 id="Gradle是什么">Gradle是什么</h2><p>Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。</p>
 <p>Gradle官网用户指南：<a href="https://docs.gradle.org/current/userguide/userguide.html" target="_blank" rel="external">Gradle UserGuide</a></p>
 <h2 id="Gradle的缓存机制">Gradle的缓存机制</h2><p>注：以下示例中假设已有一个Gradle的task，名为warProduct。</p>
 <h3 id="1-脚本缓存">1.脚本缓存</h3><p>为了提高响应速度，默认情况下Gradle会缓存所有已编译的脚本。包括所有构建脚本、初始化脚本和其他脚本。</p>
