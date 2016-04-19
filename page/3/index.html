@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C++,Sublime," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -57,16 +57,15 @@
 
 
 
-<meta name="description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Sublime Text 3搭建绿色C++编译环境">
-<meta property="og:url" content="http://coderec.github.io/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/index.html">
+<meta name="description" content="成长的积累">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Coderec's Blog">
+<meta property="og:url" content="http://coderec.github.io/page/3/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
-<meta property="og:updated_time" content="2015-11-27T16:20:38.000Z">
+<meta property="og:description" content="成长的积累">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sublime Text 3搭建绿色C++编译环境">
-<meta name="twitter:description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
+<meta name="twitter:title" content="Coderec's Blog">
+<meta name="twitter:description" content="成长的积累">
 
 
 
@@ -84,7 +83,7 @@
   };
 </script>
 
-  <title> Sublime Text 3搭建绿色C++编译环境 | Coderec's Blog </title>
+  <title> Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -99,7 +98,9 @@
   
   
 
-  <div class="container one-collumn  page-post-detail ">
+  <div class="container one-collumn  
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -207,9 +208,20 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
+  <section id="posts" class="posts-expand">
 
-  <div id="posts" class="posts-expand">
     
+
+    
+    
+      
+      
+
+      
+    
+
+    
+      
 
   
   
@@ -229,7 +241,10 @@
             
             
               
-                Sublime Text 3搭建绿色C++编译环境
+                
+                <a class="post-title-link" href="/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/" itemprop="url">
+                  Sublime Text 3搭建绿色C++编译环境
+                </a>
               
             
           </h1>
@@ -302,77 +317,39 @@
       
 
       
-        <p>因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。</p>
-<p>需要：<br>  1.mingw绿色免安装版（实际上我找了一个晚上也没找到，至少都是需要设置下环境变量path的）<br>  2.sublime text 3免安装版<br>首先：<br>  1.拿到subime，<br>  2.将下载好的mingw“免安装版”拷贝到sublime根目录下<br>  3.进入sublime-tools-build system-new build system,设置编译系统的配置文件，并保存文件名C++.sublime-build</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          "<span class="attribute">path</span>": <span class="value"><span class="string">"G:/Sublime Text 3_x64(Python and CPP)/MinGW/bin"</span></span>,</span><br><span class="line">          "<span class="attribute">cmd</span>": <span class="value">[<span class="string">"g++.exe"</span>, <span class="string">"$&#123;file&#125;"</span>, <span class="string">"-o"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;"</span>]</span>,</span><br><span class="line">          "<span class="attribute">file_regex</span>": <span class="value"><span class="string">"^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$"</span></span>,</span><br><span class="line">          "<span class="attribute">working_dir</span>": <span class="value"><span class="string">"$&#123;file_path&#125;"</span></span>,</span><br><span class="line">          "<span class="attribute">selector</span>": <span class="value"><span class="string">"source.c, source.c++"</span></span>,</span><br><span class="line">          "<span class="attribute">encoding</span>":<span class="value"><span class="string">"UTF-8"</span></span>,    </span><br><span class="line">          "<span class="attribute">encoding</span>": <span class="value"><span class="string">"cp936"</span></span>,</span><br><span class="line">          "<span class="attribute">variants</span>":</span><br><span class="line">          <span class="value">[</span><br><span class="line">               &#123;</span><br><span class="line">                    "<span class="attribute">name</span>": <span class="value"><span class="string">"Run"</span></span>,</span><br><span class="line">                   </span><br><span class="line">                    "<span class="attribute">cmd</span>": <span class="value">[ <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;.exe"</span>]</span>,</span><br><span class="line">                    "<span class="attribute">shell</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">                 "<span class="attribute">cmd</span>" : <span class="value">[<span class="string">"start"</span>, <span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125; &amp;&amp;echo. &amp; pause &amp;&amp; exit"</span>]</span><br><span class="line">               </span>&#125;</span><br><span class="line">          ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-<p>  4.说明1：文件中第一行path参数是区别于网上其他教程的，<strong>请将path参数设置为sublime目录下mingw文件夹的bin目录</strong>，该参数的意思就是在执行cmd编译之前将系统环境变量暂时改变为设置的值，cmd执行结束后在取消修改，因此<strong>不需要在系统中设置环境变量了</strong><br>  5.说明2：sublime官方文档上说\${packages}可以用来表示packages这个目录但是如果我在path中设置使用\${packages}，sublime貌似没能识别，也因此我没能全部使用相对路径，也因此<strong>每次改变sublime的路径后一定要修改此处的path参数</strong></p>
-<p>对于第五条，如何才能真正做到，在换了sublime路径后仍然不必更改path参数，这个问题，希望有人可以给我解答，</p>
-<p>这里介绍的最起码无需麻烦的在系统中设置环境变量了。当然，如果真的有无需配置环境变量即可使用的编译环境，就无需配置path参数了</p>
-
+        
+          因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/C/" rel="tag">#C++</a>
-          
-            <a href="/tags/Sublime/" rel="tag">#Sublime</a>
-          
-        </div>
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/11/23/Git-merge与rebase使用区别/" rel="prev" title="Git merge与rebase使用区别">
-                Git merge与rebase使用区别 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
+    
 
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
+  </section>
 
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
 
 
           </div>
@@ -380,14 +357,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2015/11/23/Sublime-Text-3搭建绿色C-编译环境/"
-           data-title="Sublime Text 3搭建绿色C++编译环境" data-url="http://coderec.github.io/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -407,17 +376,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/logo.jpg"
@@ -502,23 +462,6 @@
       </section>
 
       
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator">
-            <i class="fa fa-angle-double-up"></i>
-          </div>
-          <div class="post-toc">
-            
-              
-            
-            
-              <p class="post-toc-empty">此文章未包含目录</p>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator">
-            <i class="fa fa-angle-double-down"></i>
-          </div>
-        </section>
-      
 
     </div>
   </aside>
@@ -585,167 +528,6 @@
   
 
   
-  
-<script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.0"></script>
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.motion.complete', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      var $indicator = $(indicator);
-      var opacity = action === 'show' ? 1 : 0;
-      $indicator.velocity ?
-        $indicator.velocity('stop').velocity({
-          opacity: opacity
-        }, { duration: 100 }) :
-        $indicator.stop().animate({
-          opacity: opacity
-        }, 100);
-    }
-
-  });
-</script>
-
-<script type="text/javascript" id="sidebar.nav">
-  $(document).ready(function () {
-    var html = $('html');
-    var TAB_ANIMATE_DURATION = 200;
-    var hasVelocity = $.isFunction(html.velocity);
-
-    $('.sidebar-nav li').on('click', function () {
-      var item = $(this);
-      var activeTabClassName = 'sidebar-nav-active';
-      var activePanelClassName = 'sidebar-panel-active';
-      if (item.hasClass(activeTabClassName)) {
-        return;
-      }
-
-      var currentTarget = $('.' + activePanelClassName);
-      var target = $('.' + item.data('target'));
-
-      hasVelocity ?
-        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
-            .addClass(activePanelClassName);
-        }) :
-        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
-          currentTarget.hide();
-          target
-            .stop()
-            .css({'opacity': 0, 'display': 'block'})
-            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
-              currentTarget.removeClass(activePanelClassName);
-              target.addClass(activePanelClassName);
-            });
-        });
-
-      item.siblings().removeClass(activeTabClassName);
-      item.addClass(activeTabClassName);
-    });
-
-    $('.post-toc a').on('click', function (e) {
-      e.preventDefault();
-      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
-      var offset = $(targetSelector).offset().top;
-      hasVelocity ?
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        }) :
-        $('html, body').stop().animate({
-          scrollTop: offset
-        }, 500);
-    });
-
-    // Expand sidebar on post detail page by default, when post has a toc.
-    NexT.motion.middleWares.sidebar = function () {
-      var $tocContent = $('.post-toc-content');
-
-      if (CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          NexT.utils.displaySidebar();
-        }
-      }
-    };
-  });
-</script>
-
-
 
   
 

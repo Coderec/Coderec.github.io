@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C++,Sublime," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -57,16 +57,20 @@
 
 
 
-<meta name="description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
+<meta name="description" content="Apache提供的消息路由引擎，骆驼！
+题图：from Zoommy">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sublime Text 3搭建绿色C++编译环境">
-<meta property="og:url" content="http://coderec.github.io/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/index.html">
+<meta property="og:title" content="Apache Camel路由规则引擎（一）">
+<meta property="og:url" content="http://coderec.github.io/2016/04/19/Apache-Camel路由规则引擎（一）/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
-<meta property="og:updated_time" content="2015-11-27T16:20:38.000Z">
+<meta property="og:description" content="Apache提供的消息路由引擎，骆驼！
+题图：from Zoommy">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3gw1f31v4cfqq1j20j40b2tc3.jpg">
+<meta property="og:updated_time" content="2016-04-19T03:45:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sublime Text 3搭建绿色C++编译环境">
-<meta name="twitter:description" content="因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。">
+<meta name="twitter:title" content="Apache Camel路由规则引擎（一）">
+<meta name="twitter:description" content="Apache提供的消息路由引擎，骆驼！
+题图：from Zoommy">
 
 
 
@@ -84,7 +88,7 @@
   };
 </script>
 
-  <title> Sublime Text 3搭建绿色C++编译环境 | Coderec's Blog </title>
+  <title> Apache Camel路由规则引擎（一） | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -229,7 +233,7 @@
             
             
               
-                Sublime Text 3搭建绿色C++编译环境
+                Apache Camel路由规则引擎（一）
               
             
           </h1>
@@ -241,38 +245,19 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-23T13:16:38+08:00" content="2015-11-23">
-              2015-11-23
+            <time itemprop="dateCreated" datetime="2016-04-19T11:06:29+08:00" content="2016-04-19">
+              2016-04-19
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/配置记录/" itemprop="url" rel="index">
-                    <span itemprop="name">配置记录</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/23/Sublime-Text-3搭建绿色C-编译环境/" itemprop="commentsCount"></span>
+                <a href="/2016/04/19/Apache-Camel路由规则引擎（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/19/Apache-Camel路由规则引擎（一）/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -282,7 +267,7 @@
 
           
           
-             <span id="/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/" class="leancloud_visitors" data-flag-title="Sublime Text 3搭建绿色C++编译环境">
+             <span id="/2016/04/19/Apache-Camel路由规则引擎（一）/" class="leancloud_visitors" data-flag-title="Apache Camel路由规则引擎（一）">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -302,38 +287,81 @@
       
 
       
-        <p>因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。</p>
-<p>需要：<br>  1.mingw绿色免安装版（实际上我找了一个晚上也没找到，至少都是需要设置下环境变量path的）<br>  2.sublime text 3免安装版<br>首先：<br>  1.拿到subime，<br>  2.将下载好的mingw“免安装版”拷贝到sublime根目录下<br>  3.进入sublime-tools-build system-new build system,设置编译系统的配置文件，并保存文件名C++.sublime-build</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          "<span class="attribute">path</span>": <span class="value"><span class="string">"G:/Sublime Text 3_x64(Python and CPP)/MinGW/bin"</span></span>,</span><br><span class="line">          "<span class="attribute">cmd</span>": <span class="value">[<span class="string">"g++.exe"</span>, <span class="string">"$&#123;file&#125;"</span>, <span class="string">"-o"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;"</span>]</span>,</span><br><span class="line">          "<span class="attribute">file_regex</span>": <span class="value"><span class="string">"^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$"</span></span>,</span><br><span class="line">          "<span class="attribute">working_dir</span>": <span class="value"><span class="string">"$&#123;file_path&#125;"</span></span>,</span><br><span class="line">          "<span class="attribute">selector</span>": <span class="value"><span class="string">"source.c, source.c++"</span></span>,</span><br><span class="line">          "<span class="attribute">encoding</span>":<span class="value"><span class="string">"UTF-8"</span></span>,    </span><br><span class="line">          "<span class="attribute">encoding</span>": <span class="value"><span class="string">"cp936"</span></span>,</span><br><span class="line">          "<span class="attribute">variants</span>":</span><br><span class="line">          <span class="value">[</span><br><span class="line">               &#123;</span><br><span class="line">                    "<span class="attribute">name</span>": <span class="value"><span class="string">"Run"</span></span>,</span><br><span class="line">                   </span><br><span class="line">                    "<span class="attribute">cmd</span>": <span class="value">[ <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;.exe"</span>]</span>,</span><br><span class="line">                    "<span class="attribute">shell</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">                 "<span class="attribute">cmd</span>" : <span class="value">[<span class="string">"start"</span>, <span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125; &amp;&amp;echo. &amp; pause &amp;&amp; exit"</span>]</span><br><span class="line">               </span>&#125;</span><br><span class="line">          ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-<p>  4.说明1：文件中第一行path参数是区别于网上其他教程的，<strong>请将path参数设置为sublime目录下mingw文件夹的bin目录</strong>，该参数的意思就是在执行cmd编译之前将系统环境变量暂时改变为设置的值，cmd执行结束后在取消修改，因此<strong>不需要在系统中设置环境变量了</strong><br>  5.说明2：sublime官方文档上说\${packages}可以用来表示packages这个目录但是如果我在path中设置使用\${packages}，sublime貌似没能识别，也因此我没能全部使用相对路径，也因此<strong>每次改变sublime的路径后一定要修改此处的path参数</strong></p>
-<p>对于第五条，如何才能真正做到，在换了sublime路径后仍然不必更改path参数，这个问题，希望有人可以给我解答，</p>
-<p>这里介绍的最起码无需麻烦的在系统中设置环境变量了。当然，如果真的有无需配置环境变量即可使用的编译环境，就无需配置path参数了</p>
+        <p><img src="http://ww3.sinaimg.cn/large/6b7b34d3gw1f31v4cfqq1j20j40b2tc3.jpg" width="700" height="397"></p>
+<p>Apache提供的消息路由引擎，骆驼！</p>
+<p>题图：from Zoommy</p>
+<a id="more"></a>
+<h2 id="Camel是什么">Camel是什么</h2><p>核心是路由引擎，更精确地说就是路由引擎构造器。camel提供了统一的高级抽象api，开发者无需考虑消息来源或者消息目的地，甚至连协议都无需考虑，所有的这些都通过相同的api处理。</p>
+<p>另外值得一提，Camel不是什么。他不是ESB(<a href="http://baike.baidu.com/link?url=BiQkD7Ziz6wlvrWkfyHkMqTywSzSUH-SP_m-mQM_Y4IiUNqk-8x1tc8AIKXHeVwVKjQjCuDnvyzLSJS7fve_dq" target="_blank" rel="external">点击送你去度娘</a>)</p>
+<h2 id="Camel的历史">Camel的历史</h2><p>Camel最初是在Apache ActiveMQ项目下的子项目，其功能就是做队列间的消息转发。随着其功能的不断完善，Camel被提升为Apache顶级项目。也因此，作为路由规则引擎被广泛使用。</p>
+<p>这个项目被命名为Camel的原因有很多种；有说是因为开发成员喜欢Camel香烟的，有说是因为骆驼可以不吃不喝跋山涉水且负重颇高的，还有说是因为骆驼不会对它喜欢的人吐口水的。</p>
+<p>Whatever，想象一下，Camel对你吐口水的那场景，：）。</p>
+<h2 id="Camel的功能和特性">Camel的功能和特性</h2><ul>
+<li>路由和规则引擎<blockquote>
+<p>Camel的主要功能就是路由引擎，说白了就是消息分发。</p>
+</blockquote>
+</li>
+<li>EIPs (<a href="https://book.douban.com/subject/1438029/" target="_blank" rel="external">点击送你去豆瓣</a>)<blockquote>
+<p>ENTERPRISE INTEGRATION PATTERNS ，企业集成模式；是指为了解决系统间集成问题提出的多种模式，Camel几乎实现了所有的EIPs，并且有DSL与之对应；因此Camel是EIPs的实现者。</p>
+</blockquote>
+</li>
+<li>pojo模型<blockquote>
+<p>Beans是Camel世界的一等公民，Camel倾向于用户使用Beans，带来的好处之一就是用户可以继承Camel内建的功能并自定义。</p>
+</blockquote>
+</li>
+<li>DSL、容易配置<blockquote>
+<p>Camel有自己的领域语言，语法简洁，支持Java、XML、Scala、Groovy。可以方便的配置一个路由。</p>
+</blockquote>
+</li>
+<li>内容格式无关、自动类型转换<blockquote>
+<p>Camel没有规定消息格式，几乎可以以任意一种格式传递消息。能实现这样的工能，就是因为Camel内置了很多类型转换器，并且可以自动转换。</p>
+</blockquote>
+</li>
+<li>可扩展组件库、模块化与插件化架构<blockquote>
+<p>Camel的架构设计就采用了模块化和组件化的思想，因此添加第三方扩展组件以及自定义组件都很容易，此外Camel的组件库也很丰富。</p>
+</blockquote>
+</li>
+<li>轻量级内核<blockquote>
+<p>1.6MB的内核，应该可以算轻量级吧。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Camel小示例">Camel小示例</h2><ol>
+<li>简单的队列消息转发<br> // 从一个消息队列分发到另外三个消息队列<br> from(“jms:queue:” + Destination.TASK_FINISH_PUBLISH)<pre><code><span class="class">.to</span>(
+    "<span class="tag">jms</span><span class="pseudo">:queue</span><span class="pseudo">:"</span> + <span class="tag">Destination</span><span class="class">.CONSUMER_TASK_TASK_FINISH</span>,
+    "<span class="tag">jms</span><span class="pseudo">:queue</span><span class="pseudo">:"</span> + <span class="tag">Destination</span><span class="class">.CONSUMER_GROWTH_TASK_FINISH</span>,
+    "<span class="tag">jms</span><span class="pseudo">:queue</span><span class="pseudo">:"</span> + <span class="tag">Destination</span><span class="class">.CONSUMER_APPINFO_TASK_FINISH</span>
+    );
+</code></pre></li>
+<li>监听目录，如果有文件删除就复制一份到目标目录<br> from(“file://inputdir/?delete=true”).to(“file://outputdir”)</li>
+</ol>
+<h2 id="消息路由的意义">消息路由的意义</h2><p>说了这么多，我们现在看到的功能无非就是消息的转发，有什么用呢，看起来很鸡肋啊。</p>
+<p>其实不然，有了消息路由这个中间站，我们可以对消息自定义处理：</p>
+<ul>
+<li>分布式环境下的去重</li>
+<li>对消息进行包装</li>
+<li>分发到多个目的地</li>
+</ul>
+<p>等等…消息在手，想怎么玩就怎么玩。</p>
+<p>下一篇我们就来详细的说说Camel的原理。</p>
 
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/C/" rel="tag">#C++</a>
-          
-            <a href="/tags/Sublime/" rel="tag">#Sublime</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/04/10/使用消息队列进行解耦/" rel="next" title="使用消息队列对应用解耦">
+                <i class="fa fa-chevron-left"></i> 使用消息队列对应用解耦
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/11/23/Git-merge与rebase使用区别/" rel="prev" title="Git merge与rebase使用区别">
-                Git merge与rebase使用区别 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -382,8 +410,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/23/Sublime-Text-3搭建绿色C-编译环境/"
-           data-title="Sublime Text 3搭建绿色C++编译环境" data-url="http://coderec.github.io/2015/11/23/Sublime-Text-3搭建绿色C-编译环境/">
+      <div class="ds-thread" data-thread-key="2016/04/19/Apache-Camel路由规则引擎（一）/"
+           data-title="Apache Camel路由规则引擎（一）" data-url="http://coderec.github.io/2016/04/19/Apache-Camel路由规则引擎（一）/">
       </div>
     
   </div>
@@ -511,7 +539,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Camel是什么"><span class="nav-number">1.</span> <span class="nav-text">Camel是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Camel的历史"><span class="nav-number">2.</span> <span class="nav-text">Camel的历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Camel的功能和特性"><span class="nav-number">3.</span> <span class="nav-text">Camel的功能和特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Camel小示例"><span class="nav-number">4.</span> <span class="nav-text">Camel小示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息路由的意义"><span class="nav-number">5.</span> <span class="nav-text">消息路由的意义</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
