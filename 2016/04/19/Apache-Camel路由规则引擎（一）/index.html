@@ -66,7 +66,7 @@
 <meta property="og:description" content="Apache提供的消息路由引擎，骆驼！
 题图：from Zoommy">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3gw1f31v4cfqq1j20j40b2tc3.jpg">
-<meta property="og:updated_time" content="2016-04-19T05:17:49.000Z">
+<meta property="og:updated_time" content="2016-04-26T08:00:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apache Camel路由规则引擎（一）">
 <meta name="twitter:description" content="Apache提供的消息路由引擎，骆驼！
@@ -316,53 +316,59 @@
 <p>这个项目被命名为Camel的原因有很多种；有说是因为开发成员喜欢Camel香烟的，有说是因为骆驼可以不吃不喝跋山涉水且负重颇高的，还有说是因为骆驼不会对它喜欢的人吐口水的。</p>
 <p>Whatever，想象一下，Camel对你吐口水的那场景，：）。</p>
 <h2 id="Camel的功能和特性">Camel的功能和特性</h2><ul>
-<li>路由和规则引擎<blockquote>
+<li><p>路由和规则引擎</p>
+<blockquote>
 <p>Camel的主要功能就是路由引擎，说白了就是消息分发。</p>
 </blockquote>
 </li>
-<li>EIPs (<a href="https://book.douban.com/subject/1438029/" target="_blank" rel="external">点击送你去豆瓣</a>)<blockquote>
+<li><p>EIPs (<a href="https://book.douban.com/subject/1438029/" target="_blank" rel="external">点击送你去豆瓣</a>)</p>
+<blockquote>
 <p>ENTERPRISE INTEGRATION PATTERNS ，企业集成模式；是指为了解决系统间集成问题提出的多种模式，Camel几乎实现了所有的EIPs，并且有DSL与之对应；因此Camel是EIPs的实现者。</p>
 </blockquote>
 </li>
-<li>pojo模型<blockquote>
+<li><p>pojo模型</p>
+<blockquote>
 <p>Beans是Camel世界的一等公民，Camel倾向于用户使用Beans，带来的好处之一就是用户可以继承Camel内建的功能并自定义。</p>
 </blockquote>
 </li>
-<li>DSL、容易配置<blockquote>
+<li><p>DSL、容易配置</p>
+<blockquote>
 <p>Camel有自己的领域语言，语法简洁，支持Java、XML、Scala、Groovy。可以方便的配置一个路由。</p>
 </blockquote>
 </li>
-<li>内容格式无关、自动类型转换<blockquote>
+<li><p>内容格式无关、自动类型转换</p>
+<blockquote>
 <p>Camel没有规定消息格式，几乎可以以任意一种格式传递消息。能实现这样的工能，就是因为Camel内置了很多类型转换器，并且可以自动转换。</p>
 </blockquote>
 </li>
-<li>可扩展组件库、模块化与插件化架构<blockquote>
+<li><p>可扩展组件库、模块化与插件化架构</p>
+<blockquote>
 <p>Camel的架构设计就采用了模块化和组件化的思想，因此添加第三方扩展组件以及自定义组件都很容易，此外Camel的组件库也很丰富。</p>
 </blockquote>
 </li>
-<li>轻量级内核<blockquote>
+<li><p>轻量级内核</p>
+<blockquote>
 <p>1.6MB的内核，应该可以算轻量级吧。</p>
 </blockquote>
 </li>
 </ul>
 <h2 id="Camel小示例">Camel小示例</h2><ul>
-<li>简单的队列消息转发<pre><code><span class="comment">// 从一个消息队列分发到另外三个消息队列</span>
-<span class="keyword">from</span>(<span class="string">"jms:queue:"</span> + Destination.TASK_FINISH_PUBLISH)
-    .to(
-        <span class="string">"jms:queue:"</span> + Destination.CONSUMER_TASK_TASK_FINISH,
-        <span class="string">"jms:queue:"</span> + Destination.CONSUMER_GROWTH_TASK_FINISH,
-        <span class="string">"jms:queue:"</span> + Destination.CONSUMER_APPINFO_TASK_FINISH
-        );
-</code></pre></li>
-<li>监听目录，如果有文件删除就复制一份到目标目录<pre><code><span class="function"><span class="title">from</span><span class="params">(<span class="string">"file://inputdir/?delete=true"</span>)</span></span>.<span class="function"><span class="title">to</span><span class="params">(<span class="string">"file://outputdir"</span>)</span></span>
-</code></pre></li>
+<li>简单的队列消息转发</li>
 </ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从一个消息队列分发到另外三个消息队列</span></span><br><span class="line">from(<span class="string">"jms:queue:"</span> + Destination.TASK_FINISH_PUBLISH)</span><br><span class="line">    .to(</span><br><span class="line">        <span class="string">"jms:queue:"</span> + Destination.CONSUMER_TASK_TASK_FINISH,</span><br><span class="line">        <span class="string">"jms:queue:"</span> + Destination.CONSUMER_GROWTH_TASK_FINISH,</span><br><span class="line">        <span class="string">"jms:queue:"</span> + Destination.CONSUMER_APPINFO_TASK_FINISH</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<ul>
+<li>监听目录，如果有文件删除就复制一份到目标目录</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from(<span class="string">"file://inputdir/?delete=true"</span>).to(<span class="string">"file://outputdir"</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="消息路由的意义">消息路由的意义</h2><p>说了这么多，我们现在看到的功能无非就是消息的转发，有什么用呢，看起来很鸡肋啊。</p>
 <p>其实不然，有了消息路由这个中间站，我们可以对消息自定义处理：</p>
 <ul>
-<li>分布式环境下的去重</li>
-<li>对消息进行包装</li>
-<li>分发到多个目的地</li>
+<li><p>分布式环境下的去重</p>
+</li>
+<li><p>对消息进行包装</p>
+</li>
+<li><p>分发到多个目的地</p>
+</li>
 </ul>
 <p>等等…消息在手，想怎么玩就怎么玩。</p>
 <p>下一篇我们就来详细的说说Camel的原理。</p>

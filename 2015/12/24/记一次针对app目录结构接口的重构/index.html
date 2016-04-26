@@ -67,7 +67,7 @@
 题图：from Google">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezaw9wf48nj20kb06p75p.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3jw1ezatgnhz09j20e30jz0uz.jpg">
-<meta property="og:updated_time" content="2016-04-13T11:47:11.000Z">
+<meta property="og:updated_time" content="2016-04-26T08:14:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次针对app目录结构接口的重构">
 <meta name="twitter:description" content="记录一次对现有app目录结构接口的重构，合理的重构让我们的代码更加优美和简洁，也让我们的项目更加容易维护。
@@ -320,28 +320,32 @@
 <h2 id="背景">背景</h2><p>后端：RESTful接口<br>app：包括ios、android<br>接口数据结构：Json</p>
 <p>当前app首页以及目录结构接口返回结构：</p>
 <p><img src="http://ww3.sinaimg.cn/large/6b7b34d3jw1ezatgnhz09j20e30jz0uz.jpg" alt="兼职端app：先锋"></p>
-<p>```<br>{<br>    “success”: true,<br>    “msg”: [<br>        {<br>            “aIcon”: “<a href="http://xxx.png" target="_blank" rel="external">http://xxx.png</a>“,  //安卓 icon<br>            “iIcon”: “<a href="http://xxx.png" target="_blank" rel="external">http://xxx.png</a>“,  //ios icon<br>            “id”: 801,                  //图标id<br>            “title”: “任务分配”         //图标title<br>        },<br>        {<br>            “aIcon”: “<a href="http://xxx.png" target="_blank" rel="external">http://xxx.png</a>“,<br>            “iIcon”: “<a href="http://xxx.png" target="_blank" rel="external">http://xxx.png</a>“,<br>            “id”: 802,<br>            “title”: “分餐点”<br>        }<br>    ]<br>}<br>```</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"success"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"msg"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//安卓 icon</span></span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//ios icon</span></span><br><span class="line">            <span class="string">"id"</span>: <span class="number">801</span>,                  <span class="comment">//图标id </span></span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"任务分配"</span>         <span class="comment">//图标title</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,</span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,</span><br><span class="line">            <span class="string">"id"</span>: <span class="number">802</span>,</span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"分餐点"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="重构原因">重构原因</h2><ol>
-<li><strong>缺少部分数据</strong><br>很简单，在返回结构中加上所需数据就好。</li>
-<li><strong>实现后端控制跳转</strong></li>
+<li><strong>缺少部分数据</strong><br> 很简单，在返回结构中加上所需数据就好。</li>
+<li><strong>实现后端控制跳转</strong><ul>
 <li>app中点击菜单或者图标会跳转到对应的目录或者页面，目前app采用的方式是在代码中写死路径。</li>
 <li>现在考虑在返回结构中加上url，这样每个菜单或图标根据此url进行跳转</li>
 <li>此举可以降低app代码的耦合度，并且，若有修改跳转url的需要，只需后端修改即可，无需重新发版</li>
-<li><strong>实现后端访问统计</strong><br>对于现在web服务来说，经常会有统计访问量、统计访问来源等信息的需求。</li>
-</ol>
-<ul>
-<li>前端统计<br>主要使用不同厂商提供的统计服务，例如百度、友盟、flurry、google analytics</li>
-<li>后端统计<br>通过后台代码进行统计，合理入库并提供展示。使用后端统计意味着需要：<pre><code><span class="bullet">* </span>前端在每次请求时都要携带特定参数用于统计，因此应该合理设计参数以减小对于传输效率的影响。
-<span class="bullet">* </span>后端需要在每次接到请求时将对应统计参数进行解析处理
-</code></pre></li>
 </ul>
-<p><a href="http://open.taobao.com/doc2/detail.htm?articleId=959&amp;docType=1&amp;treeId=null" target="_blank" rel="external">淘宝后端统计，前端参数方案（spm）</a>  </p>
+</li>
+<li><strong>实现后端访问统计</strong><br> 对于现在web服务来说，经常会有统计访问量、统计访问来源等信息的需求。<ul>
+<li>前端统计<br>  主要使用不同厂商提供的统计服务，例如百度、友盟、flurry、google analytics</li>
+<li>后端统计<br>  通过后台代码进行统计，合理入库并提供展示。使用后端统计意味着需要：<ul>
+<li>前端在每次请求时都要携带特定参数用于统计，因此应该合理设计参数以减小对于传输效率的影响。</li>
+<li>后端需要在每次接到请求时将对应统计参数进行解析处理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><a href="http://open.taobao.com/doc2/detail.htm?articleId=959&amp;docType=1&amp;treeId=null" target="_blank" rel="external">淘宝后端统计，前端参数方案（spm）</a>      </p>
 <h2 id="重构结果">重构结果</h2><ol>
 <li>通过将跳转控制剥离到后端，降低app代码设计的耦合性</li>
 <li>加入访问统计，日后可以分析用户行为</li>
 <li>将接口结构与请求参数规范化，易于维护</li>
 </ol>
-<h2 id="重构后接口">重构后接口</h2><p>```<br>{<br>    “success”: true,<br>    “msg”: [<br>        {<br>            “aIcon”: “<a href="http://xxx.png" target="_blank" rel="external">http://xxx.png</a>“,  //安卓 icon<br>            “iIcon”: “<a href="http://xxx.png" target="_blank" rel="external">http://xxx.png</a>“,  //ios icon<br>            “id”: 801,                  //图标id<br>            “title”: “任务分配”         //图标title<br>            “badge”: 1,                 //小红点之类的标记<br>            “url”: “<a href="http://www.baidu.com" target="_blank" rel="external">http://www.baidu.com</a>“   //跳转url<br>            “isHome”: 1                 //是否首页显示<br>        },<br>        {<br>            “aIcon”: “<a href="http://xxx.png" target="_blank" rel="external">http://xxx.png</a>“,  //安卓 icon<br>            “iIcon”: “<a href="http://xxx.png" target="_blank" rel="external">http://xxx.png</a>“,  //ios icon<br>            “id”: 801,                  //图标id<br>            “title”: “任务分配”         //图标title<br>            “badge”: 1,                 //小红点之类的标记<br>            “url”: “redScarf://www.baidu.com”   //跳转url(自定义协议用于app内部跳转)<br>            “isHome”: 1                 //是否首页显示<br>        }<br>    ]<br>}<br>```</p>
+<h2 id="重构后接口">重构后接口</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"success"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"msg"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//安卓 icon</span></span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//ios icon</span></span><br><span class="line">            <span class="string">"id"</span>: <span class="number">801</span>,                  <span class="comment">//图标id </span></span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"任务分配"</span>         <span class="comment">//图标title</span></span><br><span class="line">            <span class="string">"badge"</span>: <span class="number">1</span>,                 <span class="comment">//小红点之类的标记</span></span><br><span class="line">            <span class="string">"url"</span>: <span class="string">"http://www.baidu.com"</span>   <span class="comment">//跳转url</span></span><br><span class="line">            <span class="string">"isHome"</span>: <span class="number">1</span>                 <span class="comment">//是否首页显示</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//安卓 icon</span></span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//ios icon</span></span><br><span class="line">            <span class="string">"id"</span>: <span class="number">801</span>,                  <span class="comment">//图标id </span></span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"任务分配"</span>         <span class="comment">//图标title</span></span><br><span class="line">            <span class="string">"badge"</span>: <span class="number">1</span>,                 <span class="comment">//小红点之类的标记</span></span><br><span class="line">            <span class="string">"url"</span>: <span class="string">"redScarf://www.baidu.com"</span>   <span class="comment">//跳转url(自定义协议用于app内部跳转)</span></span><br><span class="line">            <span class="string">"isHome"</span>: <span class="number">1</span>                 <span class="comment">//是否首页显示</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>

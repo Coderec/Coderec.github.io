@@ -66,7 +66,7 @@
 <meta property="og:description" content="记录配置过程
 题图：made by Keynote">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3jw1f13iclb5x3j20mq08s3z3.jpg">
-<meta property="og:updated_time" content="2016-04-19T03:39:40.000Z">
+<meta property="og:updated_time" content="2016-04-26T07:55:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot下配置Redis缓存">
 <meta name="twitter:description" content="记录配置过程
@@ -330,132 +330,17 @@
       
 
       
-        <p><img src="http://ww4.sinaimg.cn/large/6b7b34d3jw1f13iclb5x3j20mq08s3z3.jpg" width="700" height="397"></p>
+        <p><img src="http://ww4.sinaimg.cn/large/6b7b34d3jw1f13iclb5x3j20mq08s3z3.jpg" width="700" height="307"></p>
 <p>记录配置过程</p>
 <p>题图：made by Keynote</p>
 <a id="more"></a>
 <h2 id="一、添加Redis支持">一、添加Redis支持</h2><p>在build.gradle文件的dependencies模块下添加</p>
-<p>```<br>compile(“org.springframework.boot:spring-boot-starter-redis”)<br>```</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">compile</span><span class="params">(<span class="string">"org.springframework.boot:spring-boot-starter-redis"</span>)</span></span></span><br></pre></td></tr></table></figure>
 <h2 id="二、配置Redis">二、配置Redis</h2><p>想要使得redis可用，我们首先需要为缓存配置一个CacheManager、创建连接用的ConnectionFactory以及与Redis交互用的template（Spring的特点^_^）。当然，如果需要自定义主键，还要配置一个KeyGenerator，否则默认使用参数名作为主键。</p>
 <p>下面示例代码中RedisProperties类用来读取配置信息，RedisConfiguration用来对redis进行配置。</p>
-<p>```java<br>@Configuration<br>@EnableCaching<br>public class RedisConfiguration extends CachingConfigurerSupport {<br>    @Autowired<br>    private RedisProperties redisProperties;</p>
-<pre><code><span class="annotation">@Bean</span>
-<span class="keyword">public</span> <span class="function">KeyGenerator <span class="title">keyGenerator</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> <span class="keyword">new</span> KeyGenerator() {
-        <span class="annotation">@Override</span>
-        <span class="keyword">public</span> <span class="function">Object <span class="title">generate</span><span class="params">(Object <span class="keyword">target</span>, Method method, Object... params)</span> </span>{
-            <span class="keyword">if</span> (params.length == <span class="number">0</span>) {
-                <span class="keyword">return</span> Constants.CACHE_KEY_PREFIX + method.getName();
-            }
-            <span class="keyword">if</span> (params.length == <span class="number">1</span>) {
-                Object param = params[<span class="number">0</span>];
-                <span class="keyword">if</span> (param != <span class="keyword">null</span> &amp;&amp; !param.getClass().isArray()) {
-                    <span class="keyword">return</span> Constants.CACHE_KEY_PREFIX + method.getName() + <span class="string">"_"</span> + param;
-                }
-            }
-            <span class="keyword">return</span> Constants.CACHE_KEY_PREFIX + method.getName() + <span class="string">" ["</span> + StringUtils.arrayToCommaDelimitedString(params) + <span class="string">"]"</span>;
-        }
-    };
-}
-
-<span class="annotation">@Bean</span>
-<span class="keyword">public</span> <span class="function">CacheManager <span class="title">cacheManager</span><span class="params">(RedisTemplate redisTemplate)</span> </span>{
-    RedisCacheManager redisCacheManager = <span class="keyword">new</span> RedisCacheManager(redisTemplate);
-    redisCacheManager.setDefaultExpiration(redisProperties.getExpire());
-    <span class="keyword">return</span> redisCacheManager;
-}
-
-<span class="annotation">@Bean</span>(name = <span class="string">"redisTemplate"</span>)
-<span class="keyword">public</span> RedisTemplate&lt;String, Object&gt; redisTemplate(RedisConnectionFactory factory) {
-    RedisTemplate&lt;String, Object&gt; redisTemplate = <span class="keyword">new</span> RedisTemplate&lt;&gt;();
-    redisTemplate.setConnectionFactory(factory);
-
-    redisTemplate.setValueSerializer(<span class="keyword">new</span> RedisSerializer&lt;Object&gt;() {
-        <span class="annotation">@Override</span>
-        <span class="keyword">public</span> <span class="keyword">byte</span>[] serialize(Object object) <span class="keyword">throws</span> SerializationException {
-            <span class="keyword">if</span> (object == <span class="keyword">null</span>) {
-                <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">0</span>];
-            }
-            <span class="keyword">if</span> (!(object <span class="keyword">instanceof</span> Serializable)) {
-                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"RedisSerializer.serialize requires a Serializable payload "</span>
-                        + <span class="string">"but received an object of type ["</span> + object.getClass().getName() + <span class="string">"]"</span>);
-            }
-            <span class="keyword">return</span> SerializationUtils.serialize((Serializable) object);
-        }
-
-        <span class="annotation">@Override</span>
-        <span class="keyword">public</span> <span class="function">Object <span class="title">deserialize</span><span class="params">(<span class="keyword">byte</span>[] bytes)</span> <span class="keyword">throws</span> SerializationException </span>{
-            <span class="keyword">if</span> (bytes == <span class="keyword">null</span> || bytes.length == <span class="number">0</span>) {
-                <span class="keyword">return</span> <span class="keyword">null</span>;
-            }
-            <span class="function"><span class="keyword">return</span> SerializationUtils.<span class="title">deserialize</span><span class="params">(bytes)</span></span>;
-        }
-    });
-
-    redisTemplate.afterPropertiesSet();
-    <span class="keyword">return</span> redisTemplate;
-}
-
-<span class="annotation">@Bean</span>
-<span class="keyword">public</span> <span class="function">JedisConnectionFactory <span class="title">redisConnectionFactory</span><span class="params">()</span> </span>{
-    JedisConnectionFactory redisConnectionFactory = <span class="keyword">new</span> JedisConnectionFactory();
-
-    <span class="comment">// Defaults</span>
-    redisConnectionFactory.setHostName(redisProperties.getHost());
-    redisConnectionFactory.setPort(redisProperties.getPort());
-    redisConnectionFactory.setDatabase(redisProperties.getIndex());
-    redisConnectionFactory.setPassword(redisProperties.getPassword());
-    <span class="keyword">return</span> redisConnectionFactory;
-}
-</code></pre><p>}<br>```</p>
-<p>```java<br>@Component<br>@ConfigurationProperties(prefix = “redis”)<br>public class RedisProperties {</p>
-<pre><code><span class="keyword">private</span> String host;
-<span class="keyword">private</span> <span class="keyword">int</span> port;
-<span class="keyword">private</span> String password;
-<span class="keyword">private</span> <span class="keyword">int</span> expire;
-<span class="keyword">private</span> <span class="keyword">int</span> index;
-
-<span class="keyword">public</span> <span class="function">String <span class="title">getHost</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> host;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setHost</span><span class="params">(String host)</span> </span>{
-    <span class="keyword">this</span>.host = host;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getPort</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> port;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setPort</span><span class="params">(<span class="keyword">int</span> port)</span> </span>{
-    <span class="keyword">this</span>.port = port;
-}
-
-<span class="keyword">public</span> <span class="function">String <span class="title">getPassword</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> password;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setPassword</span><span class="params">(String password)</span> </span>{
-    <span class="keyword">this</span>.password = password;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getExpire</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> expire;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setExpire</span><span class="params">(<span class="keyword">int</span> expire)</span> </span>{
-    <span class="keyword">this</span>.expire = expire;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getIndex</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> index;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>{
-    <span class="keyword">this</span>.index = index;
-}
-</code></pre><p>}<br>```</p>
-<h2 id="三、Redis服务器配置">三、Redis服务器配置</h2><p>在application.yml文件中进行配置<br>```xml<br>redis:<br>    host: 127.0.0.1<br>    port: 6379<br>    password: xxxxxxx<br>    expire: 120<br>    index: 11<br>```</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Configuration</span></span><br><span class="line"><span class="annotation">@EnableCaching</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfiguration</span> <span class="keyword">extends</span> <span class="title">CachingConfigurerSupport</span> </span>&#123;</span><br><span class="line">    <span class="annotation">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RedisProperties redisProperties;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> KeyGenerator <span class="title">keyGenerator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> KeyGenerator() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> Object <span class="title">generate</span><span class="params">(Object target, Method method, Object... params)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (params.length == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> Constants.CACHE_KEY_PREFIX + method.getName();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (params.length == <span class="number">1</span>) &#123;</span><br><span class="line">                    Object param = params[<span class="number">0</span>];</span><br><span class="line">                    <span class="keyword">if</span> (param != <span class="keyword">null</span> &amp;&amp; !param.getClass().isArray()) &#123;</span><br><span class="line">                        <span class="keyword">return</span> Constants.CACHE_KEY_PREFIX + method.getName() + <span class="string">"_"</span> + param;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> Constants.CACHE_KEY_PREFIX + method.getName() + <span class="string">" ["</span> + StringUtils.arrayToCommaDelimitedString(params) + <span class="string">"]"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CacheManager <span class="title">cacheManager</span><span class="params">(RedisTemplate redisTemplate)</span> </span>&#123;</span><br><span class="line">        RedisCacheManager redisCacheManager = <span class="keyword">new</span> RedisCacheManager(redisTemplate);</span><br><span class="line">        redisCacheManager.setDefaultExpiration(redisProperties.getExpire());</span><br><span class="line">        <span class="keyword">return</span> redisCacheManager;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Bean</span>(name = <span class="string">"redisTemplate"</span>)</span><br><span class="line">    <span class="keyword">public</span> RedisTemplate&lt;String, Object&gt; redisTemplate(RedisConnectionFactory factory) &#123;</span><br><span class="line">        RedisTemplate&lt;String, Object&gt; redisTemplate = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        redisTemplate.setConnectionFactory(factory);</span><br><span class="line"></span><br><span class="line">        redisTemplate.setValueSerializer(<span class="keyword">new</span> RedisSerializer&lt;Object&gt;() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">byte</span>[] serialize(Object object) <span class="keyword">throws</span> SerializationException &#123;</span><br><span class="line">                <span class="keyword">if</span> (object == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">0</span>];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (!(object <span class="keyword">instanceof</span> Serializable)) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"RedisSerializer.serialize requires a Serializable payload "</span></span><br><span class="line">                            + <span class="string">"but received an object of type ["</span> + object.getClass().getName() + <span class="string">"]"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> SerializationUtils.serialize((Serializable) object);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> Object <span class="title">deserialize</span><span class="params">(<span class="keyword">byte</span>[] bytes)</span> <span class="keyword">throws</span> SerializationException </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (bytes == <span class="keyword">null</span> || bytes.length == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> SerializationUtils.deserialize(bytes);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        redisTemplate.afterPropertiesSet();</span><br><span class="line">        <span class="keyword">return</span> redisTemplate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> JedisConnectionFactory <span class="title">redisConnectionFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        JedisConnectionFactory redisConnectionFactory = <span class="keyword">new</span> JedisConnectionFactory();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Defaults</span></span><br><span class="line">        redisConnectionFactory.setHostName(redisProperties.getHost());</span><br><span class="line">        redisConnectionFactory.setPort(redisProperties.getPort());</span><br><span class="line">        redisConnectionFactory.setDatabase(redisProperties.getIndex());</span><br><span class="line">        redisConnectionFactory.setPassword(redisProperties.getPassword());</span><br><span class="line">        <span class="keyword">return</span> redisConnectionFactory;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Component</span></span><br><span class="line"><span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"redis"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisProperties</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String host;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> port;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> expire;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> index;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHost</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> host;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHost</span><span class="params">(String host)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.host = host;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPort</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> port;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPort</span><span class="params">(<span class="keyword">int</span> port)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.port = port;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPassword</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPassword</span><span class="params">(String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getExpire</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> expire;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setExpire</span><span class="params">(<span class="keyword">int</span> expire)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.expire = expire;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getIndex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> index;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.index = index;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="三、Redis服务器配置">三、Redis服务器配置</h2><p>在application.yml文件中进行配置<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">redis:</span><br><span class="line">    host: 127.0.0.1</span><br><span class="line">    port: 6379</span><br><span class="line">    password: xxxxxxx</span><br><span class="line">    expire: 120</span><br><span class="line">    index: 11</span><br></pre></td></tr></table></figure></p>
 <h2 id="四、应用">四、应用</h2><h3 id="1-@Cacheable">1.@Cacheable</h3><p>通过以上配置，spring会自动检测到redis的缓存配置。<br>在需要缓存结果的方法上添加@Cacheable注解，即可实现自动使用redis进行缓存。</p>
 <h3 id="2-redisTemplate">2.redisTemplate</h3><p>某些情况下，@Cacheable注解有可能不适用，也可以直接获取redisTemplate来直接操作redis缓存。<br>与JDBCTemplate等Template相同，RedisTemplate也对redis的相关操作进行很好的封装，使用起来十分方便。<br><strong>因为redisTemplate已经注册为Spring管理的Bean，所以可以通过getBean()方法直接获取。</strong></p>
 <h2 id="五、参考文章">五、参考文章</h2><p><a href="http://caseyscarborough.com/blog/2014/12/18/caching-data-in-spring-using-redis/" target="_blank" rel="external">Caching Data in Spring Using Redis</a></p>
