@@ -73,6 +73,7 @@
 <meta name="twitter:title" content="IntelliJ Idea 常用配置">
 <meta name="twitter:description" content="从Eclipse切换到IntelliJ Idea有好多配置不太一样，在这里记录下常用的配置。
 题图：from IntelliJ">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/6b7b34d3jw1ezngbgpgh4j20su0gkjte.jpg">
 
 
 
@@ -312,20 +313,20 @@
 <p>从Eclipse切换到IntelliJ Idea有好多配置不太一样，在这里记录下常用的配置。</p>
 <p>题图：from IntelliJ</p>
 <a id="more"></a>
-<h2 id="Inspection_代码检查">Inspection 代码检查</h2><p>在设置目录中，editor –&gt; inspections用来配置各种代码检查以及警告。</p>
+<h2 id="Inspection-代码检查"><a href="#Inspection-代码检查" class="headerlink" title="Inspection 代码检查"></a>Inspection 代码检查</h2><p>在设置目录中，editor –&gt; inspections用来配置各种代码检查以及警告。</p>
 <ol>
 <li><strong>开启import *提示</strong><br>editor –&gt; inspections –&gt; java –&gt; imports<br>勾选<code>* import</code> </li>
 <li><strong>工具类必须为final、不能含有public构造方法、必须有private构造方法</strong><br>editor –&gt; inspections –&gt; java –&gt; class structure<br>勾选<code>utility class is not final</code><br>勾选<code>utility class with public constructor</code><br>勾选<code>utility class without private constructor</code>  </li>
 <li><strong>equals()与hashCode()方法必须成对出现</strong><br>editor –&gt; inspections –&gt; java –&gt; probable bugs<br>勾选<code>equals and hashcode() not paired</code>  </li>
 <li><strong>可序列化类没有声明serialVersionUID</strong><br>editor –&gt; inspections –&gt; java –&gt; Serialization issue<br>勾选<code>Serializable class without &#39;serialVersionUID&#39;</code></li>
 </ol>
-<h2 id="Code_Style_代码风格">Code Style 代码风格</h2><ol>
+<h2 id="Code-Style-代码风格"><a href="#Code-Style-代码风格" class="headerlink" title="Code Style 代码风格"></a>Code Style 代码风格</h2><ol>
 <li><strong>else新起一行</strong><br>editor –&gt; code style –&gt; java –&gt; if() statement<br>勾选<code>else on new line</code><br><code>force brace</code>选择<code>always</code>  </li>
 <li><strong>方法参数过长自动换行</strong><br>editor –&gt; code style –&gt; java –&gt; method declaration<br><code>parameters</code>选择<code>wrap if long</code>  </li>
 <li><strong>禁用import *</strong><br>editor –&gt; code style –&gt; java –&gt; imports<br><code>class count to use import with *</code> 填写 <code>500</code><br><code>names count to use static import with *</code>填写 <code>500</code>  </li>
 <li><strong>配置import顺序</strong><br>editor –&gt; code style –&gt; java –&gt; imports  –&gt; import layout<br><a href="http://stackoverflow.com/questions/14716283/is-it-possible-for-intellij-to-organize-imports-the-same-way-as-in-eclipse" target="_blank" rel="external">参考链接（stackoverflow.com）</a></li>
 </ol>
-<h2 id="IDE配置">IDE配置</h2><ol>
+<h2 id="IDE配置"><a href="#IDE配置" class="headerlink" title="IDE配置"></a>IDE配置</h2><ol>
 <li><strong>自动import</strong><br>editor –&gt; general –&gt; auto import<br>勾选<code>optimize imports on the fly</code><br>勾选<code>add unambiguous imports on the fly</code>  </li>
 <li><strong>编辑器显示行号</strong><br>editor –&gt; general –&gt; apperance<br>勾选<code>show line numbers</code>  </li>
 <li><strong>自动补全main函数</strong><br>editor –&gt; live templates –&gt; other<br>右侧点击加号，如下图配置<br><img src="http://ww2.sinaimg.cn/large/6b7b34d3jw1eznalqaj46j20r10h4wi5.jpg" alt="image">  </li>
@@ -454,21 +455,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -537,7 +538,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Inspection_代码检查"><span class="nav-number">1.</span> <span class="nav-text">Inspection 代码检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code_Style_代码风格"><span class="nav-number">2.</span> <span class="nav-text">Code Style 代码风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDE配置"><span class="nav-number">3.</span> <span class="nav-text">IDE配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Inspection-代码检查"><span class="nav-number">1.</span> <span class="nav-text">Inspection 代码检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Style-代码风格"><span class="nav-number">2.</span> <span class="nav-text">Code Style 代码风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDE配置"><span class="nav-number">3.</span> <span class="nav-text">IDE配置</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

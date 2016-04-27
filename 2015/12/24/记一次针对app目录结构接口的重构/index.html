@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="接口设计,重构," />
+  <meta name="keywords" content="重构,接口设计," />
 
 
 
@@ -72,6 +72,7 @@
 <meta name="twitter:title" content="记一次针对app目录结构接口的重构">
 <meta name="twitter:description" content="记录一次对现有app目录结构接口的重构，合理的重构让我们的代码更加优美和简洁，也让我们的项目更加容易维护。
 题图：from Google">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezaw9wf48nj20kb06p75p.jpg">
 
 
 
@@ -311,17 +312,17 @@
 <p>记录一次对现有app目录结构接口的重构，合理的重构让我们的代码更加优美和简洁，也让我们的项目更加容易维护。</p>
 <p>题图：from Google</p>
 <a id="more"></a>
-<h2 id="引子">引子</h2><p>在web开发中，针对app的后端接口设计是有别于传统网页接口设计的。之所以存在这种差异，主要有以下几点原因：</p>
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>在web开发中，针对app的后端接口设计是有别于传统网页接口设计的。之所以存在这种差异，主要有以下几点原因：</p>
 <ol>
 <li>数据量<br>按需返回，app需要哪些数据就返回哪些数据。如果返回多余的数据，很明显会浪费流量，但是更重要的会影响传输效率与响应时间。</li>
 <li>接口数量<br>app更希望一个页面对应一个接口，而传统网页则要求不高，此处主要是考虑到http传输效率。众所周知http包会包括多个数据头，真正需要的数据可能还不及数据头大，因此接口减少，有利于提高传输效率。</li>
 <li>接口版本控制<br>随着app不断迭代发版，app使用的新旧接口变化，后端需要面对如何应对管理的问题。（一种方法：使用参数中带版本信息，请求通过filter时进行解析然后分发）</li>
 </ol>
-<h2 id="背景">背景</h2><p>后端：RESTful接口<br>app：包括ios、android<br>接口数据结构：Json</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>后端：RESTful接口<br>app：包括ios、android<br>接口数据结构：Json</p>
 <p>当前app首页以及目录结构接口返回结构：</p>
 <p><img src="http://ww3.sinaimg.cn/large/6b7b34d3jw1ezatgnhz09j20e30jz0uz.jpg" alt="兼职端app：先锋"></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"success"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"msg"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//安卓 icon</span></span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//ios icon</span></span><br><span class="line">            <span class="string">"id"</span>: <span class="number">801</span>,                  <span class="comment">//图标id </span></span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"任务分配"</span>         <span class="comment">//图标title</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,</span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,</span><br><span class="line">            <span class="string">"id"</span>: <span class="number">802</span>,</span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"分餐点"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="重构原因">重构原因</h2><ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;success&quot;: true,</span><br><span class="line">    &quot;msg&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;aIcon&quot;: &quot;http://xxx.png&quot;,  //安卓 icon</span><br><span class="line">            &quot;iIcon&quot;: &quot;http://xxx.png&quot;,  //ios icon</span><br><span class="line">            &quot;id&quot;: 801,                  //图标id </span><br><span class="line">            &quot;title&quot;: &quot;任务分配&quot;         //图标title</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;aIcon&quot;: &quot;http://xxx.png&quot;,</span><br><span class="line">            &quot;iIcon&quot;: &quot;http://xxx.png&quot;,</span><br><span class="line">            &quot;id&quot;: 802,</span><br><span class="line">            &quot;title&quot;: &quot;分餐点&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="重构原因"><a href="#重构原因" class="headerlink" title="重构原因"></a>重构原因</h2><ol>
 <li><strong>缺少部分数据</strong><br> 很简单，在返回结构中加上所需数据就好。</li>
 <li><strong>实现后端控制跳转</strong><ul>
 <li>app中点击菜单或者图标会跳转到对应的目录或者页面，目前app采用的方式是在代码中写死路径。</li>
@@ -340,12 +341,12 @@
 </li>
 </ol>
 <p><a href="http://open.taobao.com/doc2/detail.htm?articleId=959&amp;docType=1&amp;treeId=null" target="_blank" rel="external">淘宝后端统计，前端参数方案（spm）</a>      </p>
-<h2 id="重构结果">重构结果</h2><ol>
+<h2 id="重构结果"><a href="#重构结果" class="headerlink" title="重构结果"></a>重构结果</h2><ol>
 <li>通过将跳转控制剥离到后端，降低app代码设计的耦合性</li>
 <li>加入访问统计，日后可以分析用户行为</li>
 <li>将接口结构与请求参数规范化，易于维护</li>
 </ol>
-<h2 id="重构后接口">重构后接口</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"success"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"msg"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//安卓 icon</span></span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//ios icon</span></span><br><span class="line">            <span class="string">"id"</span>: <span class="number">801</span>,                  <span class="comment">//图标id </span></span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"任务分配"</span>         <span class="comment">//图标title</span></span><br><span class="line">            <span class="string">"badge"</span>: <span class="number">1</span>,                 <span class="comment">//小红点之类的标记</span></span><br><span class="line">            <span class="string">"url"</span>: <span class="string">"http://www.baidu.com"</span>   <span class="comment">//跳转url</span></span><br><span class="line">            <span class="string">"isHome"</span>: <span class="number">1</span>                 <span class="comment">//是否首页显示</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"aIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//安卓 icon</span></span><br><span class="line">            <span class="string">"iIcon"</span>: <span class="string">"http://xxx.png"</span>,  <span class="comment">//ios icon</span></span><br><span class="line">            <span class="string">"id"</span>: <span class="number">801</span>,                  <span class="comment">//图标id </span></span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"任务分配"</span>         <span class="comment">//图标title</span></span><br><span class="line">            <span class="string">"badge"</span>: <span class="number">1</span>,                 <span class="comment">//小红点之类的标记</span></span><br><span class="line">            <span class="string">"url"</span>: <span class="string">"redScarf://www.baidu.com"</span>   <span class="comment">//跳转url(自定义协议用于app内部跳转)</span></span><br><span class="line">            <span class="string">"isHome"</span>: <span class="number">1</span>                 <span class="comment">//是否首页显示</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="重构后接口"><a href="#重构后接口" class="headerlink" title="重构后接口"></a>重构后接口</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;success&quot;: true,</span><br><span class="line">    &quot;msg&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;aIcon&quot;: &quot;http://xxx.png&quot;,  //安卓 icon</span><br><span class="line">            &quot;iIcon&quot;: &quot;http://xxx.png&quot;,  //ios icon</span><br><span class="line">            &quot;id&quot;: 801,                  //图标id </span><br><span class="line">            &quot;title&quot;: &quot;任务分配&quot;         //图标title</span><br><span class="line">            &quot;badge&quot;: 1,                 //小红点之类的标记</span><br><span class="line">            &quot;url&quot;: &quot;http://www.baidu.com&quot;   //跳转url</span><br><span class="line">            &quot;isHome&quot;: 1                 //是否首页显示</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;aIcon&quot;: &quot;http://xxx.png&quot;,  //安卓 icon</span><br><span class="line">            &quot;iIcon&quot;: &quot;http://xxx.png&quot;,  //ios icon</span><br><span class="line">            &quot;id&quot;: 801,                  //图标id </span><br><span class="line">            &quot;title&quot;: &quot;任务分配&quot;         //图标title</span><br><span class="line">            &quot;badge&quot;: 1,                 //小红点之类的标记</span><br><span class="line">            &quot;url&quot;: &quot;redScarf://www.baidu.com&quot;   //跳转url(自定义协议用于app内部跳转)</span><br><span class="line">            &quot;isHome&quot;: 1                 //是否首页显示</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -354,9 +355,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/接口设计/" rel="tag">#接口设计</a>
-          
             <a href="/tags/重构/" rel="tag">#重构</a>
+          
+            <a href="/tags/接口设计/" rel="tag">#接口设计</a>
           
         </div>
       
@@ -470,21 +471,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

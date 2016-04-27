@@ -71,6 +71,7 @@
 <meta name="twitter:title" content="Apache Camel路由规则引擎（一）">
 <meta name="twitter:description" content="Apache提供的消息路由引擎，骆驼！
 题图：from Zoommy">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/6b7b34d3gw1f31v4cfqq1j20j40b2tc3.jpg">
 
 
 
@@ -310,12 +311,12 @@
 <p>Apache提供的消息路由引擎，骆驼！</p>
 <p>题图：from Zoommy</p>
 <a id="more"></a>
-<h2 id="Camel是什么">Camel是什么</h2><p>核心是路由引擎，更精确地说就是路由引擎构造器。camel提供了统一的高级抽象api，开发者无需考虑消息来源或者消息目的地，甚至连协议都无需考虑，所有的这些都通过相同的api处理。</p>
+<h2 id="Camel是什么"><a href="#Camel是什么" class="headerlink" title="Camel是什么"></a>Camel是什么</h2><p>核心是路由引擎，更精确地说就是路由引擎构造器。camel提供了统一的高级抽象api，开发者无需考虑消息来源或者消息目的地，甚至连协议都无需考虑，所有的这些都通过相同的api处理。</p>
 <p>另外值得一提，Camel不是什么。他不是ESB(<a href="http://baike.baidu.com/link?url=BiQkD7Ziz6wlvrWkfyHkMqTywSzSUH-SP_m-mQM_Y4IiUNqk-8x1tc8AIKXHeVwVKjQjCuDnvyzLSJS7fve_dq" target="_blank" rel="external">点击送你去度娘</a>)</p>
-<h2 id="Camel的历史">Camel的历史</h2><p>Camel最初是在Apache ActiveMQ项目下的子项目，其功能就是做队列间的消息转发。随着其功能的不断完善，Camel被提升为Apache顶级项目。也因此，作为路由规则引擎被广泛使用。</p>
+<h2 id="Camel的历史"><a href="#Camel的历史" class="headerlink" title="Camel的历史"></a>Camel的历史</h2><p>Camel最初是在Apache ActiveMQ项目下的子项目，其功能就是做队列间的消息转发。随着其功能的不断完善，Camel被提升为Apache顶级项目。也因此，作为路由规则引擎被广泛使用。</p>
 <p>这个项目被命名为Camel的原因有很多种；有说是因为开发成员喜欢Camel香烟的，有说是因为骆驼可以不吃不喝跋山涉水且负重颇高的，还有说是因为骆驼不会对它喜欢的人吐口水的。</p>
 <p>Whatever，想象一下，Camel对你吐口水的那场景，：）。</p>
-<h2 id="Camel的功能和特性">Camel的功能和特性</h2><ul>
+<h2 id="Camel的功能和特性"><a href="#Camel的功能和特性" class="headerlink" title="Camel的功能和特性"></a>Camel的功能和特性</h2><ul>
 <li><p>路由和规则引擎</p>
 <blockquote>
 <p>Camel的主要功能就是路由引擎，说白了就是消息分发。</p>
@@ -352,7 +353,7 @@
 </blockquote>
 </li>
 </ul>
-<h2 id="Camel小示例">Camel小示例</h2><ul>
+<h2 id="Camel小示例"><a href="#Camel小示例" class="headerlink" title="Camel小示例"></a>Camel小示例</h2><ul>
 <li>简单的队列消息转发</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从一个消息队列分发到另外三个消息队列</span></span><br><span class="line">from(<span class="string">"jms:queue:"</span> + Destination.TASK_FINISH_PUBLISH)</span><br><span class="line">    .to(</span><br><span class="line">        <span class="string">"jms:queue:"</span> + Destination.CONSUMER_TASK_TASK_FINISH,</span><br><span class="line">        <span class="string">"jms:queue:"</span> + Destination.CONSUMER_GROWTH_TASK_FINISH,</span><br><span class="line">        <span class="string">"jms:queue:"</span> + Destination.CONSUMER_APPINFO_TASK_FINISH</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
@@ -360,7 +361,7 @@
 <li>监听目录，如果有文件删除就复制一份到目标目录</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from(<span class="string">"file://inputdir/?delete=true"</span>).to(<span class="string">"file://outputdir"</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="消息路由的意义">消息路由的意义</h2><p>说了这么多，我们现在看到的功能无非就是消息的转发，有什么用呢，看起来很鸡肋啊。</p>
+<h2 id="消息路由的意义"><a href="#消息路由的意义" class="headerlink" title="消息路由的意义"></a>消息路由的意义</h2><p>说了这么多，我们现在看到的功能无非就是消息的转发，有什么用呢，看起来很鸡肋啊。</p>
 <p>其实不然，有了消息路由这个中间站，我们可以对消息自定义处理：</p>
 <ul>
 <li><p>分布式环境下的去重</p>
@@ -396,6 +397,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/26/Mac下好用的工具/" rel="prev" title="Mac下好用的工具">
+                Mac下好用的工具 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -490,21 +495,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

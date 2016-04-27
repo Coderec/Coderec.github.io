@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="C++,Sublime," />
+  <meta name="keywords" content="Sublime,C++," />
 
 
 
@@ -304,7 +304,7 @@
       
         <p>因为想打造一款随插随用的绿色版c++编译环境，又不太想用vc6.0（有绿色版），毕竟sublime的界面很舒服，于是就着手打造sublime的c++编译环境。</p>
 <p>需要：<br>  1.mingw绿色免安装版（实际上我找了一个晚上也没找到，至少都是需要设置下环境变量path的）<br>  2.sublime text 3免安装版<br>首先：<br>  1.拿到subime，<br>  2.将下载好的mingw“免安装版”拷贝到sublime根目录下<br>  3.进入sublime-tools-build system-new build system,设置编译系统的配置文件，并保存文件名C++.sublime-build</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          "<span class="attribute">path</span>": <span class="value"><span class="string">"G:/Sublime Text 3_x64(Python and CPP)/MinGW/bin"</span></span>,</span><br><span class="line">          "<span class="attribute">cmd</span>": <span class="value">[<span class="string">"g++.exe"</span>, <span class="string">"$&#123;file&#125;"</span>, <span class="string">"-o"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;"</span>]</span>,</span><br><span class="line">          "<span class="attribute">file_regex</span>": <span class="value"><span class="string">"^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$"</span></span>,</span><br><span class="line">          "<span class="attribute">working_dir</span>": <span class="value"><span class="string">"$&#123;file_path&#125;"</span></span>,</span><br><span class="line">          "<span class="attribute">selector</span>": <span class="value"><span class="string">"source.c, source.c++"</span></span>,</span><br><span class="line">          "<span class="attribute">encoding</span>":<span class="value"><span class="string">"UTF-8"</span></span>,    </span><br><span class="line">          "<span class="attribute">encoding</span>": <span class="value"><span class="string">"cp936"</span></span>,</span><br><span class="line">          "<span class="attribute">variants</span>":</span><br><span class="line">          <span class="value">[</span><br><span class="line">               &#123;</span><br><span class="line">                    "<span class="attribute">name</span>": <span class="value"><span class="string">"Run"</span></span>,</span><br><span class="line">                   </span><br><span class="line">                    "<span class="attribute">cmd</span>": <span class="value">[ <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125;.exe"</span>]</span>,</span><br><span class="line">                    "<span class="attribute">shell</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">                 "<span class="attribute">cmd</span>" : <span class="value">[<span class="string">"start"</span>, <span class="string">"cmd"</span>, <span class="string">"/k"</span>, <span class="string">"$&#123;file_path&#125;/$&#123;file_base_name&#125; &amp;&amp;echo. &amp; pause &amp;&amp; exit"</span>]</span><br><span class="line">               </span>&#125;</span><br><span class="line">          ]</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          &quot;path&quot;: &quot;G:/Sublime Text 3_x64(Python and CPP)/MinGW/bin&quot;,</span><br><span class="line">          &quot;cmd&quot;: [&quot;g++.exe&quot;, &quot;$&#123;file&#125;&quot;, &quot;-o&quot;, &quot;$&#123;file_path&#125;/$&#123;file_base_name&#125;&quot;],</span><br><span class="line">          &quot;file_regex&quot;: &quot;^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$&quot;,</span><br><span class="line">          &quot;working_dir&quot;: &quot;$&#123;file_path&#125;&quot;,</span><br><span class="line">          &quot;selector&quot;: &quot;source.c, source.c++&quot;,</span><br><span class="line">          &quot;encoding&quot;:&quot;UTF-8&quot;,    </span><br><span class="line">          &quot;encoding&quot;: &quot;cp936&quot;,</span><br><span class="line">          &quot;variants&quot;:</span><br><span class="line">          [</span><br><span class="line">               &#123;</span><br><span class="line">                    &quot;name&quot;: &quot;Run&quot;,</span><br><span class="line">                   </span><br><span class="line">                    &quot;cmd&quot;: [ &quot;$&#123;file_path&#125;/$&#123;file_base_name&#125;.exe&quot;],</span><br><span class="line">                    &quot;shell&quot;: true,</span><br><span class="line">                 &quot;cmd&quot; : [&quot;start&quot;, &quot;cmd&quot;, &quot;/k&quot;, &quot;$&#123;file_path&#125;/$&#123;file_base_name&#125; &amp;&amp;echo. &amp; pause &amp;&amp; exit&quot;]</span><br><span class="line">               &#125;</span><br><span class="line">          ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>  4.说明1：文件中第一行path参数是区别于网上其他教程的，<strong>请将path参数设置为sublime目录下mingw文件夹的bin目录</strong>，该参数的意思就是在执行cmd编译之前将系统环境变量暂时改变为设置的值，cmd执行结束后在取消修改，因此<strong>不需要在系统中设置环境变量了</strong><br>  5.说明2：sublime官方文档上说\${packages}可以用来表示packages这个目录但是如果我在path中设置使用\${packages}，sublime貌似没能识别，也因此我没能全部使用相对路径，也因此<strong>每次改变sublime的路径后一定要修改此处的path参数</strong></p>
 <p>对于第五条，如何才能真正做到，在换了sublime路径后仍然不必更改path参数，这个问题，希望有人可以给我解答，</p>
 <p>这里介绍的最起码无需麻烦的在系统中设置环境变量了。当然，如果真的有无需配置环境变量即可使用的编译环境，就无需配置path参数了</p>
@@ -316,9 +316,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/C/" rel="tag">#C++</a>
-          
             <a href="/tags/Sublime/" rel="tag">#Sublime</a>
+          
+            <a href="/tags/C/" rel="tag">#C++</a>
           
         </div>
       
@@ -428,21 +428,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

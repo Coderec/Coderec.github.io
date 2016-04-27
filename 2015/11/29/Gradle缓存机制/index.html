@@ -73,6 +73,7 @@
 <meta name="twitter:title" content="Gradle缓存机制">
 <meta name="twitter:description" content="了解Gradle本身的缓存机制，更好的使用它。
 题图：from Google">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg">
 
 
 
@@ -312,17 +313,17 @@
 <p>了解Gradle本身的缓存机制，更好的使用它。</p>
 <p>题图：from Google</p>
 <a id="more"></a>
-<h2 id="Gradle是什么">Gradle是什么</h2><p>Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。</p>
+<h2 id="Gradle是什么"><a href="#Gradle是什么" class="headerlink" title="Gradle是什么"></a>Gradle是什么</h2><p>Gradle跟ant/maven一样，是一种依赖管理/自动化构建工具。但是跟ant/maven不一样是，它并没有使用xml语言，而是采用了Groovy语言，这使得它更加简洁、灵活，更加强大的是，gradle完全兼容maven。</p>
 <p>Gradle官网用户指南：<a href="https://docs.gradle.org/current/userguide/userguide.html" target="_blank" rel="external">Gradle UserGuide</a></p>
-<h2 id="Gradle的缓存机制">Gradle的缓存机制</h2><p>注：以下示例中假设已有一个Gradle的task，名为warProduct。</p>
-<h3 id="1-脚本缓存">1.脚本缓存</h3><p>为了提高响应速度，默认情况下Gradle会缓存所有已编译的脚本。包括所有构建脚本、初始化脚本和其他脚本。</p>
+<h2 id="Gradle的缓存机制"><a href="#Gradle的缓存机制" class="headerlink" title="Gradle的缓存机制"></a>Gradle的缓存机制</h2><p>注：以下示例中假设已有一个Gradle的task，名为warProduct。</p>
+<h3 id="1-脚本缓存"><a href="#1-脚本缓存" class="headerlink" title="1.脚本缓存"></a>1.脚本缓存</h3><p>为了提高响应速度，默认情况下Gradle会缓存所有已编译的脚本。包括所有构建脚本、初始化脚本和其他脚本。</p>
 <p>以构建脚本为例，在第一次运行构建脚本时， Gradle 会创建.gradle目录，用于存放已编译的脚本。在下次运行构建脚本时， 如果该脚本自它编译后没有被修改，Gradle 会使用这个已编译的脚本。否则该脚本会重新编译，并把最新版本存在缓存中。</p>
 <p>在实际使用中，如果不想使用这种缓存机制，可以通过–recompile-scripts选项运行 Gradle ，这样会丢弃缓存的脚本，然后重新编译脚本并将其存在缓存中。我们可以用这种方式强制重新编译脚本。</p>
 <blockquote>
 <p>示例<br>gradle warProduct –recompile-scripts</p>
 </blockquote>
 <p>参考链接：<br>Gradle命令行选项：<a href="https://docs.gradle.org/current/userguide/gradle_command_line.html" target="_blank" rel="external">gradle command line</a></p>
-<h3 id="2-task缓存">2.task缓存</h3><p>同样是为了提高速度，Gradle对于内建类型task，也即built-in tasks，也使用了缓存。（自定义task只要指定了输入输出路径，也会使用缓存）</p>
+<h3 id="2-task缓存"><a href="#2-task缓存" class="headerlink" title="2.task缓存"></a>2.task缓存</h3><p>同样是为了提高速度，Gradle对于内建类型task，也即built-in tasks，也使用了缓存。（自定义task只要指定了输入输出路径，也会使用缓存）</p>
 <p>使用缓存的效果如下所示：</p>
 <blockquote>
 <p>第一次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg" alt=""><br>第二次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg" alt=""></p>
@@ -456,21 +457,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

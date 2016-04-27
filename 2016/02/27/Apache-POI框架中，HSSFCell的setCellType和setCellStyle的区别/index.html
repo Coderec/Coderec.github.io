@@ -71,6 +71,7 @@
 <meta name="twitter:title" content="Apache POI框架中，HSSFCell的setCellType和setCellStyle的区别">
 <meta name="twitter:description" content="来看一看POI是怎么设置excel单元格类型的。
 题图：from Google">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/6b7b34d3gw1f1e97gjmdqj20la09bt9i.jpg">
 
 
 
@@ -310,8 +311,8 @@
 <p>来看一看POI是怎么设置excel单元格类型的。</p>
 <p>题图：from Google</p>
 <a id="more"></a>
-<h2 id="引子">引子</h2><p>HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。</p>
-<h2 id="1-铺垫">1.铺垫</h2><ol>
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>HSSFCell类是对Excel表格中的单元格的抽象。HSSFCell类中的setCellType和setCellStyle方法，都可以用来设置单元格格式，但是两者又有细微不同，本篇文章就简单分析下他们的不同之处。</p>
+<h2 id="1-铺垫"><a href="#1-铺垫" class="headerlink" title="1.铺垫"></a>1.铺垫</h2><ol>
 <li>HSSFCell类有两个属性与今天要说的方法有关<ol>
 <li>int _cellType;<br> 存储单元格类型的int值</li>
 <li>CellValueRecordInterface _record；<br> 存储单元格数据的对象，包含单元格值与类型，对象内存储类型的属性也是int型。<br> CellValueRecordInterface只是一个接口，具体不同类型单元格存的也是不同类型的实现类。</li>
@@ -321,7 +322,7 @@
 <p> 而在构造HSSFCell时，会根据_record的类型去为_cellType赋值。</p>
 </li>
 </ol>
-<h2 id="2-区别">2.区别</h2><p>通过跟踪源码的方式，对两种方法的不同总结如下</p>
+<h2 id="2-区别"><a href="#2-区别" class="headerlink" title="2.区别"></a>2.区别</h2><p>通过跟踪源码的方式，对两种方法的不同总结如下</p>
 <ol>
 <li>setCellType<br> ﻿setCellType方法实际上是修改了_cellType的值，并且将_record改为对应类型的CellValueRecordInterface实现类。</li>
 <li>setCellSytle<br> ﻿setCellSytle方法实际上只是修改了_record对象里保存类型的int型变量的值，但是没有修改_cellType的值。</li>
@@ -452,21 +453,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">30</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
