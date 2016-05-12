@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="IntelliJ Idea," />
+  <meta name="keywords" content="Apache Camel," />
 
 
 
@@ -57,23 +57,21 @@
 
 
 
-<meta name="description" content="从Eclipse切换到IntelliJ Idea有好多配置不太一样，在这里记录下常用的配置。
-题图：from IntelliJ">
+<meta name="description" content="使用Apache Camel进行消息去重
+题图：from Zoommy">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IntelliJ Idea 常用配置">
-<meta property="og:url" content="http://coderec.github.io/2016/01/04/IntelliJ-Idea-常用配置/index.html">
+<meta property="og:title" content="Apache Camel 路由消息时去重">
+<meta property="og:url" content="http://coderec.github.io/2016/05/12/Apache-Camel-路由消息时去重/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="从Eclipse切换到IntelliJ Idea有好多配置不太一样，在这里记录下常用的配置。
-题图：from IntelliJ">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3jw1ezngbgpgh4j20su0gkjte.jpg">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/6b7b34d3jw1eznalqaj46j20r10h4wi5.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1eznb25ly95j20r00l4dm1.jpg">
-<meta property="og:updated_time" content="2016-04-26T07:56:36.000Z">
+<meta property="og:description" content="使用Apache Camel进行消息去重
+题图：from Zoommy">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3spekqlkcj21kw16m4qp.jpg">
+<meta property="og:updated_time" content="2016-05-12T08:56:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IntelliJ Idea 常用配置">
-<meta name="twitter:description" content="从Eclipse切换到IntelliJ Idea有好多配置不太一样，在这里记录下常用的配置。
-题图：from IntelliJ">
-<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/6b7b34d3jw1ezngbgpgh4j20su0gkjte.jpg">
+<meta name="twitter:title" content="Apache Camel 路由消息时去重">
+<meta name="twitter:description" content="使用Apache Camel进行消息去重
+题图：from Zoommy">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3spekqlkcj21kw16m4qp.jpg">
 
 
 
@@ -91,7 +89,7 @@
   };
 </script>
 
-  <title> IntelliJ Idea 常用配置 | Coderec's Blog </title>
+  <title> Apache Camel 路由消息时去重 | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -236,7 +234,7 @@
             
             
               
-                IntelliJ Idea 常用配置
+                Apache Camel 路由消息时去重
               
             
           </h1>
@@ -248,8 +246,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-01-04T14:24:49+08:00" content="2016-01-04">
-              2016-01-04
+            <time itemprop="dateCreated" datetime="2016-05-12T16:24:37+08:00" content="2016-05-12">
+              2016-05-12
             </time>
           </span>
 
@@ -262,8 +260,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/配置记录/" itemprop="url" rel="index">
-                    <span itemprop="name">配置记录</span>
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
                   </a>
                 </span>
 
@@ -278,8 +276,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/04/IntelliJ-Idea-常用配置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/04/IntelliJ-Idea-常用配置/" itemprop="commentsCount"></span>
+                <a href="/2016/05/12/Apache-Camel-路由消息时去重/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/12/Apache-Camel-路由消息时去重/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -289,7 +287,7 @@
 
           
           
-             <span id="/2016/01/04/IntelliJ-Idea-常用配置/" class="leancloud_visitors" data-flag-title="IntelliJ Idea 常用配置">
+             <span id="/2016/05/12/Apache-Camel-路由消息时去重/" class="leancloud_visitors" data-flag-title="Apache Camel 路由消息时去重">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -309,30 +307,37 @@
       
 
       
-        <p><img src="http://ww4.sinaimg.cn/large/6b7b34d3jw1ezngbgpgh4j20su0gkjte.jpg" width="700" height="397"></p>
-<p>从Eclipse切换到IntelliJ Idea有好多配置不太一样，在这里记录下常用的配置。</p>
-<p>题图：from IntelliJ</p>
+        <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3spekqlkcj21kw16m4qp.jpg" width="700" height="397"></p>
+<p>使用Apache Camel进行消息去重</p>
+<p>题图：from Zoommy</p>
 <a id="more"></a>
-<h2 id="Inspection-代码检查"><a href="#Inspection-代码检查" class="headerlink" title="Inspection 代码检查"></a>Inspection 代码检查</h2><p>在设置目录中，editor –&gt; inspections用来配置各种代码检查以及警告。</p>
+<h2 id="为什么要消息去重"><a href="#为什么要消息去重" class="headerlink" title="为什么要消息去重"></a>为什么要消息去重</h2><p>虚拟场景：</p>
+<p>财务系统靠人力系统的通知向你发放薪水，正常情况是每月一次。不过，某天人力系统因为某些原因，重复发送了通知，（可能是以为财务系统没有收到通知，也可能是其他原因）。你以为你会收到两份薪水？</p>
+<p>别逗了，公司不会允许这种事情发生的。财务系统针对同一个通知（3月发给你工资），不论收到几次，都只会处理一次。</p>
+<p>这么做的原因显而易见，而这样的财务系统就是一个幂等消费者。</p>
+<h2 id="幂等消费者，Idempotent-Consumer"><a href="#幂等消费者，Idempotent-Consumer" class="headerlink" title="幂等消费者，Idempotent Consumer"></a>幂等消费者，Idempotent Consumer</h2><p>什么是Idempotent Consumer？这是EIPs中的一个概念，指代幂等消息消费者，也即对于重复消息的处理应该有幂等的结果。</p>
+<p>这就涉及到了消息消费者如何处理重复消息的问题。EIPs中只有一系列需要解决的系统整合问题的定义，而Apache Camel却是实实在在提供了几乎所有这些问题的解决方案。</p>
+<p>针对幂等消费者的问题，Apache Camel提供了IdempotentConsumer类作为解决方案。</p>
+<h2 id="IdempotentConsumer类"><a href="#IdempotentConsumer类" class="headerlink" title="IdempotentConsumer类"></a>IdempotentConsumer类</h2><p>Apache Camel提供idempotentConsumer类来解决幂等消费者的问题，这个类的构造函数通常需要两个参数，一个唯一ID的表达式，一种存储方式IdempotentRepository（redis，jpa等）。唯一的Message Exchange ID用来标识消息身份。而存储方式就是如何存储这些消息ID。</p>
+<p>构造函数举例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可见，该构造方法只需要一个MessageID表达式和一种用来存储MessageID的存储方式</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> IdempotentConsumerDefinition <span class="title">idempotentConsumer</span><span class="params">(Expression messageIdExpression, IdempotentRepository&lt;?&gt; idempotentRepository)</span> </span>&#123;</span><br><span class="line">        IdempotentConsumerDefinition answer = <span class="keyword">new</span> IdempotentConsumerDefinition(messageIdExpression, idempotentRepository);</span><br><span class="line">        addOutput(answer);</span><br><span class="line">        <span class="keyword">return</span> answer;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>实际上，他工作的原理更像是一个消息过滤器。收到消息后去IdempotentRepository中查找Message ID是否已经存在，如果不存在，就会把Message ID放入IdempotentRepository，并且继续处理消息，如果消息处理失败则会再把Message ID从IdempotentRepository中移除。</p>
+<p>默认IdempotentCusumer会丢弃重复消息，但是Camel允许我们自定义处理重复消息。具体方式可以参考官网，链接见文末。</p>
+<p>Apache Camel提供了多种IdempotentRepository以供选择，常用的有:</p>
 <ol>
-<li><strong>开启import *提示</strong><br>editor –&gt; inspections –&gt; java –&gt; imports<br>勾选<code>* import</code> </li>
-<li><strong>工具类必须为final、不能含有public构造方法、必须有private构造方法</strong><br>editor –&gt; inspections –&gt; java –&gt; class structure<br>勾选<code>utility class is not final</code><br>勾选<code>utility class with public constructor</code><br>勾选<code>utility class without private constructor</code>  </li>
-<li><strong>equals()与hashCode()方法必须成对出现</strong><br>editor –&gt; inspections –&gt; java –&gt; probable bugs<br>勾选<code>equals and hashcode() not paired</code>  </li>
-<li><strong>可序列化类没有声明serialVersionUID</strong><br>editor –&gt; inspections –&gt; java –&gt; Serialization issue<br>勾选<code>Serializable class without &#39;serialVersionUID&#39;</code></li>
+<li>MemoryIdempotentRepository 基于内存</li>
+<li>RedisStringIdempotentRepository 基于Redis</li>
+<li>JpaMessageIdRepository 基于Jpa</li>
+<li>JdbcMessageIdRepository 基于Jdbc</li>
 </ol>
-<h2 id="Code-Style-代码风格"><a href="#Code-Style-代码风格" class="headerlink" title="Code Style 代码风格"></a>Code Style 代码风格</h2><ol>
-<li><strong>else新起一行</strong><br>editor –&gt; code style –&gt; java –&gt; if() statement<br>勾选<code>else on new line</code><br><code>force brace</code>选择<code>always</code>  </li>
-<li><strong>方法参数过长自动换行</strong><br>editor –&gt; code style –&gt; java –&gt; method declaration<br><code>parameters</code>选择<code>wrap if long</code>  </li>
-<li><strong>禁用import *</strong><br>editor –&gt; code style –&gt; java –&gt; imports<br><code>class count to use import with *</code> 填写 <code>500</code><br><code>names count to use static import with *</code>填写 <code>500</code>  </li>
-<li><strong>配置import顺序</strong><br>editor –&gt; code style –&gt; java –&gt; imports  –&gt; import layout<br><a href="http://stackoverflow.com/questions/14716283/is-it-possible-for-intellij-to-organize-imports-the-same-way-as-in-eclipse" target="_blank" rel="external">参考链接（stackoverflow.com）</a></li>
-</ol>
-<h2 id="IDE配置"><a href="#IDE配置" class="headerlink" title="IDE配置"></a>IDE配置</h2><ol>
-<li><strong>自动import</strong><br>editor –&gt; general –&gt; auto import<br>勾选<code>optimize imports on the fly</code><br>勾选<code>add unambiguous imports on the fly</code>  </li>
-<li><strong>编辑器显示行号</strong><br>editor –&gt; general –&gt; apperance<br>勾选<code>show line numbers</code>  </li>
-<li><strong>自动补全main函数</strong><br>editor –&gt; live templates –&gt; other<br>右侧点击加号，如下图配置<br><img src="http://ww2.sinaimg.cn/large/6b7b34d3jw1eznalqaj46j20r10h4wi5.jpg" alt="image">  </li>
-<li><strong>去掉新文件自动添加的created by注释</strong><br>editor –&gt; file and code templates<br>找到需要修改的模板，按图中所示，将红框内内容替换为空行<br><img src="http://ww1.sinaimg.cn/large/6b7b34d3jw1eznb25ly95j20r00l4dm1.jpg" alt="image">  </li>
-<li><strong>版本控制显示修改文件及目录</strong><br>version control<br>勾选<code>show directories with changed descendants</code></li>
-</ol>
+<p>更多请参见官网，链接见文末。</p>
+<h2 id="使用RedisStringIdempotentRepository进行去重"><a href="#使用RedisStringIdempotentRepository进行去重" class="headerlink" title="使用RedisStringIdempotentRepository进行去重"></a>使用RedisStringIdempotentRepository进行去重</h2><p>使用redis需要添加依赖<code>compile(&quot;org.apache.camel:camel-spring-redis:2.17.0&quot;)</code></p>
+<p>该依赖提供两个类RedisStringIdempotentRepository和RedisIdempotentRepository。前者是以<string，string>类型存入redis，后者是<string, set="">类型存入。前者支持设置超时时间。两者的构造方法都很简单，只需要提供一个RedisTemplate<string, string="">对象和一个处理进程名。他们会根据处理进程名与Message ID生成key存储在redis中。</string,></string,></string，string></p>
+<p>配置示例代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Camel路由配置</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CamelConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function">RouteBuilder <span class="title">myRouter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RouteBuilder() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                <span class="comment">// 使用idempotent和camel-redis组件进行去重</span></span><br><span class="line">                <span class="comment">// 设置处理进程名为camel-idem</span></span><br><span class="line">                RedisStringIdempotentRepository idempotentRepo = <span class="keyword">new</span> RedisStringIdempotentRepository(redisTemplate, <span class="string">"camel-idem"</span>);</span><br><span class="line">                <span class="comment">// 设置超时为20秒</span></span><br><span class="line">                idempotentRepo.setExpiry(<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 根据taskId和tdrId去重</span></span><br><span class="line">                <span class="comment">// 将unique头设置为FINISH+taskId的值+tdrId的值</span></span><br><span class="line">                <span class="comment">// 将unique头作为Message ID进行去重</span></span><br><span class="line">                from(<span class="string">"jms:queue:"</span> + Destination.TASK_FINISH_PUBLISH)</span><br><span class="line">                        .setHeader(<span class="string">"unique"</span>)</span><br><span class="line">                        .simple(<span class="string">"FINISH$&#123;body[taskId]&#125;$&#123;body[tdrId]&#125;"</span>)</span><br><span class="line">                        .idempotentConsumer(header(<span class="string">"unique"</span>), idempotentRepo)</span><br><span class="line">                        .to(</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_TASK_TASK_FINISH,</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_GROWTH_TASK_FINISH,</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_APPINFO_TASK_FINISH</span><br><span class="line">                        );</span><br><span class="line">                <span class="comment">// 根据taskId去重</span></span><br><span class="line">                from(<span class="string">"jms:queue:"</span> + Destination.TASK_UNDELIVER_PUBLISH)</span><br><span class="line">                        .setHeader(<span class="string">"unique"</span>)</span><br><span class="line">                        .simple(<span class="string">"UNDELIVER$&#123;body[taskId]&#125;"</span>)</span><br><span class="line">                        .idempotentConsumer(header(<span class="string">"unique"</span>), idempotentRepo)</span><br><span class="line">                        .to(</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_TASK_TASK_UNDELIVER,</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_GROWTH_TASK_UNDELIVER</span><br><span class="line">                        );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="待解决问题"><a href="#待解决问题" class="headerlink" title="待解决问题"></a>待解决问题</h2><p>如果是做消息队列的消息去重，但是消息队列又开启了ack消息确认处理成功的机制，那么在队列进行失败消息重发时，Apache Camel应该如何处理？</p>
+<p>暂时想到的解决方案是为去重设置合理的超时时间，保证队列重发时，Camel对该消息的去重也已超时。</p>
+<h2 id="Apache-Camel-Idempotent文档"><a href="#Apache-Camel-Idempotent文档" class="headerlink" title="Apache Camel Idempotent文档"></a>Apache Camel Idempotent文档</h2><p>链接地址：<a href="http://camel.apache.org/idempotent-consumer.html" target="_blank" rel="external">http://camel.apache.org/idempotent-consumer.html</a></p>
 
       
     </div>
@@ -341,7 +346,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/IntelliJ-Idea/" rel="tag">#IntelliJ Idea</a>
+            <a href="/tags/Apache-Camel/" rel="tag">#Apache Camel</a>
           
         </div>
       
@@ -350,17 +355,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/03/2015年终总结/" rel="next" title="2015年终总结">
-                <i class="fa fa-chevron-left"></i> 2015年终总结
+              <a href="/2016/05/07/我的git生涯/" rel="next" title="我的git生涯">
+                <i class="fa fa-chevron-left"></i> 我的git生涯
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/05/在Gradle中使用FindBugs/" rel="prev" title="在Gradle中使用FindBugs">
-                在Gradle中使用FindBugs <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -409,8 +410,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/04/IntelliJ-Idea-常用配置/"
-           data-title="IntelliJ Idea 常用配置" data-url="http://coderec.github.io/2016/01/04/IntelliJ-Idea-常用配置/">
+      <div class="ds-thread" data-thread-key="2016/05/12/Apache-Camel-路由消息时去重/"
+           data-title="Apache Camel 路由消息时去重" data-url="http://coderec.github.io/2016/05/12/Apache-Camel-路由消息时去重/">
       </div>
     
   </div>
@@ -538,7 +539,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Inspection-代码检查"><span class="nav-number">1.</span> <span class="nav-text">Inspection 代码检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Style-代码风格"><span class="nav-number">2.</span> <span class="nav-text">Code Style 代码风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDE配置"><span class="nav-number">3.</span> <span class="nav-text">IDE配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要消息去重"><span class="nav-number">1.</span> <span class="nav-text">为什么要消息去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#幂等消费者，Idempotent-Consumer"><span class="nav-number">2.</span> <span class="nav-text">幂等消费者，Idempotent Consumer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IdempotentConsumer类"><span class="nav-number">3.</span> <span class="nav-text">IdempotentConsumer类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用RedisStringIdempotentRepository进行去重"><span class="nav-number">4.</span> <span class="nav-text">使用RedisStringIdempotentRepository进行去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#待解决问题"><span class="nav-number">5.</span> <span class="nav-text">待解决问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-Camel-Idempotent文档"><span class="nav-number">6.</span> <span class="nav-text">Apache Camel Idempotent文档</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
