@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Apache Camel," />
+  <meta name="keywords" content="ELK,日志分析," />
 
 
 
@@ -57,21 +57,26 @@
 
 
 
-<meta name="description" content="使用Apache Camel进行消息去重
+<meta name="description" content="ELK，麋鹿？no，no，no；了解一下快速简单又灵活的ELK日志分析系统。
 题图：from Zoommy">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Apache Camel 路由消息时去重">
-<meta property="og:url" content="http://coderec.github.io/2016/05/12/Apache-Camel-路由消息时去重/index.html">
+<meta property="og:title" content="日志分析之Elastic Stack简介">
+<meta property="og:url" content="http://coderec.github.io/2016/05/16/日志分析之Elastic-Stack简介/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="使用Apache Camel进行消息去重
+<meta property="og:description" content="ELK，麋鹿？no，no，no；了解一下快速简单又灵活的ELK日志分析系统。
 题图：from Zoommy">
-<meta property="og:image" content="http://41.media.tumblr.com/1e3212692dddadc48636c61964847d49/tumblr_npacg6IcPw1ted1sho1_1280.jpg">
-<meta property="og:updated_time" content="2016-05-12T09:27:06.000Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3xcvf90aej20jg0aj40s.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3jw1f3x2kn04g2j20ij0csjsn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3x23qfvstj20m9070t9f.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3x266zatcj20ly0ic41n.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3gw1f3x947y74lj20p00fwgpa.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1f3x937nzkzj20p00ihmzx.jpg">
+<meta property="og:updated_time" content="2016-05-16T09:36:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Apache Camel 路由消息时去重">
-<meta name="twitter:description" content="使用Apache Camel进行消息去重
+<meta name="twitter:title" content="日志分析之Elastic Stack简介">
+<meta name="twitter:description" content="ELK，麋鹿？no，no，no；了解一下快速简单又灵活的ELK日志分析系统。
 题图：from Zoommy">
-<meta name="twitter:image" content="http://41.media.tumblr.com/1e3212692dddadc48636c61964847d49/tumblr_npacg6IcPw1ted1sho1_1280.jpg">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3xcvf90aej20jg0aj40s.jpg">
 
 
 
@@ -89,7 +94,7 @@
   };
 </script>
 
-  <title> Apache Camel 路由消息时去重 | Coderec's Blog </title>
+  <title> 日志分析之Elastic Stack简介 | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -234,7 +239,7 @@
             
             
               
-                Apache Camel 路由消息时去重
+                日志分析之Elastic Stack简介
               
             
           </h1>
@@ -246,8 +251,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-12T16:24:37+08:00" content="2016-05-12">
-              2016-05-12
+            <time itemprop="dateCreated" datetime="2016-05-16T16:45:25+08:00" content="2016-05-16">
+              2016-05-16
             </time>
           </span>
 
@@ -276,8 +281,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/12/Apache-Camel-路由消息时去重/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/12/Apache-Camel-路由消息时去重/" itemprop="commentsCount"></span>
+                <a href="/2016/05/16/日志分析之Elastic-Stack简介/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/16/日志分析之Elastic-Stack简介/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -287,7 +292,7 @@
 
           
           
-             <span id="/2016/05/12/Apache-Camel-路由消息时去重/" class="leancloud_visitors" data-flag-title="Apache Camel 路由消息时去重">
+             <span id="/2016/05/16/日志分析之Elastic-Stack简介/" class="leancloud_visitors" data-flag-title="日志分析之Elastic Stack简介">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -307,37 +312,30 @@
       
 
       
-        <p><img src="http://41.media.tumblr.com/1e3212692dddadc48636c61964847d49/tumblr_npacg6IcPw1ted1sho1_1280.jpg" width="700" height="397"></p>
-<p>使用Apache Camel进行消息去重</p>
+        <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3xcvf90aej20jg0aj40s.jpg" width="700" height="397"></p>
+<p>ELK，麋鹿？no，no，no；了解一下快速简单又灵活的ELK日志分析系统。</p>
 <p>题图：from Zoommy</p>
 <a id="more"></a>
-<h2 id="为什么要消息去重"><a href="#为什么要消息去重" class="headerlink" title="为什么要消息去重"></a>为什么要消息去重</h2><p>虚拟场景：</p>
-<p>财务系统靠人力系统的通知向你发放薪水，正常情况是每月一次。不过，某天人力系统因为某些原因，重复发送了通知，（可能是以为财务系统没有收到通知，也可能是其他原因）。你以为你会收到两份薪水？</p>
-<p>别逗了，公司不会允许这种事情发生的。财务系统针对同一个通知（3月发给你工资），不论收到几次，都只会处理一次。</p>
-<p>这么做的原因显而易见，而这样的财务系统就是一个幂等消费者。</p>
-<h2 id="幂等消费者，Idempotent-Consumer"><a href="#幂等消费者，Idempotent-Consumer" class="headerlink" title="幂等消费者，Idempotent Consumer"></a>幂等消费者，Idempotent Consumer</h2><p>什么是Idempotent Consumer？这是EIPs中的一个概念，指代幂等消息消费者，也即对于重复消息的处理应该有幂等的结果。</p>
-<p>这就涉及到了消息消费者如何处理重复消息的问题。EIPs中只有一系列需要解决的系统整合问题的定义，而Apache Camel却是实实在在提供了几乎所有这些问题的解决方案。</p>
-<p>针对幂等消费者的问题，Apache Camel提供了IdempotentConsumer类作为解决方案。</p>
-<h2 id="IdempotentConsumer类"><a href="#IdempotentConsumer类" class="headerlink" title="IdempotentConsumer类"></a>IdempotentConsumer类</h2><p>Apache Camel提供idempotentConsumer类来解决幂等消费者的问题，这个类的构造函数通常需要两个参数，一个唯一ID的表达式，一种存储方式IdempotentRepository（redis，jpa等）。唯一的Message Exchange ID用来标识消息身份。而存储方式就是如何存储这些消息ID。</p>
-<p>构造函数举例如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可见，该构造方法只需要一个MessageID表达式和一种用来存储MessageID的存储方式</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> IdempotentConsumerDefinition <span class="title">idempotentConsumer</span><span class="params">(Expression messageIdExpression, IdempotentRepository&lt;?&gt; idempotentRepository)</span> </span>&#123;</span><br><span class="line">        IdempotentConsumerDefinition answer = <span class="keyword">new</span> IdempotentConsumerDefinition(messageIdExpression, idempotentRepository);</span><br><span class="line">        addOutput(answer);</span><br><span class="line">        <span class="keyword">return</span> answer;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>实际上，他工作的原理更像是一个消息过滤器。收到消息后去IdempotentRepository中查找Message ID是否已经存在，如果不存在，就会把Message ID放入IdempotentRepository，并且继续处理消息，如果消息处理失败则会再把Message ID从IdempotentRepository中移除。</p>
-<p>默认IdempotentCusumer会丢弃重复消息，但是Camel允许我们自定义处理重复消息。具体方式可以参考官网，链接见文末。</p>
-<p>Apache Camel提供了多种IdempotentRepository以供选择，常用的有:</p>
-<ol>
-<li>MemoryIdempotentRepository 基于内存</li>
-<li>RedisStringIdempotentRepository 基于Redis</li>
-<li>JpaMessageIdRepository 基于Jpa</li>
-<li>JdbcMessageIdRepository 基于Jdbc</li>
-</ol>
-<p>更多请参见官网，链接见文末。</p>
-<h2 id="使用RedisStringIdempotentRepository进行去重"><a href="#使用RedisStringIdempotentRepository进行去重" class="headerlink" title="使用RedisStringIdempotentRepository进行去重"></a>使用RedisStringIdempotentRepository进行去重</h2><p>使用redis需要添加依赖<code>compile(&quot;org.apache.camel:camel-spring-redis:2.17.0&quot;)</code></p>
-<p>该依赖提供两个类RedisStringIdempotentRepository和RedisIdempotentRepository。前者是以<code>&lt;String，String&gt;</code>类型存入redis，后者是<code>&lt;String, Set&gt;</code>类型存入。前者支持设置超时时间。两者的构造方法都很简单，只需要提供一个<code>RedisTemplate&lt;String, String&gt;</code>对象和一个处理进程名。他们会根据处理进程名与Message ID生成key存储在redis中。</p>
-<p>配置示例代码如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Camel路由配置</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CamelConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function">RouteBuilder <span class="title">myRouter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RouteBuilder() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                <span class="comment">// 使用idempotent和camel-redis组件进行去重</span></span><br><span class="line">                <span class="comment">// 设置处理进程名为camel-idem</span></span><br><span class="line">                RedisStringIdempotentRepository idempotentRepo = <span class="keyword">new</span> RedisStringIdempotentRepository(redisTemplate, <span class="string">"camel-idem"</span>);</span><br><span class="line">                <span class="comment">// 设置超时为20秒</span></span><br><span class="line">                idempotentRepo.setExpiry(<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 根据taskId和tdrId去重</span></span><br><span class="line">                <span class="comment">// 将unique头设置为FINISH+taskId的值+tdrId的值</span></span><br><span class="line">                <span class="comment">// 将unique头作为Message ID进行去重</span></span><br><span class="line">                from(<span class="string">"jms:queue:"</span> + Destination.TASK_FINISH_PUBLISH)</span><br><span class="line">                        .setHeader(<span class="string">"unique"</span>)</span><br><span class="line">                        .simple(<span class="string">"FINISH$&#123;body[taskId]&#125;$&#123;body[tdrId]&#125;"</span>)</span><br><span class="line">                        .idempotentConsumer(header(<span class="string">"unique"</span>), idempotentRepo)</span><br><span class="line">                        .to(</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_TASK_TASK_FINISH,</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_GROWTH_TASK_FINISH,</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_APPINFO_TASK_FINISH</span><br><span class="line">                        );</span><br><span class="line">                <span class="comment">// 根据taskId去重</span></span><br><span class="line">                from(<span class="string">"jms:queue:"</span> + Destination.TASK_UNDELIVER_PUBLISH)</span><br><span class="line">                        .setHeader(<span class="string">"unique"</span>)</span><br><span class="line">                        .simple(<span class="string">"UNDELIVER$&#123;body[taskId]&#125;"</span>)</span><br><span class="line">                        .idempotentConsumer(header(<span class="string">"unique"</span>), idempotentRepo)</span><br><span class="line">                        .to(</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_TASK_TASK_UNDELIVER,</span><br><span class="line">                                <span class="string">"jms:queue:"</span> + Destination.CONSUMER_GROWTH_TASK_UNDELIVER</span><br><span class="line">                        );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="待解决问题"><a href="#待解决问题" class="headerlink" title="待解决问题"></a>待解决问题</h2><p>如果是做消息队列的消息去重，但是消息队列又开启了ack消息确认处理成功的机制，那么在队列进行失败消息重发时，Apache Camel应该如何处理？</p>
-<p>暂时想到的解决方案是为去重设置合理的超时时间，保证队列重发时，Camel对该消息的去重也已超时。</p>
-<h2 id="Apache-Camel-Idempotent文档"><a href="#Apache-Camel-Idempotent文档" class="headerlink" title="Apache Camel Idempotent文档"></a>Apache Camel Idempotent文档</h2><p>链接地址：<a href="http://camel.apache.org/idempotent-consumer.html" target="_blank" rel="external">http://camel.apache.org/idempotent-consumer.html</a></p>
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>随着系统产生的日志数量不断增加，大量的日志不再适合人工阅读或查看，因此，往往采用一些技术对已有日志进行分析整理，以图表或者其他易于阅读的方式将日志信息展示出来。</p>
+<h2 id="Elastic-Stack"><a href="#Elastic-Stack" class="headerlink" title="Elastic Stack"></a>Elastic Stack</h2><p>Elastic Stack是Elastic公司的一套开源项目，这套技术栈也被广泛的称之为ELK。包括elasicsearch，logstash，kibana。其主要功能就是对数据进行收集，格式化，索引，分析和可视化。具有搭建简单，配置容易等优点。</p>
+<p>起初，只有elasticsearch是elastic公司的，不过在接下来的一段时间内，elastic公司先后收购了logstash和kibana，统一三者的发布版本号，完善了三者间的配合，将三者打造成了数据收集分析和展示的利器。</p>
+<p>ElasticStack从2014年开始逐渐趋于完善稳定，不过现在（2016年05月16日）仍处在快速迭代中。</p>
+<p><strong>对于分析日志而言，一般分为三个步骤；日志收集，日志整理存储，数据展示。对应ElasticStack中的：L(ogstash)， E(lasticsearch)，K(ibana)。</strong></p>
+<p>注：E、L、K三者都可以单独使用，并非一定要绑在一起打包使用。</p>
+<h2 id="Logstash"><a href="#Logstash" class="headerlink" title="Logstash"></a>Logstash</h2><p>Logstash是一个插件化的日志收集系统，现已包含200+plugin可用，并且可以轻松自定义插件，下图源自官网文档，可见Logstash可以轻松与常用系统集成。<br><img src="http://ww3.sinaimg.cn/large/6b7b34d3jw1f3x2kn04g2j20ij0csjsn.jpg" width="700"></p>
+<p>用过Linux的人应该对管道操作符‘|’很熟悉，Logstash就像是一个管道操作符，他对事件、消息、或者任何感兴趣的东西进行收集、处理、分发。就像管道中的水流入流出。</p>
+<h3 id="多样的架构"><a href="#多样的架构" class="headerlink" title="多样的架构"></a>多样的架构</h3><p>input、output、filter是最常用的三个插件，用来配置输入输出目标与过滤处理。下面两图分别介绍了最简单和稍复杂的Logstash收集系统架构。<br><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3x23qfvstj20m9070t9f.jpg" width="700"></p>
+<p>下图中，先是使用一层多个Logstash实例进行收集并汇总到消息队列，再使用一层Logstash实例从消息队列中获取、处理然后存储到分布式的Elasticsearch中。<br><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1f3x266zatcj20ly0ic41n.jpg" width="700"></p>
+<h2 id="Elasticsearch-ES"><a href="#Elasticsearch-ES" class="headerlink" title="Elasticsearch(ES)"></a>Elasticsearch(ES)</h2><p>Elasticsearch是一个基于Apache Lucene的开源搜索引擎。Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
+<p>同时，ES具有与生俱来的分布式支持。</p>
+<blockquote>
+<p>•    分布式的实时文件存储，每个字段都被索引并可被搜索<br>•    分布式的实时分析搜索引擎<br>•    可以扩展到上百台服务器，处理PB级结构化或非结构化数据<br>——《Elasticsearch权威指南》</p>
+</blockquote>
+<p>在ELK中，ES的角色就是存储并提供搜索功能以便更好的进行日志分析。</p>
+<h2 id="Kibana"><a href="#Kibana" class="headerlink" title="Kibana"></a>Kibana</h2><p>Logstash收集后的数据都已经存放到了ES中，作为日志分析一条龙服务，现在就差数据展示（可视化）了。Kibana的前身就是专门设计用来查看ES中数据的，因此Kibana与ES的配合十分简单流畅。Kibana不要求与ES部署在同一台机器上，可以通过ES的Restful API查询数据。可以通过配置文件将一个ES集群配置给Kibana进行查询，并且Kibana支持常用图表的生成，可以通过自定义查询、横纵坐标含义等方式展示信息，拥有良好的数据展示能力与自定义能力。</p>
+<p><strong>支持常用图表类型：</strong><br><img src="http://ww3.sinaimg.cn/large/6b7b34d3gw1f3x947y74lj20p00fwgpa.jpg" width="700"></p>
+<p><strong>饼图示例：</strong><br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1f3x937nzkzj20p00ihmzx.jpg" width="700"></p>
+<h2 id="相关推荐"><a href="#相关推荐" class="headerlink" title="相关推荐"></a>相关推荐</h2><p>ELKstack中文指南：<a href="http://kibana.logstash.es/content/" target="_blank" rel="external">http://kibana.logstash.es/content/</a></p>
 
       
     </div>
@@ -346,7 +344,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Apache-Camel/" rel="tag">#Apache Camel</a>
+            <a href="/tags/ELK/" rel="tag">#ELK</a>
+          
+            <a href="/tags/日志分析/" rel="tag">#日志分析</a>
           
         </div>
       
@@ -355,17 +355,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/07/我的git生涯/" rel="next" title="我的git生涯">
-                <i class="fa fa-chevron-left"></i> 我的git生涯
+              <a href="/2016/05/12/Apache-Camel-路由消息时去重/" rel="next" title="Apache Camel 路由消息时去重">
+                <i class="fa fa-chevron-left"></i> Apache Camel 路由消息时去重
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/16/日志分析之Elastic-Stack简介/" rel="prev" title="日志分析之Elastic Stack简介">
-                日志分析之Elastic Stack简介 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -414,8 +410,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/12/Apache-Camel-路由消息时去重/"
-           data-title="Apache Camel 路由消息时去重" data-url="http://coderec.github.io/2016/05/12/Apache-Camel-路由消息时去重/">
+      <div class="ds-thread" data-thread-key="2016/05/16/日志分析之Elastic-Stack简介/"
+           data-title="日志分析之Elastic Stack简介" data-url="http://coderec.github.io/2016/05/16/日志分析之Elastic-Stack简介/">
       </div>
     
   </div>
@@ -543,7 +539,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要消息去重"><span class="nav-number">1.</span> <span class="nav-text">为什么要消息去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#幂等消费者，Idempotent-Consumer"><span class="nav-number">2.</span> <span class="nav-text">幂等消费者，Idempotent Consumer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IdempotentConsumer类"><span class="nav-number">3.</span> <span class="nav-text">IdempotentConsumer类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用RedisStringIdempotentRepository进行去重"><span class="nav-number">4.</span> <span class="nav-text">使用RedisStringIdempotentRepository进行去重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#待解决问题"><span class="nav-number">5.</span> <span class="nav-text">待解决问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-Camel-Idempotent文档"><span class="nav-number">6.</span> <span class="nav-text">Apache Camel Idempotent文档</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引子"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elastic-Stack"><span class="nav-number">2.</span> <span class="nav-text">Elastic Stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Logstash"><span class="nav-number">3.</span> <span class="nav-text">Logstash</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多样的架构"><span class="nav-number">3.1.</span> <span class="nav-text">多样的架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch-ES"><span class="nav-number">4.</span> <span class="nav-text">Elasticsearch(ES)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kibana"><span class="nav-number">5.</span> <span class="nav-text">Kibana</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关推荐"><span class="nav-number">6.</span> <span class="nav-text">相关推荐</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
