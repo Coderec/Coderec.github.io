@@ -65,15 +65,15 @@
 <meta property="og:site_name" content="Coderec's Blog">
 <meta property="og:description" content="代码检查之PMD
 题图：from Google">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/6b7b34d3jw1ezpjs888doj20sd0d1gmo.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezprkuh6ssj206w0g8q4a.jpg">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3jw1ezpsp2ziu4j20m4056jsl.jpg">
-<meta property="og:updated_time" content="2016-04-26T07:56:14.000Z">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8PMD.jpg">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8PMD1.jpg">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8PMD2.jpg">
+<meta property="og:updated_time" content="2016-06-25T05:40:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Gradle中使用PMD">
 <meta name="twitter:description" content="代码检查之PMD
 题图：from Google">
-<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/6b7b34d3jw1ezpjs888doj20sd0d1gmo.jpg">
+<meta name="twitter:image" content="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8PMD.jpg">
 
 
 
@@ -309,19 +309,19 @@
       
 
       
-        <p><img src="http://ww2.sinaimg.cn/large/6b7b34d3jw1ezpjs888doj20sd0d1gmo.jpg" width="700" height="397"></p>
+        <p><img src="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8PMD.jpg" width="700" height="397"></p>
 <p>代码检查之PMD</p>
 <p>题图：from Google</p>
 <a id="more"></a>
 <h2 id="什么是PMD？"><a href="#什么是PMD？" class="headerlink" title="什么是PMD？"></a>什么是PMD？</h2><p>与FindBugs类似，PMD也是一款Java代码静态检查工具。它可以做到检查Java代码中是否含有未使用的变量、是否含有空的抓取块、是否含有不必要的对象等。  </p>
 <p>PMD与FindBugs最主要的区别是PMD检查源文件，而FindBugs检查字节码。</p>
 <h2 id="PMD匹配模式"><a href="#PMD匹配模式" class="headerlink" title="PMD匹配模式"></a>PMD匹配模式</h2><p>与FindBugs一样，PMD也允许自定义匹配模式。<br>虽然提供自定义功能，但是其自带的一系列规则也已经基本够用，自带规则如下：</p>
-<p><img src="http://ww1.sinaimg.cn/large/6b7b34d3jw1ezprkuh6ssj206w0g8q4a.jpg" alt="image"></p>
+<p><img src="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8PMD1.jpg" alt="image"></p>
 <p>以上每个xml中都定义了若干规范，如需查看只需下载源码包，在<code>pmd-java/src/main/resources/rulesets/java/</code>目录下即可找到。<br>PMD提供两种方式定义匹配模式，java代码或者XPath表达式。如果真的有自定义匹配模式的需求，可以到官网查看编写文档（链接见附录）  </p>
 <h2 id="Gradle中使用PMD插件"><a href="#Gradle中使用PMD插件" class="headerlink" title="Gradle中使用PMD插件"></a>Gradle中使用PMD插件</h2><p>Gradle中同样集成了PMD插件。执行检测也只需要<code>gradle pmdMain</code></p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">"java"</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">"pmd"</span></span><br><span class="line"></span><br><span class="line">pmd &#123;</span><br><span class="line">    toolVersion = <span class="string">"5.4.1"</span></span><br><span class="line">    sourceSets = [sourceSets.main]</span><br><span class="line">    ignoreFailures = <span class="literal">true</span></span><br><span class="line">    reportsDir = file(<span class="string">"$project.buildDir/pmdReports"</span>)</span><br><span class="line">    targetJdk = <span class="number">1.8</span></span><br><span class="line">    ruleSets = [<span class="string">"java-basic"</span>, <span class="string">"java-braces"</span>]</span><br><span class="line">    ruleSetFiles = files(<span class="string">"config/pmd/myRuleSet.xml"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>属性说明：</p>
-<p><img src="http://ww3.sinaimg.cn/large/6b7b34d3jw1ezpsp2ziu4j20m4056jsl.jpg" alt="image"></p>
+<p><img src="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8PMD2.jpg" alt="image"></p>
 <p><strong>PS：</strong><br>如果不指定，Gradle默认使用basic.xml中的匹配，basic.xml详见源码包中<code>pmd-java/src/main/resources/rulesets/java/basic.xml</code></p>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>常用 Java 静态代码分析工具的分析与比较: <a href="http://www.oschina.net/question/129540_23043" target="_blank" rel="external">http://www.oschina.net/question/129540_23043</a><br>如何编写PMD规则: <a href="https://pmd.github.io/pmd-5.4.1/customizing/howtowritearule.html" target="_blank" rel="external">https://pmd.github.io/pmd-5.4.1/customizing/howtowritearule.html</a><br>关于ruleSets的使用,PMD5.0以上需要加”java-“前缀: <a href="http://stackoverflow.com/questions/20710704/gradles-pmd-plugin-what-are-acceptable-arguments/26229678#26229678" target="_blank" rel="external">stackOverFlow问题链接</a></p>
 

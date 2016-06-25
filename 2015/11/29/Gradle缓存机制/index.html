@@ -65,15 +65,15 @@
 <meta property="og:site_name" content="Coderec's Blog">
 <meta property="og:description" content="了解Gradle本身的缓存机制，更好的使用它。
 题图：from Google">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg">
-<meta property="og:updated_time" content="2016-04-26T07:57:17.000Z">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/Gradle%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6.jpg">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/Gradle%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B61.jpg">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/Gradle%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B62.jpg">
+<meta property="og:updated_time" content="2016-06-25T05:45:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gradle缓存机制">
 <meta name="twitter:description" content="了解Gradle本身的缓存机制，更好的使用它。
 题图：from Google">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg">
+<meta name="twitter:image" content="https://github.com/Coderec/picBed/raw/master/Gradle%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6.jpg">
 
 
 
@@ -309,7 +309,7 @@
       
 
       
-        <p><img src="http://ww1.sinaimg.cn/large/6b7b34d3gw1eyi4jtvjjkj20f5064aak.jpg" width="700" height="397"></p>
+        <p><img src="https://github.com/Coderec/picBed/raw/master/Gradle%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6.jpg" width="700" height="397"></p>
 <p>了解Gradle本身的缓存机制，更好的使用它。</p>
 <p>题图：from Google</p>
 <a id="more"></a>
@@ -326,7 +326,7 @@
 <h3 id="2-task缓存"><a href="#2-task缓存" class="headerlink" title="2.task缓存"></a>2.task缓存</h3><p>同样是为了提高速度，Gradle对于内建类型task，也即built-in tasks，也使用了缓存。（自定义task只要指定了输入输出路径，也会使用缓存）</p>
 <p>使用缓存的效果如下所示：</p>
 <blockquote>
-<p>第一次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5h9y3exj205u01sglk.jpg" alt=""><br>第二次执行task<br><img src="http://ww4.sinaimg.cn/large/6b7b34d3gw1eyi5igfm40j205c01ft8m.jpg" alt=""></p>
+<p>第一次执行task<br><img src="https://github.com/Coderec/picBed/raw/master/Gradle%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B61.jpg" alt=""><br>第二次执行task<br><img src="https://github.com/Coderec/picBed/raw/master/Gradle%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B62.jpg" alt=""></p>
 </blockquote>
 <p>每当一个built-in task第一次执行之前，Gradle会对task的输入做一次快照，然后执行这个task，在其成功执行后，Gradle会对task的输出做一次快照。Gradle会缓存这俩快照直到该task下次执行。</p>
 <p>在该task下次执行之前，Gradle会对其输入在此进行快照，然后与缓存中的快照对比，如果相同，Gradle则认为该task是up-to-date的，然后跳过执行，直接输出缓存中的快照，如果不同，Gradle会执行该task并再次进行快照更新缓存。</p>

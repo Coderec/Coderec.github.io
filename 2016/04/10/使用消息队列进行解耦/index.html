@@ -65,17 +65,17 @@
 <meta property="og:site_name" content="Coderec's Blog">
 <meta property="og:description" content="解耦的故事
 题图：from Google">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3jw1f2s2o84j0oj20j609940m.jpg">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3jw1f2s0dx6jfvj20fe09mab8.jpg">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3jw1f2s0t7qkgdj20fo0ebq4n.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/6b7b34d3jw1f2s19y2n09j20ah0bagmg.jpg">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/6b7b34d3jw1f2s21zr4rqj20lg0hhtco.jpg">
-<meta property="og:updated_time" content="2016-04-26T07:53:59.000Z">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A6.jpg">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A61.jpg">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A62.jpg">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A63.jpg">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A64.jpg">
+<meta property="og:updated_time" content="2016-06-25T05:34:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用消息队列对应用解耦">
 <meta name="twitter:description" content="解耦的故事
 题图：from Google">
-<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/6b7b34d3jw1f2s2o84j0oj20j609940m.jpg">
+<meta name="twitter:image" content="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A6.jpg">
 
 
 
@@ -311,7 +311,7 @@
       
 
       
-        <p><img src="http://ww4.sinaimg.cn/large/6b7b34d3jw1f2s2o84j0oj20j609940m.jpg" width="700" height="397"></p>
+        <p><img src="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A6.jpg" width="700" height="397"></p>
 <p>解耦的故事</p>
 <p>题图：from Google</p>
 <a id="more"></a>
@@ -349,20 +349,20 @@
 <p>面对我们的需求——将附加逻辑从主逻辑中剥离，显而易见，附加逻辑都是依赖于主逻辑的完成，也就是在主逻辑执行完后才去执行附加逻辑。</p>
 <p>参照上述提到queue和topic，选择topic模式就是顺理成章的事了。在主逻辑完成后只需发布一条通知消息，各个订阅模块即可进行相应的附加逻辑的处理了。</p>
 <h3 id="分布式下的问题"><a href="#分布式下的问题" class="headerlink" title="分布式下的问题"></a>分布式下的问题</h3><p>在分布式部署下的Topic消息队列存在一个订阅者重复的问题。</p>
-<p><img src="http://ww3.sinaimg.cn/large/6b7b34d3jw1f2s0dx6jfvj20fe09mab8.jpg" alt="分布式下的问题"></p>
+<p><img src="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A61.jpg" alt="分布式下的问题"></p>
 <p>有上图可清晰看到，原本代码的意图是一个发布者，两个订阅者；但是如果分布式部署就会出现一个发布者，四个订阅者的问题。</p>
 <h3 id="分布式问题的解决"><a href="#分布式问题的解决" class="headerlink" title="分布式问题的解决"></a>分布式问题的解决</h3><h4 id="只使用某台机器"><a href="#只使用某台机器" class="headerlink" title="只使用某台机器"></a>只使用某台机器</h4><p>一个最简单的解决方案，只使用某一台服务器，一次保证订阅者不重复。不过，这有点因噎废食的意味：），使用分布式部署就是为了减少单个服务器压力，如果只使用某一台服务区处理队列消息，显然是有违初衷的。</p>
 <h4 id="使用消息队列提供的VitualTopic特性"><a href="#使用消息队列提供的VitualTopic特性" class="headerlink" title="使用消息队列提供的VitualTopic特性"></a>使用消息队列提供的VitualTopic特性</h4><p>ActiveMQ、RabbitMQ都有提供VirtualTopic特性。该特性就是为了解决这一问题的。</p>
-<p><img src="http://ww3.sinaimg.cn/large/6b7b34d3jw1f2s0t7qkgdj20fo0ebq4n.jpg" alt="VirtualTopic方案"></p>
+<p><img src="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A62.jpg" alt="VirtualTopic方案"></p>
 <p>简单来讲就是topic下又挂了几个queue。不需要订阅者关联关联订阅主题，VirtualTopic在接收到消息后会查找所有关联的消费队列，把消息在这些队列中各保存一份。</p>
 <p>订阅者在自己的队列上进行消费，这样分布式部署的消费者可以共同消费一个queue中的消息。这样就避免了重复消费消息的问题。</p>
 <h4 id="使用路由框架"><a href="#使用路由框架" class="headerlink" title="使用路由框架"></a>使用路由框架</h4><p>由于SpringBoot等框架对VirtualTopic方案的支持不是很好，虽然可以实现，但是还是比较复杂，我们还可以采用现有的一些消息路由框架，如Apache Camel。</p>
 <p>这类框架的本质就是路由规则引擎，允许开发者自定义消息流转，举个简单的例子就是，可以手动实现截取发布者的消息，分发到指定的队列或者方法。</p>
 <h2 id="以实际案例进行说明"><a href="#以实际案例进行说明" class="headerlink" title="以实际案例进行说明"></a>以实际案例进行说明</h2><p>理论一定要通过实践才会得到认可，全文一直都在说理论，这就以一次简单的解耦案例进行说明。</p>
 <p>首先，我们的已有结构：主逻辑与附加逻辑依次执行，附加逻辑执行异常会导致主逻辑失败回滚。</p>
-<p><img src="http://ww4.sinaimg.cn/large/6b7b34d3jw1f2s19y2n09j20ah0bagmg.jpg" alt="已有结构"></p>
+<p><img src="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A63.jpg" alt="已有结构"></p>
 <p>根据上文理论，解耦后的结构：主逻辑与附加逻辑彻底拆分，附加逻辑模块自己保证执行成功，以此确保最终一致性。</p>
-<p><img src="http://ww3.sinaimg.cn/large/6b7b34d3jw1f2s21zr4rqj20lg0hhtco.jpg" alt="解耦后逻辑"></p>
+<p><img src="https://github.com/Coderec/picBed/raw/master/%E4%BD%BF%E7%94%A8%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AF%B9%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A64.jpg" alt="解耦后逻辑"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文从为什么要解耦说到如何使用消息队列解耦，从分布式部署可能遇到的问题讲到使用路由框架解决方案，并以一次真实的解耦小案例为例子说明了解耦的过程，到这里就算是结束了。希望这篇文章能对大家有所帮助。</p>
 
       
