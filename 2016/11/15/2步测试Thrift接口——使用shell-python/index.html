@@ -1,0 +1,938 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="小工具,测试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.0" />
+
+
+
+
+
+
+<meta name="description" content="省下重复劳作的时间，坐下来喝一杯茶，工具完善生活。
+题图：from Zoommy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2步测试Thrift接口——使用shell+python">
+<meta property="og:url" content="http://coderec.github.io/2016/11/15/2步测试Thrift接口——使用shell-python/index.html">
+<meta property="og:site_name" content="Coderec's Blog">
+<meta property="og:description" content="省下重复劳作的时间，坐下来喝一杯茶，工具完善生活。
+题图：from Zoommy">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/2%E6%AD%A5%E6%B5%8B%E8%AF%95Thrift%E6%8E%A5%E5%8F%A3%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8shell%2Bpython.jpeg">
+<meta property="og:updated_time" content="2016-11-16T09:35:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2步测试Thrift接口——使用shell+python">
+<meta name="twitter:description" content="省下重复劳作的时间，坐下来喝一杯茶，工具完善生活。
+题图：from Zoommy">
+<meta name="twitter:image" content="https://github.com/Coderec/picBed/raw/master/2%E6%AD%A5%E6%B5%8B%E8%AF%95Thrift%E6%8E%A5%E5%8F%A3%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8shell%2Bpython.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post',
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 2步测试Thrift接口——使用shell+python | Coderec's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+  
+  
+
+  <div class="container one-collumn  page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Coderec's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'UyYq7-KAF9BvkJF6cV-T','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                2步测试Thrift接口——使用shell+python
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-15T18:43:07+08:00" content="2016-11-15">
+              2016-11-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/工作笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">工作笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/15/2步测试Thrift接口——使用shell-python/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/15/2步测试Thrift接口——使用shell-python/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/15/2步测试Thrift接口——使用shell-python/" class="leancloud_visitors" data-flag-title="2步测试Thrift接口——使用shell+python">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://github.com/Coderec/picBed/raw/master/2%E6%AD%A5%E6%B5%8B%E8%AF%95Thrift%E6%8E%A5%E5%8F%A3%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8shell%2Bpython.jpeg" width="700" height="397"></p>
+<p>省下重复劳作的时间，坐下来喝一杯茶，工具完善生活。</p>
+<p>题图：from Zoommy</p>
+<a id="more"></a>
+<h2 id="一、引子"><a href="#一、引子" class="headerlink" title="一、引子"></a>一、引子</h2><p>由于Thrift每个接口都依赖特定IDL结构，因此，针对不同的接口需要编写不同的代码。  </p>
+<p>也因此，每次开发完成Thrift server端后，如要测试，都要开发对应的client端进行测试。</p>
+<p>参考官方文档可以发现，client端代码说简单也不简单（毕竟要写 ：） ），重点是这些代码在测试过后即沦为废品，实在是浪费时间精力。</p>
+<p>那么，到底能不能找到一种偷懒的方式呢？答案是肯定的。将一切重复劳动工具化，这是程序猿天生的责任。</p>
+<p>官方文档：<a href="https://thrift.apache.org/tutorial/java" target="_blank" rel="external">Thrift Java Tutorial</a>、<a href="https://thrift.apache.org/tutorial/py" target="_blank" rel="external">Thrift Python Tutorial</a>、<a href="https://thrift.apache.org/tutorial/php" target="_blank" rel="external">Thrift PHP Tutorial</a></p>
+<h2 id="二、为何使用python-client测试"><a href="#二、为何使用python-client测试" class="headerlink" title="二、为何使用python client测试"></a>二、为何使用python client测试</h2><p>由于只是一个简单的client端开发，因此使用java等重武器总会有牛刀杀鸡的感觉。这种时候当然是选择轻巧灵便的脚本语言——python。（这也要感谢Thrift是跨语言的）</p>
+<p>此外，python也有其独有优势。  </p>
+<ol>
+<li>MacOS、Linux原生自带python  </li>
+<li>python脚本执行简便，一条命令即可</li>
+</ol>
+<p>因此选择python来实现测试client端也就是顺理成章的事情了。</p>
+<h2 id="三、如何使用python-client"><a href="#三、如何使用python-client" class="headerlink" title="三、如何使用python client"></a>三、如何使用python client</h2><p>参考官方文档：<a href="https://thrift.apache.org/tutorial/py" target="_blank" rel="external">Thrift Python Tutorial</a></p>
+<ul>
+<li>搞到IDL文件（由server端提供）</li>
+<li><p>本机装有thrift服务<br>  <code>pip install thrift</code><br>  Mac如何安装pip：<a href="https://pip.readthedocs.io/en/stable/installing/" target="_blank" rel="external">https://pip.readthedocs.io/en/stable/installing/</a> </p>
+</li>
+<li><p>使用thrift命令，生成目标代码<br>  <code>thrift -r --gen py example.thrift</code></p>
+</li>
+<li><p>编写python client端代码<br>  编写一个python脚本，接收4个参数：1：server的ip，2：server的端口，3：python脚本中方法名，4：调用的远程方法与参数列表  </p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一个示例文件,名为client.py</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line">sys.path.append(<span class="string">'gen-py'</span>)</span><br><span class="line"><span class="keyword">from</span> test1 <span class="keyword">import</span> HeartbeatThriftService</span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> thrift <span class="keyword">import</span> Thrift</span><br><span class="line"><span class="keyword">from</span> thrift.transport <span class="keyword">import</span> TSocket</span><br><span class="line"><span class="keyword">from</span> thrift.transport <span class="keyword">import</span> TTransport</span><br><span class="line"><span class="keyword">from</span> thrift.protocol <span class="keyword">import</span> TBinaryProtocol</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1_HeartbeatThriftService</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="comment"># Make socket</span></span><br><span class="line">        transport = TSocket.TSocket(sys.argv[<span class="number">1</span>], int(sys.argv[<span class="number">2</span>]))</span><br><span class="line"> </span><br><span class="line">        <span class="comment"># Buffering is critical. Raw sockets are very slow</span></span><br><span class="line">        transport = TTransport.TFramedTransport(transport)</span><br><span class="line"> </span><br><span class="line">        <span class="comment"># Wrap in a protocol</span></span><br><span class="line">        protocol = TBinaryProtocol.TBinaryProtocol(transport)</span><br><span class="line"> </span><br><span class="line">        <span class="comment"># Create a client to use the protocol encoder</span></span><br><span class="line">        client = HeartbeatThriftService.Client(protocol)</span><br><span class="line"> </span><br><span class="line">        <span class="comment"># Connect!</span></span><br><span class="line">        transport.open()</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">                msg = eval(<span class="string">'client.'</span> + sys.argv[<span class="number">4</span>])</span><br><span class="line">                <span class="keyword">print</span> msg</span><br><span class="line">        <span class="keyword">except</span> Thrift.TException, ex:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'%s'</span> % (ex.message)</span><br><span class="line"> </span><br><span class="line">        <span class="comment"># Close!</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">'transport close'</span></span><br><span class="line">        transport.close()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">        method = eval(sys.argv[<span class="number">3</span>])</span><br><span class="line">        method()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行命令调用server端接口<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 一条示例命令</span><br><span class="line">python client.py 172.18.201.100 9001 test1_HeartbeatThriftService &quot;getServiceStatus()&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>OK!<br>到这里我们就完成了测试client的编写。<br>但是到这里为止，我们还是要为不同的server接口编写不同client代码，完全没有实现工具自动化。<br>别急，下一步，我们就可以使用shell脚本进行代码的自动生成，将3、4两步的繁琐编码替换执行一条命令。</p>
+<h2 id="四、shell脚本自动化生成代码-支持多个IDL文件同时生成"><a href="#四、shell脚本自动化生成代码-支持多个IDL文件同时生成" class="headerlink" title="四、shell脚本自动化生成代码(支持多个IDL文件同时生成)"></a>四、shell脚本自动化生成代码(支持多个IDL文件同时生成)</h2><p>使用shell脚本是这里的核心，通过shell脚本自动生成代码，可以省去每次编写client端代码的繁琐过程，这样，测试所需步骤即可简化为2步！</p>
+<ol>
+<li>在thrift文件（IDL）目录下，执行shell脚本生成代码</li>
+<li>在相同目录下，执行python脚本测试thrift接口</li>
+</ol>
+<p>现写好脚本如下，方便大家参考交流</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># shell开始</span><br><span class="line">rm -rf gen-py/</span><br><span class="line"> </span><br><span class="line">rm client.py</span><br><span class="line"> </span><br><span class="line"># 使用&apos;thrift -r --gen example.thrift&apos;命令，根据所有idl文件生成代码</span><br><span class="line">find . -name &quot;*.thrift&quot; | sed &apos;s/^\.\///&apos; | xargs -I &#123;&#125; thrift -r --gen py &#123;&#125;</span><br><span class="line"> </span><br><span class="line"># import sys</span><br><span class="line"># import glob</span><br><span class="line"># sys.path.append(&apos;gen-py&apos;)</span><br><span class="line">echo &quot;import sys\nimport glob\nsys.path.append(&apos;gen-py&apos;)\n\n&quot; &gt;&gt; client.py</span><br><span class="line"> </span><br><span class="line"># from test import testService</span><br><span class="line">find ./gen-py -name &quot;*-remote&quot; | sed &apos;s/^\.\/gen-py\///; s/-remote$//&apos; | sed &apos;s/\// import /; s/^/from /&apos; &gt;&gt; client.py</span><br><span class="line"> </span><br><span class="line"># from thrift import Thrift</span><br><span class="line"># from thrift.transport import TSocket</span><br><span class="line"># from thrift.transport import TTransport</span><br><span class="line"># from thrift.protocol import TBinaryProtocol</span><br><span class="line">echo &quot;\nfrom thrift import Thrift\nfrom thrift.transport import TSocket\nfrom thrift.transport import TTransport\nfrom thrift.protocol import TBinaryProtocol\n\n\n&quot; &gt;&gt; client.py</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">methodNames=$(find ./gen-py -name &quot;*-remote&quot; | sed &apos;s/^\.\/gen-py\///; s/-remote$//&apos; | sed &apos;s/\//_/&apos;)</span><br><span class="line"> </span><br><span class="line"># 开始生成方法体</span><br><span class="line">for name in $methodNames; do   </span><br><span class="line">    var=&quot;\ndef &quot;$name&quot;():\n\</span><br><span class="line">    \t# Make socket\n\</span><br><span class="line">    \ttransport = TSocket.TSocket(sys.argv[1], int(sys.argv[2]))\n\n\</span><br><span class="line">    \t# Buffering is critical. Raw sockets are very slow\n\</span><br><span class="line">    \ttransport = TTransport.TFramedTransport(transport)\n\n\n\</span><br><span class="line">    \t# Wrap in a protocol\n\</span><br><span class="line">    \tprotocol = TBinaryProtocol.TBinaryProtocol(transport)\n\n\n\</span><br><span class="line">    \t# Create a client to use the protocol encoder\n\</span><br><span class="line">    \tclient = &quot;$(echo $name | sed &apos;s/.*_//; s/^//; s/$//&apos;)&quot;.Client(protocol)\n\n\n\</span><br><span class="line">    \t# Connect!\n\ttransport.open()\n\n\n\</span><br><span class="line">    \ttry:\n\</span><br><span class="line">    \t\tmsg = eval(&apos;client.&apos; + sys.argv[4])\n\</span><br><span class="line">    \t\tprint msg\n\</span><br><span class="line">    \texcept Thrift.TException, ex:\n\</span><br><span class="line">    \t\tprint &apos;%s&apos; % (ex.message)\n\n\n\</span><br><span class="line">    \t# Close!\n\</span><br><span class="line">    \tprint &apos;transport close&apos;\n\</span><br><span class="line">    \ttransport.close()\n\n&quot;</span><br><span class="line">    echo $var &gt;&gt; client.py</span><br><span class="line">    echo $name</span><br><span class="line">done</span><br><span class="line"> </span><br><span class="line">echo &quot;\nif __name__ == &apos;__main__&apos;:\n\tmethod = eval(sys.argv[3])\n\tmethod()&quot; &gt;&gt; client.py</span><br><span class="line"> </span><br><span class="line">:&lt;&lt;BLOCK</span><br><span class="line">生成的文件示例</span><br><span class="line">import sys</span><br><span class="line">import glob</span><br><span class="line">sys.path.append(&apos;gen-py&apos;)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">from test1 import HeartbeatThriftService</span><br><span class="line"> </span><br><span class="line">from thrift import Thrift</span><br><span class="line">from thrift.transport import TSocket</span><br><span class="line">from thrift.transport import TTransport</span><br><span class="line">from thrift.protocol import TBinaryProtocol</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def test1_HeartbeatThriftService():</span><br><span class="line">        # Make socket</span><br><span class="line">        transport = TSocket.TSocket(sys.argv[1], int(sys.argv[2]))</span><br><span class="line"> </span><br><span class="line">        # Buffering is critical. Raw sockets are very slow</span><br><span class="line">        transport = TTransport.TFramedTransport(transport)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        # Wrap in a protocol</span><br><span class="line">        protocol = TBinaryProtocol.TBinaryProtocol(transport)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        # Create a client to use the protocol encoder</span><br><span class="line">        client = HeartbeatThriftService.Client(protocol)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        # Connect!</span><br><span class="line">        transport.open()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        try:</span><br><span class="line">                msg = eval(&apos;client.&apos; + sys.argv[4])</span><br><span class="line">                print msg</span><br><span class="line">        except Thrift.TException, ex:</span><br><span class="line">                print &apos;%s&apos; % (ex.message)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        # Close!</span><br><span class="line">        print &apos;transport close&apos;</span><br><span class="line">        transport.close()</span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    method = eval(sys.argv[3])</span><br><span class="line">    method()</span><br><span class="line">BLOCK</span><br></pre></td></tr></table></figure>
+<h2 id="五、2步测试Thrift接口"><a href="#五、2步测试Thrift接口" class="headerlink" title="五、2步测试Thrift接口"></a>五、2步测试Thrift接口</h2><p>通过上边的工具化，现在针对不同的thrift接口，我们都只需要两步即可进行测试。</p>
+<p>举个例子：位于目录<code>thrift</code>下，其内包含<code>test1.thrift</code>，需要手动操作的过程如下</p>
+<ol>
+<li><code>sh genThriftTest.sh</code> (即上述shell脚本)</li>
+<li><code>python client.py 172.18.201.100 9001 test1_HeartbeatThriftService &quot;getServiceStatus()&quot;</code> (ip、端口、方法皆为本次测试所用，针对不同测试可以自定义)</li>
+</ol>
+<h2 id="六、扩展应用"><a href="#六、扩展应用" class="headerlink" title="六、扩展应用"></a>六、扩展应用</h2><p>由于每次调用都简化为一次命令，因此，也可以很容易的编写批量测试脚本，这样也将自动化测试thrift的工作变得更加简单了。</p>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/小工具/" rel="tag">#小工具</a>
+          
+            <a href="/tags/测试/" rel="tag">#测试</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/27/一步一步自定义SpringMVC参数解析器/" rel="next" title="一步一步自定义SpringMVC参数解析器">
+                <i class="fa fa-chevron-left"></i> 一步一步自定义SpringMVC参数解析器
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/15/2步测试Thrift接口——使用shell-python/"
+           data-title="2步测试Thrift接口——使用shell+python" data-url="http://coderec.github.io/2016/11/15/2步测试Thrift接口——使用shell-python/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/logo.jpg"
+               alt="Coderec" />
+          <p class="site-author-name" itemprop="name">Coderec</p>
+          <p class="site-description motion-element" itemprop="description">成长的积累</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/coderec" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1803236563" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:baosencumt@126.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://caltyang.cn/" target="_blank">CaltYang的博客</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://ll-fly.com/" target="_blank">了了的博客</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://miaoxinguo.github.io" target="_blank">老苗的博客</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.dozer.cc/" target="_blank">Dozer的博客</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、引子"><span class="nav-number">1.</span> <span class="nav-text">一、引子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、为何使用python-client测试"><span class="nav-number">2.</span> <span class="nav-text">二、为何使用python client测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、如何使用python-client"><span class="nav-number">3.</span> <span class="nav-text">三、如何使用python client</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、shell脚本自动化生成代码-支持多个IDL文件同时生成"><span class="nav-number">4.</span> <span class="nav-text">四、shell脚本自动化生成代码(支持多个IDL文件同时生成)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、2步测试Thrift接口"><span class="nav-number">5.</span> <span class="nav-text">五、2步测试Thrift接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、扩展应用"><span class="nav-number">6.</span> <span class="nav-text">六、扩展应用</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Coderec</span>
+</div>
+
+<div class="welcome" >
+  <span>The quieter you become, the more you are able to hear.</span>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"coderec"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("swKI1L8ISgye1h1itMokUokE-gzGzoHsz", "Ow4Eowt3UFyLk8lbfvE5ybsd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>
