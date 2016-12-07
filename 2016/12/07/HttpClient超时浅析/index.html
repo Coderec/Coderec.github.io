@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Gradle,FindBugs," />
+  <meta name="keywords" content="HttpClient," />
 
 
 
@@ -57,23 +57,21 @@
 
 
 
-<meta name="description" content="代码检查之FindBugs
-题图：from Google">
+<meta name="description" content="在HttpClient的使用上一直对超时的设置有点模糊，搞不懂各种超时的含义，在这里整理下各种超时的设置方式以及对应含义。以便理清他们之间的关系。
+题图：from Zoommy">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在Gradle中使用FindBugs">
-<meta property="og:url" content="http://coderec.github.io/2016/01/05/在Gradle中使用FindBugs/index.html">
+<meta property="og:title" content="HttpClient超时浅析">
+<meta property="og:url" content="http://coderec.github.io/2016/12/07/HttpClient超时浅析/index.html">
 <meta property="og:site_name" content="Coderec's Blog">
-<meta property="og:description" content="代码检查之FindBugs
-题图：from Google">
-<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8FindBugs.jpg">
-<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8FindBugs1.jpg">
-<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8FindBugs2.jpg">
-<meta property="og:updated_time" content="2016-06-25T05:41:46.000Z">
+<meta property="og:description" content="在HttpClient的使用上一直对超时的设置有点模糊，搞不懂各种超时的含义，在这里整理下各种超时的设置方式以及对应含义。以便理清他们之间的关系。
+题图：from Zoommy">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/HttpClient%E8%B6%85%E6%97%B6%E6%B5%85%E6%9E%90.jpg">
+<meta property="og:updated_time" content="2016-12-07T06:44:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在Gradle中使用FindBugs">
-<meta name="twitter:description" content="代码检查之FindBugs
-题图：from Google">
-<meta name="twitter:image" content="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8FindBugs.jpg">
+<meta name="twitter:title" content="HttpClient超时浅析">
+<meta name="twitter:description" content="在HttpClient的使用上一直对超时的设置有点模糊，搞不懂各种超时的含义，在这里整理下各种超时的设置方式以及对应含义。以便理清他们之间的关系。
+题图：from Zoommy">
+<meta name="twitter:image" content="https://github.com/Coderec/picBed/raw/master/HttpClient%E8%B6%85%E6%97%B6%E6%B5%85%E6%9E%90.jpg">
 
 
 
@@ -91,7 +89,7 @@
   };
 </script>
 
-  <title> 在Gradle中使用FindBugs | Coderec's Blog </title>
+  <title> HttpClient超时浅析 | Coderec's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -236,7 +234,7 @@
             
             
               
-                在Gradle中使用FindBugs
+                HttpClient超时浅析
               
             
           </h1>
@@ -248,8 +246,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-01-05T14:15:09+08:00" content="2016-01-05">
-              2016-01-05
+            <time itemprop="dateCreated" datetime="2016-12-07T13:03:56+08:00" content="2016-12-07">
+              2016-12-07
             </time>
           </span>
 
@@ -278,8 +276,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/05/在Gradle中使用FindBugs/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/05/在Gradle中使用FindBugs/" itemprop="commentsCount"></span>
+                <a href="/2016/12/07/HttpClient超时浅析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/07/HttpClient超时浅析/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -289,7 +287,7 @@
 
           
           
-             <span id="/2016/01/05/在Gradle中使用FindBugs/" class="leancloud_visitors" data-flag-title="在Gradle中使用FindBugs">
+             <span id="/2016/12/07/HttpClient超时浅析/" class="leancloud_visitors" data-flag-title="HttpClient超时浅析">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -309,22 +307,47 @@
       
 
       
-        <p><img src="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8FindBugs.jpg" width="700" height="397"></p>
-<p>代码检查之FindBugs</p>
-<p>题图：from Google</p>
+        <p><img src="https://github.com/Coderec/picBed/raw/master/HttpClient%E8%B6%85%E6%97%B6%E6%B5%85%E6%9E%90.jpg" width="700" height="397"></p>
+<p>在HttpClient的使用上一直对超时的设置有点模糊，搞不懂各种超时的含义，在这里整理下各种超时的设置方式以及对应含义。以便理清他们之间的关系。</p>
+<p>题图：from Zoommy</p>
 <a id="more"></a>
-<h2 id="什么是FindBugs？"><a href="#什么是FindBugs？" class="headerlink" title="什么是FindBugs？"></a>什么是FindBugs？</h2><p>作为程序猴子，哪个没有被虫子困扰过，每次debug都是一次痛苦的过程。如果有一个工具可以帮我们找到那些跟我捉迷藏的bug，这个世界岂不是会变得很美好？<br>OK，FindBugs来了，它就是那个让世界变得更加美好的工具。<br>FindBugs是一个java静态分析工具，它检查类或者JAR文件，有了FindBugs，无需运行运行程序即可找到潜在的Bug。当然，它无法找到所有bug（完美的工具总是存在梦里），但目前的FindBugs已经足够强大，可以找出绝大多数潜在问题了。</p>
-<h2 id="配置FindBugs"><a href="#配置FindBugs" class="headerlink" title="配置FindBugs"></a>配置FindBugs</h2><p>一个拥有如此强大功能的工具，它的配置却是十分简单。FindBugs几乎是开箱即用，无需配置即可进行代码审计。<br>不过，它也支持自定义配置，可以自定义需要检查的类或文件，也可以自定义不进行检查的类或文件。<br>自定义的核心就是Filter File(xml文件)的配置。我们既可以指定该文件为需要检查的也可以指定其为忽略检查的。<br>这里只介绍Filter File的配置，其他内容见附录FindBugs文档链接。<br>首先来看一个示例配置</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">FindBugsFilter</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">Match</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Class</span> <span class="attr">name</span>=<span class="string">"com.foobar.ClassNotToBeAnalyzed"</span> /&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">Match</span>&gt;</span></div><div class="line"></div><div class="line">     <span class="tag">&lt;<span class="name">Match</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Class</span> <span class="attr">name</span>=<span class="string">"com.foobar.ClassWithSomeBugsMatched"</span> /&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Bug</span> <span class="attr">code</span>=<span class="string">"DE,UrF,SIC"</span> /&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">Match</span>&gt;</span></div><div class="line"></div><div class="line">     <span class="comment">&lt;!-- Match all XYZ violations. --&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">Match</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Bug</span> <span class="attr">code</span>=<span class="string">"XYZ"</span> /&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">Match</span>&gt;</span></div><div class="line"></div><div class="line">     <span class="comment">&lt;!-- Match all doublecheck violations in these methods of "AnotherClass". --&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">Match</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Class</span> <span class="attr">name</span>=<span class="string">"com.foobar.AnotherClass"</span> /&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Or</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">Method</span> <span class="attr">name</span>=<span class="string">"nonOverloadedMethod"</span> /&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">Method</span> <span class="attr">name</span>=<span class="string">"frob"</span> <span class="attr">params</span>=<span class="string">"int,java.lang.String"</span> <span class="attr">returns</span>=<span class="string">"void"</span> /&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">Method</span> <span class="attr">name</span>=<span class="string">"blat"</span> <span class="attr">params</span>=<span class="string">""</span> <span class="attr">returns</span>=<span class="string">"boolean"</span> /&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">Or</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Bug</span> <span class="attr">code</span>=<span class="string">"DC"</span> /&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">Match</span>&gt;</span></div><div class="line"></div><div class="line">     <span class="comment">&lt;!-- A method with a dead local store false positive (medium priority). --&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">Match</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Class</span> <span class="attr">name</span>=<span class="string">"com.foobar.MyClass"</span> /&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Method</span> <span class="attr">name</span>=<span class="string">"someMethod"</span> /&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Bug</span> <span class="attr">pattern</span>=<span class="string">"DLS_DEAD_LOCAL_STORE"</span> /&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">Priority</span> <span class="attr">value</span>=<span class="string">"2"</span> /&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">Match</span>&gt;</span></div><div class="line"></div><div class="line">     <span class="comment">&lt;!-- All bugs in test classes, except for JUnit-specific bugs --&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">Match</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">Class</span> <span class="attr">name</span>=<span class="string">"~.*\.*Test"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">Not</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Bug</span> <span class="attr">code</span>=<span class="string">"IJU"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">Not</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">Match</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">FindBugsFilter</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>话不多说，直接看文件。除了根级FindBugsFilter元素外，都是使用Match元素进行匹配的设置，而Match元素中仅有几种属性而已，因此，只要了解这些属性之后，即可随意配置自己需要的Filter File了。（别忘了，FindBugs开箱即用，即使没有Filter File也是可以直接审计的 : ） )</p>
-<p>匹配类型如下所示：</p>
-<p><img src="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8FindBugs1.jpg" width="750" height="400" align="center"></p>
-<p><strong>PS:</strong><br>如果在name等支持regex的属性中使用“~”开头，会被解析为javaRegexPattern<br>考虑到通配符是匹配所有元素，因此<code>.\*</code>应该加在首部，以及and/or的尾部来保证substring的匹配</p>
-<h2 id="Gradle中使用FindBugs插件"><a href="#Gradle中使用FindBugs插件" class="headerlink" title="Gradle中使用FindBugs插件"></a>Gradle中使用FindBugs插件</h2><p>Gradle本身就已经支持了FindBugs插件，因此我们只需要很简单的几步配置即可<code>gradle findbugsMain</code>进行代码审计了。<br>首先，官方示例配置如下<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">apply <span class="string">plugin:</span> <span class="string">"java"</span></div><div class="line">apply <span class="string">plugin:</span> <span class="string">"findbugs"</span></div><div class="line"></div><div class="line">findbugs &#123;</div><div class="line">    toolVersion = <span class="string">"2.0.1"</span></div><div class="line">    sourceSets = [sourceSets.main]</div><div class="line">    ignoreFailures = <span class="literal">true</span></div><div class="line">    reportsDir = file(<span class="string">"$project.buildDir/findbugsReports"</span>)</div><div class="line">    effort = <span class="string">"max"</span></div><div class="line">    reportLevel = <span class="string">"high"</span></div><div class="line">    visitors = [<span class="string">"FindSqlInjection"</span>, <span class="string">"SwitchFallthrough"</span>]</div><div class="line">    omitVisitors = [<span class="string">"FindNonShortCircuit"</span>]</div><div class="line">    includeFilter = file(<span class="string">"$rootProject.projectDir/config/findbugs/includeFilter.xml"</span>)</div><div class="line">    excludeFilter = file(<span class="string">"$rootProject.projectDir/config/findbugs/excludeFilter.xml"</span>)</div><div class="line">    excludeBugsFilter = file(<span class="string">"$rootProject.projectDir/config/findbugs/excludeBugsFilter.xml"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这里说下常用配置属性的意义：</p>
-<p><img src="https://github.com/Coderec/picBed/raw/master/%E5%9C%A8Gradle%E4%B8%AD%E4%BD%BF%E7%94%A8FindBugs2.jpg" width="750" height="160" align="center"></p>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>想必有了上述两者的配置说明，大家已经可以自己配置想要的Findbugs并使用了。<br>如果觉得不够，例如想尝试下FindBugs的注解等特性，大家可以参照文档深入研究。<br>下面附上几个文档的链接：</p>
-<p>Bug类型：FindBugs Bug Descriptions: <a href="http://findbugs.sourceforge.net/bugDescriptions.html" target="_blank" rel="external">http://findbugs.sourceforge.net/bugDescriptions.html)</a><br>FindBugs Manul: <a href="http://findbugs.sourceforge.net/manual/" target="_blank" rel="external">http://findbugs.sourceforge.net/manual/</a><br>Gradle Findbugs插件用户指南:<a href="https://docs.gradle.org/current/userguide/findbugs_plugin.html" target="_blank" rel="external">https://docs.gradle.org/current/userguide/findbugs_plugin.html</a></p>
+<h2 id="一、序"><a href="#一、序" class="headerlink" title="一、序"></a>一、序</h2><p>在HttpClient的使用上一直对超时的设置有点模糊，搞不懂各种超时的含义，在这里整理下各种超时的设置方式以及对应含义。以便理清他们之间的关系。</p>
+<h2 id="二、HttpClient-4-3-X版本设置超时"><a href="#二、HttpClient-4-3-X版本设置超时" class="headerlink" title="二、HttpClient 4.3.X版本设置超时"></a>二、HttpClient 4.3.X版本设置超时</h2><ul>
+<li>基于HttpClient</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">RequestConfig requestConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.IGNORE_COOKIES)</div><div class="line">                .setSocketTimeout(<span class="number">150</span>).setConnectTimeout(<span class="number">150</span>).setConnectionRequestTimeout(<span class="number">150</span>).build();</div><div class="line"></div><div class="line">CloseableHttpClient httpClient = HttpClients.custom()</div><div class="line">                .setDefaultRequestConfig(requestConfig)</div><div class="line">                .build();</div><div class="line">                </div><div class="line">httpClient.execute(<span class="keyword">new</span> HttpGet(<span class="string">"http://www.baidu.com"</span>));</div></pre></td></tr></table></figure>
+<ul>
+<li>基于HttpPost或HttpGet</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CloseableHttpClient httpClient = HttpClients.createDefault();</div><div class="line">HttpGet httpGet=<span class="keyword">new</span> HttpGet(<span class="string">"http://www.baidu.com"</span>);<span class="comment">//HTTP Get请求(POST雷同)</span></div><div class="line">RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(<span class="number">2000</span>).setConnectTimeout(<span class="number">2000</span>).build();<span class="comment">//设置请求和传输超时时间</span></div><div class="line">httpGet.setConfig(requestConfig);</div><div class="line">httpClient.execute(httpGet);<span class="comment">//执行请求</span></div></pre></td></tr></table></figure>
+<h2 id="三、各种超时含义"><a href="#三、各种超时含义" class="headerlink" title="三、各种超时含义"></a>三、各种超时含义</h2><p>简述：HttpClient调用一次Http请求的流程如下</p>
+<ol>
+<li>从连接管理器ConnManager中获取连接。通过设置<strong>ConnectionRequestTimeout</strong>可以定义获取连接操作的超时。</li>
+<li>请求建立连接，Http底层使用的依然是TCP，因此需要三次握手。通过设置<strong>ConnectTimeout</strong>可以定义建立连接的超时。</li>
+<li>从socket读取响应。通过设置<strong>SocketTimeout</strong>可以定义获取响应数据的超时。</li>
+</ol>
+<p><strong>注意：如果不设置，默认值为0，0会被解析为无穷大。</strong></p>
+<h2 id="四、Socket建立连接以及读超时"><a href="#四、Socket建立连接以及读超时" class="headerlink" title="四、Socket建立连接以及读超时"></a>四、Socket建立连接以及读超时</h2><p>按照时间顺序</p>
+<ol>
+<li>创建一个Socket后，操作系统会为其分配发送缓冲队列Send-Q和接收缓冲队列Recv-Q；所有需要网络发送的数据都需要进入Send-Q后等待网络模块发送，而所有网络接收到的数据都会进入Recv-Q等待<strong>应用层</strong>处理。(参考链接4)</li>
+<li>socket进行TCP三次握手，进入<strong>ConnectTimeout</strong>的定义范围。</li>
+<li>通过socket调用recv命令阻塞式读取Recv-Q，直到接收到消息或者超时，这里就是<strong>SocketTimeout</strong>的定义范围。</li>
+</ol>
+<h2 id="五、ConnectTimeout"><a href="#五、ConnectTimeout" class="headerlink" title="五、ConnectTimeout"></a>五、ConnectTimeout</h2><p>注意connectTimeout不要设置为超过75秒，对于基于 Berkeley BSD的系统，默认时间是75秒，因此，超过75秒没有意义，而且75秒对于应用来说也未免太过长了。</p>
+<p>具体代码可以参考<code>Socket</code>类中的<code>connect</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Connects this socket to the server with a specified timeout value.</div><div class="line"> * A timeout of zero is interpreted as an infinite timeout. The connection</div><div class="line"> * will then block until established or an error occurs.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span>   endpoint the &#123;<span class="doctag">@code</span> SocketAddress&#125;</div><div class="line"> * <span class="doctag">@param</span>   timeout  the timeout value to be used in milliseconds.</div><div class="line"> * <span class="doctag">@throws</span>  IOException if an error occurs during the connection</div><div class="line"> * <span class="doctag">@throws</span>  SocketTimeoutException if timeout expires before connecting</div><div class="line"> * <span class="doctag">@throws</span>  java.nio.channels.IllegalBlockingModeException</div><div class="line"> *          if this socket has an associated channel,</div><div class="line"> *          and the channel is in non-blocking mode</div><div class="line"> * <span class="doctag">@throws</span>  IllegalArgumentException if endpoint is null or is a</div><div class="line"> *          SocketAddress subclass not supported by this socket</div><div class="line"> * <span class="doctag">@since</span> 1.4</div><div class="line"> * <span class="doctag">@spec</span> JSR-51</div><div class="line"> */</div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span><span class="params">(SocketAddress endpoint, <span class="keyword">int</span> timeout)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h2 id="六、SocketTimeout"><a href="#六、SocketTimeout" class="headerlink" title="六、SocketTimeout"></a>六、SocketTimeout</h2><p>具体实现是native方法，<code>SocketInputStream.socketRead0()</code>，源码需要参考具体jvm的实现，不过可以确定的是该方法为阻塞式，<strong>SocketTimeout</strong>实际为阻塞读取Recv-Q数据的超时时间</p>
+<h2 id="七、HttpClient发送请求源码分析"><a href="#七、HttpClient发送请求源码分析" class="headerlink" title="七、HttpClient发送请求源码分析"></a>七、HttpClient发送请求源码分析</h2><p>HttpClient创建http请求也是遵照socket建立连接，接收消息的规则，通过查看具体源码，可以更好地理解<strong>ConnectTimeout</strong>和<strong>SocketTimeout</strong>的含义。</p>
+<p>可以通过在关键代码处插入断点调试的方式，实际测试各种timeout值。<strong>注意：不要将timeout设置过小，如10ms，可能造成代码未执行完就已经超时</strong></p>
+<p>关键代码如下：（<code>org.apache.http.impl.execchain.MainClientExec</code>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> CloseableHttpResponse <span class="title">execute</span><span class="params">(</span></span></div><div class="line">			<span class="keyword">final</span> HttpRoute route,</div><div class="line">			<span class="keyword">final</span> HttpRequestWrapper request,</div><div class="line">			<span class="keyword">final</span> HttpClientContext context,</div><div class="line">			<span class="keyword">final</span> HttpExecutionAware execAware) <span class="keyword">throws</span> IOException, HttpException &#123;</div><div class="line">		<span class="comment">// ...省略</span></div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="comment">// ...省略</span></div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> execCount = <span class="number">1</span>;; execCount++) &#123;</div><div class="line">				<span class="comment">// ...省略</span></div><div class="line">				<span class="keyword">if</span> (!managedConn.isOpen()) &#123;</div><div class="line">					<span class="keyword">this</span>.log.debug(<span class="string">"Opening connection "</span> + route);</div><div class="line">					<span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line"><span class="comment">// ***************************************创建连接关键代码，connectTimeout****************************************************                      </span></div><div class="line">						establishRoute(proxyAuthState, managedConn, route, request, context);</div><div class="line"><span class="comment">// ***************************************创建连接关键代码，connectTimeout****************************************************  </span></div><div class="line"></div><div class="line">					&#125; <span class="keyword">catch</span> (<span class="keyword">final</span> TunnelRefusedException ex) &#123;</div><div class="line">						<span class="keyword">if</span> (<span class="keyword">this</span>.log.isDebugEnabled()) &#123;</div><div class="line">							<span class="keyword">this</span>.log.debug(ex.getMessage());</div><div class="line">						&#125;</div><div class="line">						response = ex.getResponse();</div><div class="line">						<span class="keyword">break</span>;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">// ...省略</span></div><div class="line"><span class="comment">// ***************************************阻塞接收数据关键代码，socketTimeout****************************************************                  </span></div><div class="line">				response = requestExecutor.execute(request, managedConn, context);</div><div class="line"><span class="comment">// ***************************************阻塞接收数据关键代码，socketTimeout****************************************************  </span></div><div class="line">				<span class="comment">// ...省略</span></div><div class="line">			&#125;</div><div class="line">			<span class="comment">// ...省略</span></div><div class="line">		&#125; <span class="keyword">catch</span> (<span class="keyword">final</span> ConnectionShutdownException ex) &#123;</div><div class="line">			<span class="comment">// ...省略</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h2 id="八、总结"><a href="#八、总结" class="headerlink" title="八、总结"></a>八、总结</h2><p><strong>ConnectionRequestTimeout</strong>、<strong>ConnectTimeout</strong>和<strong>SocketTimeout</strong>是三个相对独立的操作过程的超时，三者互不包含，并无覆盖关系，通过以上分析，相信之后不会再混淆各种超时的含义了。</p>
+<h2 id="九、参考链接"><a href="#九、参考链接" class="headerlink" title="九、参考链接"></a>九、参考链接</h2><ol>
+<li><a href="http://blog.csdn.net/sureyonder/article/details/5633647" target="_blank" rel="external">JAVA Socket超时浅析</a></li>
+<li><a href="http://blog.csdn.net/ast_224/article/details/2957294" target="_blank" rel="external">Linux 下socket超时（connect超时/recv超时）</a></li>
+<li><a href="http://blog.csdn.net/walkerjong/article/details/51710945" target="_blank" rel="external">HttpClient 4.* connectionRequestTimeout, connectionTimeOut, socketTimeOut</a></li>
+<li><a href="http://blog.csdn.net/wenqian1991/article/details/46707521" target="_blank" rel="external">【Linux 内核网络协议栈源码剖析】socket 函数剖析</a></li>
+</ol>
 
       
     </div>
@@ -333,9 +356,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Gradle/" rel="tag">#Gradle</a>
-          
-            <a href="/tags/FindBugs/" rel="tag">#FindBugs</a>
+            <a href="/tags/HttpClient/" rel="tag">#HttpClient</a>
           
         </div>
       
@@ -344,17 +365,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/04/IntelliJ-Idea-常用配置/" rel="next" title="IntelliJ Idea 常用配置">
-                <i class="fa fa-chevron-left"></i> IntelliJ Idea 常用配置
+              <a href="/2016/11/15/2步测试Thrift接口——使用shell-python/" rel="next" title="2步测试Thrift接口——使用shell+python">
+                <i class="fa fa-chevron-left"></i> 2步测试Thrift接口——使用shell+python
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/06/在Gradle中使用PMD/" rel="prev" title="在Gradle中使用PMD">
-                在Gradle中使用PMD <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -403,8 +420,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/05/在Gradle中使用FindBugs/"
-           data-title="在Gradle中使用FindBugs" data-url="http://coderec.github.io/2016/01/05/在Gradle中使用FindBugs/">
+      <div class="ds-thread" data-thread-key="2016/12/07/HttpClient超时浅析/"
+           data-title="HttpClient超时浅析" data-url="http://coderec.github.io/2016/12/07/HttpClient超时浅析/">
       </div>
     
   </div>
@@ -540,7 +557,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是FindBugs？"><span class="nav-number">1.</span> <span class="nav-text">什么是FindBugs？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置FindBugs"><span class="nav-number">2.</span> <span class="nav-text">配置FindBugs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle中使用FindBugs插件"><span class="nav-number">3.</span> <span class="nav-text">Gradle中使用FindBugs插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、序"><span class="nav-number">1.</span> <span class="nav-text">一、序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、HttpClient-4-3-X版本设置超时"><span class="nav-number">2.</span> <span class="nav-text">二、HttpClient 4.3.X版本设置超时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、各种超时含义"><span class="nav-number">3.</span> <span class="nav-text">三、各种超时含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Socket建立连接以及读超时"><span class="nav-number">4.</span> <span class="nav-text">四、Socket建立连接以及读超时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、ConnectTimeout"><span class="nav-number">5.</span> <span class="nav-text">五、ConnectTimeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、SocketTimeout"><span class="nav-number">6.</span> <span class="nav-text">六、SocketTimeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、HttpClient发送请求源码分析"><span class="nav-number">7.</span> <span class="nav-text">七、HttpClient发送请求源码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、总结"><span class="nav-number">8.</span> <span class="nav-text">八、总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九、参考链接"><span class="nav-number">9.</span> <span class="nav-text">九、参考链接</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
