@@ -1,0 +1,939 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HttpClient," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.0" />
+
+
+
+
+
+
+<meta name="description" content="无聊的时候是否想过response = httpClient.execute(httpGet)对你干了啥？
+题图：from Zoommy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What happened in httpClient.execute(httpGet)">
+<meta property="og:url" content="http://coderec.github.io/2016/12/25/What-happened-in-httpClient-execute-httpGet/index.html">
+<meta property="og:site_name" content="Coderec's Blog">
+<meta property="og:description" content="无聊的时候是否想过response = httpClient.execute(httpGet)对你干了啥？
+题图：from Zoommy">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/What%20happened%20in%20httpClient.execute(httpGet)1.jpg">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/What%20happened%20in%20httpClient.execute(httpGet">
+<meta property="og:image" content="https://github.com/Coderec/picBed/raw/master/What%20happened%20in%20httpClient.execute(httpGet">
+<meta property="og:updated_time" content="2016-12-25T15:37:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What happened in httpClient.execute(httpGet)">
+<meta name="twitter:description" content="无聊的时候是否想过response = httpClient.execute(httpGet)对你干了啥？
+题图：from Zoommy">
+<meta name="twitter:image" content="https://github.com/Coderec/picBed/raw/master/What%20happened%20in%20httpClient.execute(httpGet)1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post',
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> What happened in httpClient.execute(httpGet) | Coderec's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+  
+  
+
+  <div class="container one-collumn  page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Coderec's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'UyYq7-KAF9BvkJF6cV-T','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                What happened in httpClient.execute(httpGet)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-25T18:25:08+08:00" content="2016-12-25">
+              2016-12-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/25/What-happened-in-httpClient-execute-httpGet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/25/What-happened-in-httpClient-execute-httpGet/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/12/25/What-happened-in-httpClient-execute-httpGet/" class="leancloud_visitors" data-flag-title="What happened in httpClient.execute(httpGet)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://github.com/Coderec/picBed/raw/master/What%20happened%20in%20httpClient.execute(httpGet)1.jpg" width="700" height="397"></p>
+<p>无聊的时候是否想过<code>response = httpClient.execute(httpGet)</code>对你干了啥？</p>
+<p>题图：from Zoommy</p>
+<a id="more"></a>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>HttpClient作为Http工具在Java开发中十分流行。</p>
+<p>只要调用<code>response = httpClient.execute(httpGet)</code>，开发者便可以拿到Http响应。看起来十分简单。但是，你是否好奇过这段代码究竟做了什么？</p>
+<p>本文就通过分析HttpClient源码，来理顺一遍<code>httpClient.execute(httpGet)</code>代码段的主要执行逻辑。</p>
+<h2 id="2-HttpClient"><a href="#2-HttpClient" class="headerlink" title="2. HttpClient"></a>2. HttpClient</h2><p>想知道<code>httpClient.execute(httpGet)</code>做了什么，首先要知道其调用发起者<code>httpclient</code>是什么。</p>
+<p><strong>定义</strong>：HttpClient接口定义了最基本的用于Httpclient请求的约定。具体的约束、身份验证、重定向等实现细节由不同的实现类来完成。</p>
+<p><img src="https://github.com/Coderec/picBed/raw/master/What%20happened%20in%20httpClient.execute(httpGet" alt="">2.png)</p>
+<p>HttpClient中所有的请求都是由该接口的实现类来执行完成的，常见代码：<code>httpClient.execute(httpGet)</code>。</p>
+<h3 id="2-1-以InternalHttpClient为例"><a href="#2-1-以InternalHttpClient为例" class="headerlink" title="2.1 以InternalHttpClient为例"></a>2.1 以InternalHttpClient为例</h3><p><code>InternalHttpClient</code>类中实现了<code>doExecute</code>方法，这个方法就是执行Http请求的核心。  </p>
+<p>分析源码就不难发现，该方法就干了两件事，包装、调用<code>execChain.execute</code>。说白了，真正发起请求的不是HttpClient，而是这个<code>execChain</code>——<code>ClientExecChain</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 属性之一</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> ClientExecChain execChain;</div><div class="line"></div><div class="line"><span class="comment">// 覆写方法</span></div><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">protected</span> CloseableHttpResponse <span class="title">doExecute</span><span class="params">(</span></span></div><div class="line">           <span class="keyword">final</span> HttpHost target,</div><div class="line">           <span class="keyword">final</span> HttpRequest request,</div><div class="line">           <span class="keyword">final</span> HttpContext context) <span class="keyword">throws</span> IOException, ClientProtocolException &#123;</div><div class="line">       Args.notNull(request, <span class="string">"HTTP request"</span>);</div><div class="line">       HttpExecutionAware execAware = <span class="keyword">null</span>;</div><div class="line">       <span class="keyword">if</span> (request <span class="keyword">instanceof</span> HttpExecutionAware) &#123;</div><div class="line">           execAware = (HttpExecutionAware) request;</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">           </div><div class="line">           <span class="comment">//  包装request、config</span></div><div class="line">           </div><div class="line">           <span class="keyword">final</span> HttpRequestWrapper wrapper = HttpRequestWrapper.wrap(request);</div><div class="line">           <span class="keyword">final</span> HttpClientContext localcontext = HttpClientContext.adapt(</div><div class="line">                   context != <span class="keyword">null</span> ? context : <span class="keyword">new</span> BasicHttpContext());</div><div class="line">           RequestConfig config = <span class="keyword">null</span>;</div><div class="line">           <span class="keyword">if</span> (request <span class="keyword">instanceof</span> Configurable) &#123;</div><div class="line">               config = ((Configurable) request).getConfig();</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">if</span> (config == <span class="keyword">null</span>) &#123;</div><div class="line">               <span class="keyword">final</span> HttpParams params = request.getParams();</div><div class="line">               <span class="keyword">if</span> (params <span class="keyword">instanceof</span> HttpParamsNames) &#123;</div><div class="line">                   <span class="keyword">if</span> (!((HttpParamsNames) params).getNames().isEmpty()) &#123;</div><div class="line">                       config = HttpClientParamConfig.getRequestConfig(params);</div><div class="line">                   &#125;</div><div class="line">               &#125; <span class="keyword">else</span> &#123;</div><div class="line">                   config = HttpClientParamConfig.getRequestConfig(params);</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">if</span> (config != <span class="keyword">null</span>) &#123;</div><div class="line">               localcontext.setRequestConfig(config);</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">           <span class="comment">// 设置context、route</span></div><div class="line">           </div><div class="line">           setupContext(localcontext);</div><div class="line">           <span class="keyword">final</span> HttpRoute route = determineRoute(target, wrapper, localcontext);</div><div class="line">           </div><div class="line">           <span class="comment">// 关键， 执行execute</span></div><div class="line">           </div><div class="line">           <span class="keyword">return</span> <span class="keyword">this</span>.execChain.execute(route, wrapper, localcontext, execAware);</div><div class="line">       &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> HttpException httpException) &#123;</div><div class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> ClientProtocolException(httpException);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h2 id="3-ClientExecChain"><a href="#3-ClientExecChain" class="headerlink" title="3. ClientExecChain"></a>3. ClientExecChain</h2><p><code>execChain.execute</code>看起来只是一个方法调用，实际上他是一串调用链。</p>
+<p><strong>定义</strong>：ClientExecChain接口定义了一个Http请求执行链上的节点，每个节点既可以是另一个节点的装饰器也可以是最终节点。该接口只包含一个待实现方法（<code>execute</code>）。此方法的实现，既可以是将请求传递给下一个节点执行，也可以是真实的向服务端传输请求。</p>
+<p><img src="https://github.com/Coderec/picBed/raw/master/What%20happened%20in%20httpClient.execute(httpGet" alt="">3.png)</p>
+<p>如图。</p>
+<ol>
+<li>如果ClientExecChain对象中包含另一个ClientExecChain对象<br> 那么他就是执行链上的一个装饰节点，核心还是调用内部ClientExecChain对象的<code>execute</code>，只不过在执行前后添加一些装饰逻辑。</li>
+<li>如果ClientExecChain对象中包含一个HttpRequestExecutor对象<br> 那么他就是执行链的最终节点，直接调用HttpRequestExecutor对象的<code>execute</code>，也就是真正向服务端发送Http请求。</li>
+</ol>
+<p>由以上分析，可以发现，最终节点只可能是MinimalClientExec、MainClientExec两者之一。</p>
+<p>下面分别就装饰节点和最终节点进行分析。</p>
+<h3 id="3-1-装饰节点，以ProtocolExec为例"><a href="#3-1-装饰节点，以ProtocolExec为例" class="headerlink" title="3.1 装饰节点，以ProtocolExec为例"></a>3.1 装饰节点，以ProtocolExec为例</h3><p><code>ProtocolExec</code>类的代码十分干脆，直接实现<code>execute</code>方法，做一些Http协议相关的装饰逻辑。如上节所说，<code>ProtocolExec</code>是执行链上的一个装饰节点。阅读源码也确实发现，他只做了三件事。</p>
+<ol>
+<li>解析request中的uri、target等属性</li>
+<li>在调用下一节点的<code>execute</code>前后添加装饰逻辑（拦截器方式）</li>
+<li>调用下一个节点的<code>execute</code>方法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> CloseableHttpResponse <span class="title">execute</span><span class="params">(</span></span></div><div class="line">            <span class="keyword">final</span> HttpRoute route,</div><div class="line">            <span class="keyword">final</span> HttpRequestWrapper request,</div><div class="line">            <span class="keyword">final</span> HttpClientContext context,</div><div class="line">            <span class="keyword">final</span> HttpExecutionAware execAware) <span class="keyword">throws</span> IOException,</div><div class="line">        HttpException &#123;</div><div class="line">        Args.notNull(route, <span class="string">"HTTP route"</span>);</div><div class="line">        Args.notNull(request, <span class="string">"HTTP request"</span>);</div><div class="line">        Args.notNull(context, <span class="string">"HTTP context"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// 解析request中的uri、target等属性</span></div><div class="line">        </div><div class="line">        <span class="keyword">final</span> HttpRequest original = request.getOriginal();</div><div class="line">        URI uri = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (original <span class="keyword">instanceof</span> HttpUriRequest) &#123;</div><div class="line">            uri = ((HttpUriRequest) original).getURI();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">final</span> String uriString = original.getRequestLine().getUri();</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                uri = URI.create(uriString);</div><div class="line">            &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> IllegalArgumentException ex) &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.log.isDebugEnabled()) &#123;</div><div class="line">                    <span class="keyword">this</span>.log.debug(<span class="string">"Unable to parse '"</span> + uriString + <span class="string">"' as a valid URI; "</span> +</div><div class="line">                        <span class="string">"request URI and Host header may be inconsistent"</span>, ex);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        request.setURI(uri);</div><div class="line"></div><div class="line">        <span class="comment">// Re-write request URI if needed</span></div><div class="line">        rewriteRequestURI(request, route);</div><div class="line"></div><div class="line">        <span class="keyword">final</span> HttpParams params = request.getParams();</div><div class="line">        HttpHost virtualHost = (HttpHost) params.getParameter(ClientPNames.VIRTUAL_HOST);</div><div class="line">        <span class="comment">// HTTPCLIENT-1092 - add the port if necessary</span></div><div class="line">        <span class="keyword">if</span> (virtualHost != <span class="keyword">null</span> &amp;&amp; virtualHost.getPort() == -<span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> port = route.getTargetHost().getPort();</div><div class="line">            <span class="keyword">if</span> (port != -<span class="number">1</span>) &#123;</div><div class="line">                virtualHost = <span class="keyword">new</span> HttpHost(virtualHost.getHostName(), port,</div><div class="line">                    virtualHost.getSchemeName());</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.log.isDebugEnabled()) &#123;</div><div class="line">                <span class="keyword">this</span>.log.debug(<span class="string">"Using virtual host"</span> + virtualHost);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        HttpHost target = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (virtualHost != <span class="keyword">null</span>) &#123;</div><div class="line">            target = virtualHost;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">if</span> (uri != <span class="keyword">null</span> &amp;&amp; uri.isAbsolute() &amp;&amp; uri.getHost() != <span class="keyword">null</span>) &#123;</div><div class="line">                target = <span class="keyword">new</span> HttpHost(uri.getHost(), uri.getPort(), uri.getScheme());</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (target == <span class="keyword">null</span>) &#123;</div><div class="line">            target = route.getTargetHost();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Get user info from the URI</span></div><div class="line">        <span class="keyword">if</span> (uri != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">final</span> String userinfo = uri.getUserInfo();</div><div class="line">            <span class="keyword">if</span> (userinfo != <span class="keyword">null</span>) &#123;</div><div class="line">                CredentialsProvider credsProvider = context.getCredentialsProvider();</div><div class="line">                <span class="keyword">if</span> (credsProvider == <span class="keyword">null</span>) &#123;</div><div class="line">                    credsProvider = <span class="keyword">new</span> BasicCredentialsProvider();</div><div class="line">                    context.setCredentialsProvider(credsProvider);</div><div class="line">                &#125;</div><div class="line">                credsProvider.setCredentials(</div><div class="line">                        <span class="keyword">new</span> AuthScope(target),</div><div class="line">                        <span class="keyword">new</span> UsernamePasswordCredentials(userinfo));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 执行HttpRequest拦截器</span></div><div class="line"></div><div class="line">        <span class="comment">// Run request protocol interceptors</span></div><div class="line">        context.setAttribute(HttpCoreContext.HTTP_TARGET_HOST, target);</div><div class="line">        context.setAttribute(HttpClientContext.HTTP_ROUTE, route);</div><div class="line">        context.setAttribute(HttpCoreContext.HTTP_REQUEST, request);</div><div class="line"></div><div class="line">        <span class="keyword">this</span>.httpProcessor.process(request, context);</div><div class="line"></div><div class="line">        <span class="comment">// 关键，调用执行链上下一个节点的execute方法</span></div><div class="line"></div><div class="line">        <span class="keyword">final</span> CloseableHttpResponse response = <span class="keyword">this</span>.requestExecutor.execute(route, request,</div><div class="line">            context, execAware);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">        </div><div class="line">            <span class="comment">// 执行HttpResponse拦截器</span></div><div class="line">        </div><div class="line">            <span class="comment">// Run response protocol interceptors</span></div><div class="line">            context.setAttribute(HttpCoreContext.HTTP_RESPONSE, response);</div><div class="line">            <span class="keyword">this</span>.httpProcessor.process(response, context);</div><div class="line">            <span class="keyword">return</span> response;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> RuntimeException ex) &#123;</div><div class="line">            response.close();</div><div class="line">            <span class="keyword">throw</span> ex;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> IOException ex) &#123;</div><div class="line">            response.close();</div><div class="line">            <span class="keyword">throw</span> ex;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> HttpException ex) &#123;</div><div class="line">            response.close();</div><div class="line">            <span class="keyword">throw</span> ex;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="3-2-最终节点，以MainClientExec为例"><a href="#3-2-最终节点，以MainClientExec为例" class="headerlink" title="3.2 最终节点，以MainClientExec为例"></a>3.2 最终节点，以MainClientExec为例</h3><p>通过执行链上节点间的逐级调用，最终来到了执行链的终点，Http请求的真正发起者。由于其<code>execute</code>方法过长，这里选择性省略。其主要内容包含三部分。</p>
+<ol>
+<li>包含大量身份认证、连接校验、设置超时、设置存活时间代码</li>
+<li>创建socket链路（<code>establishRoute</code>）</li>
+<li>调用HttpRequestExecutor对象的<code>execute</code>方法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> CloseableHttpResponse <span class="title">execute</span><span class="params">(</span></span></div><div class="line">            <span class="keyword">final</span> HttpRoute route,</div><div class="line">            <span class="keyword">final</span> HttpRequestWrapper request,</div><div class="line">            <span class="keyword">final</span> HttpClientContext context,</div><div class="line">            <span class="keyword">final</span> HttpExecutionAware execAware) <span class="keyword">throws</span> IOException, HttpException &#123;</div><div class="line">        Args.notNull(route, <span class="string">"HTTP route"</span>);</div><div class="line">        Args.notNull(request, <span class="string">"HTTP request"</span>);</div><div class="line">        Args.notNull(context, <span class="string">"HTTP context"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// ... 此处忽略了大段代码</span></div><div class="line">        <span class="comment">// 身份认证、连接校验等操作</span></div><div class="line">        </div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">if</span> (execAware != <span class="keyword">null</span>) &#123;</div><div class="line">                execAware.setCancellable(connHolder);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            HttpResponse response;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> execCount = <span class="number">1</span>;; execCount++) &#123;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (execCount &gt; <span class="number">1</span> &amp;&amp; !RequestEntityProxy.isRepeatable(request)) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> NonRepeatableRequestException(<span class="string">"Cannot retry request "</span> +</div><div class="line">                            <span class="string">"with a non-repeatable request entity."</span>);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (execAware != <span class="keyword">null</span> &amp;&amp; execAware.isAborted()) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RequestAbortedException(<span class="string">"Request aborted"</span>);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (!managedConn.isOpen()) &#123;</div><div class="line">                    <span class="keyword">this</span>.log.debug(<span class="string">"Opening connection "</span> + route);</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">                        <span class="comment">// 建立socket链路</span></div><div class="line"></div><div class="line">                        establishRoute(proxyAuthState, managedConn, route, request, context);</div><div class="line">                    &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> TunnelRefusedException ex) &#123;</div><div class="line">                        <span class="keyword">if</span> (<span class="keyword">this</span>.log.isDebugEnabled()) &#123;</div><div class="line">                            <span class="keyword">this</span>.log.debug(ex.getMessage());</div><div class="line">                        &#125;</div><div class="line">                        response = ex.getResponse();</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                <span class="comment">// ... 此处忽略了部分代码</span></div><div class="line">                <span class="comment">// 设置超时、身份认证等操作</span></div><div class="line"></div><div class="line">                <span class="comment">// 关键， 调用HttpRequestExecutor对象的execute方法</span></div><div class="line"></div><div class="line">                response = requestExecutor.execute(request, managedConn, context);</div><div class="line"></div><div class="line">                <span class="comment">// ... 此处忽略了大段代码</span></div><div class="line">                <span class="comment">// 设置connection存活时间、身份认证相关操作</span></div><div class="line"></div><div class="line">            <span class="comment">// 释放连接，返回response</span></div><div class="line"></div><div class="line">            <span class="comment">// check for entity, release connection if possible</span></div><div class="line">            <span class="keyword">final</span> HttpEntity entity = response.getEntity();</div><div class="line">            <span class="keyword">if</span> (entity == <span class="keyword">null</span> || !entity.isStreaming()) &#123;</div><div class="line">                <span class="comment">// connection not needed and (assumed to be) in re-usable state</span></div><div class="line">                connHolder.releaseConnection();</div><div class="line">                <span class="keyword">return</span> <span class="keyword">new</span> HttpResponseProxy(response, <span class="keyword">null</span>);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">new</span> HttpResponseProxy(response, connHolder);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> ConnectionShutdownException ex) &#123;</div><div class="line">            <span class="keyword">final</span> InterruptedIOException ioex = <span class="keyword">new</span> InterruptedIOException(</div><div class="line">                    <span class="string">"Connection has been shut down"</span>);</div><div class="line">            ioex.initCause(ex);</div><div class="line">            <span class="keyword">throw</span> ioex;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> HttpException ex) &#123;</div><div class="line">            connHolder.abortConnection();</div><div class="line">            <span class="keyword">throw</span> ex;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> IOException ex) &#123;</div><div class="line">            connHolder.abortConnection();</div><div class="line">            <span class="keyword">throw</span> ex;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> RuntimeException ex) &#123;</div><div class="line">            connHolder.abortConnection();</div><div class="line">            <span class="keyword">throw</span> ex;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="4-发起Http请求，HttpRequestExecutor"><a href="#4-发起Http请求，HttpRequestExecutor" class="headerlink" title="4. 发起Http请求，HttpRequestExecutor"></a>4. 发起Http请求，HttpRequestExecutor</h2><p>类如其名，HttpRequest请求执行者。其<code>execute</code>方法很简单，直接调用<code>HttpClientConnection</code>类的方法实现发送request接收response，而后将response返回。至此，Http请求的所有组装过程结束，请求发出，接收响应。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> HttpResponse <span class="title">execute</span><span class="params">(</span></span></div><div class="line">            <span class="keyword">final</span> HttpRequest request,</div><div class="line">            <span class="keyword">final</span> HttpClientConnection conn,</div><div class="line">            <span class="keyword">final</span> HttpContext context) <span class="keyword">throws</span> IOException, HttpException &#123;</div><div class="line">        Args.notNull(request, <span class="string">"HTTP request"</span>);</div><div class="line">        Args.notNull(conn, <span class="string">"Client connection"</span>);</div><div class="line">        Args.notNull(context, <span class="string">"HTTP context"</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            HttpResponse response = doSendRequest(request, conn, context);</div><div class="line">            <span class="keyword">if</span> (response == <span class="keyword">null</span>) &#123;</div><div class="line">                response = doReceiveResponse(request, conn, context);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> response;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> IOException ex) &#123;</div><div class="line">            closeConnection(conn);</div><div class="line">            <span class="keyword">throw</span> ex;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> HttpException ex) &#123;</div><div class="line">            closeConnection(conn);</div><div class="line">            <span class="keyword">throw</span> ex;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> RuntimeException ex) &#123;</div><div class="line">            closeConnection(conn);</div><div class="line">            <span class="keyword">throw</span> ex;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p><code>httpClient.execute(httpGet)</code>短短一行代码，实际内部包含了大量逻辑，请求执行链上的每一个节点都走过一遍、所有附加逻辑都组装到一起，Http请求才最终发出。</p>
+<p>只有通过了解<code>httpClient.execute(httpGet)</code>的内部逻辑，我们才能了解HttpClient的设计理念，我们才能了解到之前没有注意到的细节。</p>
+<p>希望这篇分析，可以抛砖引玉，引发大家深究的兴趣。也借由这篇分析为大家理清代码的脉络，方便追踪、分析。</p>
+<h2 id="6-后续"><a href="#6-后续" class="headerlink" title="6. 后续"></a>6. 后续</h2><ol>
+<li>如果继续往下跟下去，具体实现涉及流操作、原始数据的解析等，最后跟到native方法，改由jvm实现。</li>
+<li>如果想继续跟下去，可以使用一些小技巧，比如将socketTimeout设置为1，迫使其产生超时异常，通过异常栈即可找到调用路径。</li>
+</ol>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HttpClient/" rel="tag">#HttpClient</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/07/HttpClient超时浅析/" rel="next" title="HttpClient超时浅析">
+                <i class="fa fa-chevron-left"></i> HttpClient超时浅析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/25/What-happened-in-httpClient-execute-httpGet/"
+           data-title="What happened in httpClient.execute(httpGet)" data-url="http://coderec.github.io/2016/12/25/What-happened-in-httpClient-execute-httpGet/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/logo.jpg"
+               alt="Coderec" />
+          <p class="site-author-name" itemprop="name">Coderec</p>
+          <p class="site-description motion-element" itemprop="description">成长的积累</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/coderec" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1803236563" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:baosencumt@126.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://caltyang.cn/" target="_blank">CaltYang的博客</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://ll-fly.com/" target="_blank">了了的博客</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://miaoxinguo.github.io" target="_blank">老苗的博客</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.dozer.cc/" target="_blank">Dozer的博客</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引言"><span class="nav-number">1.</span> <span class="nav-text">1. 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HttpClient"><span class="nav-number">2.</span> <span class="nav-text">2. HttpClient</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-以InternalHttpClient为例"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 以InternalHttpClient为例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-ClientExecChain"><span class="nav-number">3.</span> <span class="nav-text">3. ClientExecChain</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-装饰节点，以ProtocolExec为例"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 装饰节点，以ProtocolExec为例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-最终节点，以MainClientExec为例"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 最终节点，以MainClientExec为例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-发起Http请求，HttpRequestExecutor"><span class="nav-number">4.</span> <span class="nav-text">4. 发起Http请求，HttpRequestExecutor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-总结"><span class="nav-number">5.</span> <span class="nav-text">5. 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-后续"><span class="nav-number">6.</span> <span class="nav-text">6. 后续</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Coderec</span>
+</div>
+
+<div class="welcome" >
+  <span>The quieter you become, the more you are able to hear.</span>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"coderec"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("swKI1L8ISgye1h1itMokUokE-gzGzoHsz", "Ow4Eowt3UFyLk8lbfvE5ybsd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>
