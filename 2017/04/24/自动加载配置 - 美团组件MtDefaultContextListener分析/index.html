@@ -1,0 +1,965 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="美团点评组件," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.0" />
+
+
+
+
+
+
+<meta name="description" content="探寻一直被忽略的配置加载过程
+题图：from Zoommy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动加载配置 - 美团组件MtDefaultContextListener分析">
+<meta property="og:url" content="http://coderec.github.io/2017/04/24/自动加载配置 - 美团组件MtDefaultContextListener分析/index.html">
+<meta property="og:site_name" content="Coderec's Blog">
+<meta property="og:description" content="探寻一直被忽略的配置加载过程
+题图：from Zoommy">
+<meta property="og:image" content="https://raw.githubusercontent.com/Coderec/picBed/master/MtDefaultListener.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/Coderec/picBed/master/mtDefaultListener1.png">
+<meta property="og:updated_time" content="2018-10-24T16:09:12.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自动加载配置 - 美团组件MtDefaultContextListener分析">
+<meta name="twitter:description" content="探寻一直被忽略的配置加载过程
+题图：from Zoommy">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Coderec/picBed/master/MtDefaultListener.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post',
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 自动加载配置 - 美团组件MtDefaultContextListener分析 | Coderec's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+  
+  
+
+  <div class="container one-collumn  page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Coderec's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'UyYq7-KAF9BvkJF6cV-T','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                自动加载配置 - 美团组件MtDefaultContextListener分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-24T19:16:48+08:00" content="2017-04-24">
+              2017-04-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/04/24/自动加载配置 - 美团组件MtDefaultContextListener分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/24/自动加载配置 - 美团组件MtDefaultContextListener分析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/04/24/自动加载配置 - 美团组件MtDefaultContextListener分析/" class="leancloud_visitors" data-flag-title="自动加载配置 - 美团组件MtDefaultContextListener分析">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://raw.githubusercontent.com/Coderec/picBed/master/MtDefaultListener.jpg" width="700" height="397"></p>
+<p>探寻一直被忽略的配置加载过程</p>
+<p>题图：from Zoommy</p>
+<a id="more"></a>
+<h2 id="1-疑惑"><a href="#1-疑惑" class="headerlink" title="1.疑惑"></a>1.疑惑</h2><ol>
+<li>在通过脚手架搭建的大多数美团项目中，很少见到显式指定配置文件所在目录的。</li>
+<li>一些没有在配置文件中定义的变量，在MCC(web统一配置平台)中配置后，却可以在项目中直接使用。</li>
+</ol>
+<p>以上两个问题，其实可以归纳为一个问题——这些项目是如何加载配置文件以及MCC中的配置的？</p>
+<h2 id="2-追查"><a href="#2-追查" class="headerlink" title="2.追查"></a>2.追查</h2><h3 id="2-1-Web-xml"><a href="#2-1-Web-xml" class="headerlink" title="2.1 Web.xml"></a>2.1 Web.xml</h3><p>web.xml，这个最容易被忽视的配置文件，其实是web项目的核心配置文件。</p>
+<p>web项目的一切都是从这里开始。</p>
+<p>context-param、listener、filter、servlet，一切的一切都在这里定义。因此，想研究web项目的配置加载过程，自然从这里开始。</p>
+<h4 id="2-1-1-Web-xml加载顺序"><a href="#2-1-1-Web-xml加载顺序" class="headerlink" title="2.1.1 Web.xml加载顺序"></a>2.1.1 Web.xml加载顺序</h4><ol>
+<li>容器读取<context-param></context-param>节点,并创建一个ServletContext实例,以节点的name作为键,value作为值,存储到上下文环境中。</li>
+<li>容器读取<listener></listener>节点,根据配置的class类路径来创建监听。</li>
+<li>容器读取<filter></filter>节点，根据配置路径实例化过滤器。</li>
+<li>容器读取<servlet></servlet>节点，初始化servlet。</li>
+</ol>
+<h3 id="2-2-Spring配置文件的加载"><a href="#2-2-Spring配置文件的加载" class="headerlink" title="2.2 Spring配置文件的加载"></a>2.2 Spring配置文件的加载</h3><p>众所周知，applicationContext.xml是Spring的配置文件，此文件的加载方式是通过context-param和ContextLoaderListener来加载的。</p>
+<p>简单来说就是通过将配置文件路径写在contextConfigLocation里，然后让ContextLoaderListener获取并加载配置到上下文中。</p>
+<p>示例代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;</div><div class="line">        classpath:applicationContext.xml,</div><div class="line">        classpath:database/applicationContext-mybatis-crm-customer.xml,</div><div class="line">        classpath:database/applicationContext-mybatis-crm-plan.xml,</div><div class="line">        classpath:database/applicationContext-mybatis-etl.xml,</div><div class="line">        classpath:database/applicationQuartz.xml,</div><div class="line">        classpath:applicationContext-thrift.xml,</div><div class="line">        classpath:thrift-server.xml</div><div class="line">    &lt;/param-value&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line"> </div><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>
+<h3 id="2-3-MCC以及普通配置文件的加载"><a href="#2-3-MCC以及普通配置文件的加载" class="headerlink" title="2.3 MCC以及普通配置文件的加载"></a>2.3 MCC以及普通配置文件的加载</h3><p>其实Java EE标准既然已定，那么各个框架、各种服务实现配置文件加载的机制也就大体相同。</p>
+<p>因此，参考Spring加载配置的做法，我们可以在web.xml文件中发现另外一个具有美团烙印的Listener——MtDefaultContextListener。</p>
+<p>我们只需要跟进他的contextInitialized方法看一下，就可以知道其是如何加载配置的了。</p>
+<p><strong>结论先行：</strong><br><strong>MtDefaultContextListener的主要工作就是将配置放置到ConfigurationManager.instance这个静态变量中。</strong></p>
+<h4 id="2-3-1-MtDefaultContextListener的加载过程"><a href="#2-3-1-MtDefaultContextListener的加载过程" class="headerlink" title="2.3.1 MtDefaultContextListener的加载过程"></a>2.3.1 MtDefaultContextListener的加载过程</h4><p>通过分析代码，可以发现，MtDefaultContextListener做的工作主要有</p>
+<ol>
+<li>初始化配置，包括系统环境变量、配置文件、MCC配置</li>
+<li>初始化hlb(美团http服务治理组件)</li>
+</ol>
+<p>在初始化过程中，我们主要关注initConfigUtilAdapter这个方法。</p>
+<p><strong>MtDefaultContextListener</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void contextInitialized(ServletContextEvent sce) &#123;</div><div class="line">    init(sce.getServletContext());</div><div class="line">&#125;</div><div class="line"></div><div class="line">public void init(ServletContext servletContext) &#123;</div><div class="line">    ServletContextHolder.set(servletContext);</div><div class="line">    initDeployContext();</div><div class="line">    initOtherParams();</div><div class="line">    // 博主注：此方法为初始化配置的核心方法</div><div class="line">    initConfigUtilAdapter(getParam(OCTO_APPKEY), getParam(OCTO_ENV, DEFAULT_ENV), getResourcesDirs());</div><div class="line">    initHlb();</div><div class="line">    finishInit();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="2-3-1-1-initConfigUtilAdapter"><a href="#2-3-1-1-initConfigUtilAdapter" class="headerlink" title="2.3.1.1 initConfigUtilAdapter"></a>2.3.1.1 initConfigUtilAdapter</h5><p>跟进initConfigUtilAdapter方法，发现配置加载分为三类。</p>
+<ol>
+<li>系统环境变量</li>
+<li>配置文件</li>
+<li>MCC配置</li>
+</ol>
+<p><strong>initConfigUtilAdapter</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public void initConfigUtilAdapter(String appkey, String env, String[] resourcesDir) &#123;</div><div class="line">    // 加载系统变量</div><div class="line">    if (! Boolean.valueOf(getParam(SKIP_SYSTEM, Boolean.FALSE.toString()))) &#123;</div><div class="line">        ConfigUtilAdapter.addConfiguration(new SystemConfiguration());</div><div class="line">    &#125;</div><div class="line">    // 加载配置文件</div><div class="line">    if (! Boolean.valueOf(getParam(SKIP_PROPERTIES, Boolean.FALSE.toString()))) &#123;</div><div class="line">        ConfigUtilAdapter.addConfiguration(new PropertiesConfiguration(resourcesDir));</div><div class="line">    &#125;</div><div class="line">    // 加载mcc配置</div><div class="line">    if (! Boolean.valueOf(getParam(SKIP_MCC, Boolean.FALSE.toString()))) &#123;</div><div class="line">        ConfigUtilAdapter.addConfiguration(new MccConfiguration(appkey, env, &quot;.&quot;));</div><div class="line">    &#125;</div><div class="line">    ConfigUtilAdapter.init();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="2-3-1-2-ConfigUtilAdapter-init"><a href="#2-3-1-2-ConfigUtilAdapter-init" class="headerlink" title="2.3.1.2 ConfigUtilAdapter.init()"></a>2.3.1.2 ConfigUtilAdapter.init()</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 初始化配置源,一旦执行,里面的数据源即被绑定,无法更改</div><div class="line"> */</div><div class="line">public synchronized static void init() &#123;</div><div class="line">    Preconditions.checkState(! hadInit, StringUtil.format(&quot;[&#123;&#125;]只能加载一次!&quot;, ConfigUtilAdapter.class.getSimpleName()));</div><div class="line">    //自带的还有一个ConcurrentMapConfiguration,所以这里只好检查长度是否大于1了</div><div class="line">    Preconditions.checkState(compositeConfig.getConfigurations().size() &gt; 1,</div><div class="line">            StringUtil.format(&quot;[&#123;&#125;]没有加载任何配置,请至少添加一个配置源&quot;, ConfigUtilAdapter.class.getSimpleName()));</div><div class="line">    if (! ConfigurationManager.isConfigurationInstalled()) &#123;</div><div class="line">        </div><div class="line">		// 重点方法</div><div class="line">		ConfigurationManager.install(compositeConfig);</div><div class="line">        </div><div class="line"> </div><div class="line">		Preconditions.checkState(ConfigurationManager.isConfigurationInstalled(), StringUtil.format(&quot;[&#123;&#125;]加载失败,请找相关负责人!&quot;,</div><div class="line">                ConfigUtilAdapter.class.getSimpleName()));</div><div class="line">    &#125;</div><div class="line">    Iterable&lt;String&gt; configurationNames = Iterables.transform(compositeConfig.getConfigurations(), new Function&lt;AbstractConfiguration, String&gt;() &#123;</div><div class="line">        @Nullable</div><div class="line">        @Override</div><div class="line">        public String apply(AbstractConfiguration input) &#123;</div><div class="line">            return input.getClass().getSimpleName();</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    LOG.info(&quot;[&#123;&#125;]加载的具体配置有:&#123;&#125;&quot;, ConfigUtilAdapter.class.getSimpleName(), configurationNames);</div><div class="line">    ConfigurationLog.successInit(ConfigUtilAdapter.class, getAll());</div><div class="line">    hadInit = true;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="2-3-1-3-ConfigurationManager-install"><a href="#2-3-1-3-ConfigurationManager-install" class="headerlink" title="2.3.1.3 ConfigurationManager.install"></a>2.3.1.3 ConfigurationManager.install</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public static synchronized void install(AbstractConfiguration config) throws IllegalStateException &#123;</div><div class="line">    if (!customConfigurationInstalled) &#123;</div><div class="line"> </div><div class="line">		// 重点方法</div><div class="line">        setDirect(config);</div><div class="line">        </div><div class="line"> </div><div class="line">		if (DynamicPropertyFactory.getBackingConfigurationSource() != config) &#123;                </div><div class="line">            DynamicPropertyFactory.initWithConfigurationSource(config);</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">        throw new IllegalStateException(&quot;A non-default configuration is already installed&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="2-3-1-4-setDirect"><a href="#2-3-1-4-setDirect" class="headerlink" title="2.3.1.4 setDirect"></a>2.3.1.4 setDirect</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">static synchronized void setDirect(AbstractConfiguration config) &#123;</div><div class="line">    if (instance != null) &#123;</div><div class="line">        Collection&lt;ConfigurationListener&gt; listeners = instance.getConfigurationListeners();</div><div class="line">        // transfer listeners</div><div class="line">        // transfer properties which are not in conflict with new configuration</div><div class="line">        for (Iterator&lt;String&gt; i = instance.getKeys(); i.hasNext();) &#123;</div><div class="line">            String key = i.next();</div><div class="line">            Object value = instance.getProperty(key);</div><div class="line">            if (value != null &amp;&amp; !config.containsKey(key)) &#123;</div><div class="line">                config.setProperty(key, value);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (listeners != null) &#123;</div><div class="line">            for (ConfigurationListener listener: listeners) &#123;</div><div class="line">                if (listener instanceof ExpandedConfigurationListenerAdapter</div><div class="line">                        &amp;&amp; ((ExpandedConfigurationListenerAdapter) listener).getListener() </div><div class="line">                        instanceof DynamicProperty.DynamicPropertyListener) &#123;</div><div class="line">                    // no need to transfer the fast property listener as it should be set later</div><div class="line">                    // with the new configuration</div><div class="line">                    continue;</div><div class="line">                &#125;</div><div class="line">                config.addConfigurationListener(listener);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    ConfigurationManager.removeDefaultConfiguration();</div><div class="line"> </div><div class="line">	// 重点方法</div><div class="line">    ConfigurationManager.instance = config;</div><div class="line"> </div><div class="line">    ConfigurationManager.customConfigurationInstalled = true;</div><div class="line">    ConfigurationManager.registerConfigBean();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>划重点：静态变量<code>ConfigurationManager.instance</code>在此时已经被赋值为<code>config</code></strong></p>
+<h4 id="2-3-2-ConfigUtilAdapterRegister"><a href="#2-3-2-ConfigUtilAdapterRegister" class="headerlink" title="2.3.2 ConfigUtilAdapterRegister"></a>2.3.2 ConfigUtilAdapterRegister</h4><p>Spring提供了一种加载配置文件的机制（applicationContext本身是如何加载的不再赘述），PropertyPlaceholderConfigurer，只需要在Spring配置文件中配置就可以指定配置文件路径加载。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// PropertyPlaceholderConfigurer使用方法简单示例</div><div class="line"> </div><div class="line">&lt;bean id=&quot;propertyConfigurer&quot;class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">  &lt;property name=&quot;locations&quot;&gt;</div><div class="line">   &lt;list&gt;</div><div class="line">    &lt;value&gt;/WEB-INF/mail.properties&lt;/value&gt;  </div><div class="line">    &lt;value&gt;classpath: conf/sqlmap/jdbc.properties&lt;/value&gt;</div><div class="line">   &lt;/list&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+<p>美团组件通过继承PropertyPlaceholderConfigurer并重写loadProperties方法的方式，将ConfigurationManager.instance中的所有配置加载到Spring容器中。<br>完成这个工作的就是ConfigUtilAdapterRegister。</p>
+<h5 id="2-3-2-1-applicationContext-xml"><a href="#2-3-2-1-applicationContext-xml" class="headerlink" title="2.3.2.1 applicationContext.xml"></a>2.3.2.1 applicationContext.xml</h5><p>首先在spring配置文件中加载ConfigUtilAdapterRegister</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;configUtilAdapterConfigurer&quot;</div><div class="line">      class=&quot;com.sankuai.meituan.basic.conf.ConfigUtilAdapterRegister&quot;&gt;</div><div class="line">    &lt;property name=&quot;ignoreUnresolvablePlaceholders&quot; value=&quot;true&quot;/&gt;</div><div class="line">    &lt;property name=&quot;order&quot;&gt;</div><div class="line">        &lt;util:constant static-field=&quot;org.springframework.core.Ordered.LOWEST_PRECEDENCE&quot;/&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+<h5 id="2-3-2-2-ConfigUtilAdapterRegister"><a href="#2-3-2-2-ConfigUtilAdapterRegister" class="headerlink" title="2.3.2.2 ConfigUtilAdapterRegister"></a>2.3.2.2 ConfigUtilAdapterRegister</h5><p>本质就是把<code>ConfigurationManager.instance</code>的所有配置加载到spring中，注意上文已经提到，<code>ConfigurationManager.instance</code>已被<code>MtDefaultContextListener</code>赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 将&#123;@link ConfigUtilAdapter&#125;中的配置全部导到spring里面,然后在spring配置文件里面就可以使用&#123;@link ConfigUtilAdapter&#125;的配置了&lt;br&gt;</div><div class="line"> * !!!注意:在设置的那一刻就把配置导到spring里,所以在spring配置里无法响应配置的变更&lt;br&gt;</div><div class="line"> * TODO 检验是否可以使用getDynamicString方式&lt;br&gt;</div><div class="line"> */</div><div class="line">public class ConfigUtilAdapterRegister extends PropertyPlaceholderConfigurer &#123;</div><div class="line">   @Override</div><div class="line">   protected void loadProperties(Properties props) throws IOException &#123;</div><div class="line">      super.loadProperties(props);</div><div class="line">        for (String key : Lists.newArrayList(ConfigUtilAdapter.getGolbalConfig().getKeys())) &#123;</div><div class="line">            props.put(key, ConfigUtilAdapter.getString(key));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="2-3-2-3-ConfigUtilAdapter-getGolbalConfig"><a href="#2-3-2-3-ConfigUtilAdapter-getGolbalConfig" class="headerlink" title="2.3.2.3 ConfigUtilAdapter.getGolbalConfig()"></a>2.3.2.3 ConfigUtilAdapter.getGolbalConfig()</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public static AbstractConfiguration getGolbalConfig() &#123;</div><div class="line">    checkInit();</div><div class="line">    return ConfigurationManager.getConfigInstance();</div><div class="line">&#125;</div><div class="line"> </div><div class="line">public static AbstractConfiguration getConfigInstance() &#123;</div><div class="line">    if (instance == null) &#123;</div><div class="line">        synchronized (ConfigurationManager.class) &#123;</div><div class="line">            if (instance == null) &#123;</div><div class="line">                instance = getConfigInstance(Boolean.getBoolean(DynamicPropertyFactory.DISABLE_DEFAULT_CONFIG));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">	// 返回ConfigurationManager.instance这个静态变量， 已由之前的MtDefaultContextListener加载。</div><div class="line">    return instance;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-3-3-如何保证MtDefaultContextListener先于Spring加载配置到ConfigurationManager-instance"><a href="#2-3-3-如何保证MtDefaultContextListener先于Spring加载配置到ConfigurationManager-instance" class="headerlink" title="2.3.3 如何保证MtDefaultContextListener先于Spring加载配置到ConfigurationManager.instance"></a>2.3.3 如何保证MtDefaultContextListener先于Spring加载配置到ConfigurationManager.instance</h4><p>由web.xml来保证</p>
+<p>之前提到过，Spring加载配置文件是由ContextLoaderListener完成的。</p>
+<p>web.xml中配置的listener是顺序加载的。因此MtDefaultContextListener需要配置在ContextLoaderListener前面。</p>
+<p>如下代码配置。</p>
+<p>web.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;com.sankuai.meituan.basic.webapp.MtDefaultContextListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div></pre></td></tr></table></figure>
+<h2 id="3-流程草图"><a href="#3-流程草图" class="headerlink" title="3.流程草图"></a>3.流程草图</h2><p><img src="https://raw.githubusercontent.com/Coderec/picBed/master/mtDefaultListener1.png" width="700" height="397"></p>
+<h2 id="4-直接使用Commons-Configutation和Archaius的Demo"><a href="#4-直接使用Commons-Configutation和Archaius的Demo" class="headerlink" title="4.直接使用Commons Configutation和Archaius的Demo"></a>4.直接使用Commons Configutation和Archaius的Demo</h2><p>如上文所述，MtDefaultContextListener加载配置的原理就已经解释清楚了。  </p>
+<p>但是其中提到的ConfigurationManager是什么一直没有进行说明。其实MtDefaultContextListener是使用了Apache和Netflix开源的框架Commons Configutation和Archaius；而ConfigurationManager就是其提供的配置管理器。</p>
+<p>接下来我们就直接使用这两个框架完成一个demo。</p>
+<h3 id="4-1初始化配置"><a href="#4-1初始化配置" class="headerlink" title="4.1初始化配置"></a>4.1初始化配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public static  final PropertiesConfiguration CONFIG = new PropertiesConfiguration();</div><div class="line"> </div><div class="line"> </div><div class="line">CompositeConfiguration compositeConfiguration = new CompositeConfiguration();</div><div class="line"></div><div class="line">// 动态更新</div><div class="line">AbstractPollingScheduler scheduler = new FixedDelayPollingScheduler(3000, 1000, true); // or use your own scheduler</div><div class="line">PolledConfigurationSource source = new URLConfigurationSource(new File(&quot;/Users/cuibaosen/Desktop/testDynamic.properties&quot;).toURI().toURL()); // or use your own source</div><div class="line">DynamicConfiguration dynamicConfig = new DynamicConfiguration(source, scheduler);</div><div class="line">compositeConfiguration.addConfiguration(dynamicConfig);</div><div class="line"></div><div class="line">// 文件配置</div><div class="line">PropertiesConfiguration propertiesConfiguration = new PropertiesConfiguration(&quot;/Users/cuibaosen/Desktop/testCommon.properties&quot;);</div><div class="line">compositeConfiguration.addConfiguration(propertiesConfiguration);</div><div class="line"></div><div class="line">// 模拟接收通知的更新配置</div><div class="line">DynamicPropertyUpdater updater = new DynamicPropertyUpdater();</div><div class="line">updater.updateProperties(WatchedUpdateResult.createFull(new HashMap&lt;&gt;()), CONFIG, false);</div><div class="line">compositeConfiguration.addConfiguration(CONFIG);</div><div class="line"></div><div class="line"></div><div class="line">ConfigurationManager.install(compositeConfiguration);</div></pre></td></tr></table></figure>
+<h3 id="4-2获取配置"><a href="#4-2获取配置" class="headerlink" title="4.2获取配置"></a>4.2获取配置</h3><p>Controller接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 查询配置中的属性值</div><div class="line"> *</div><div class="line"> * @param name key值</div><div class="line"> */</div><div class="line">@RequestMapping(&quot;/query&quot;)</div><div class="line">public String demo(String name) throws MalformedURLException &#123;</div><div class="line">    return ConfigurationManager.getConfigInstance().getString(name);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 模拟更新MCC配置</div><div class="line"> *</div><div class="line"> * @param key</div><div class="line"> * @param value</div><div class="line"> */</div><div class="line">@RequestMapping(&quot;/updateMcc&quot;)</div><div class="line">public String update(String key, String value) &#123;</div><div class="line">    // 新值</div><div class="line">    HashMap&lt;String, String&gt; newMap = new HashMap&lt;&gt;();</div><div class="line">    newMap.put(key, value);</div><div class="line"></div><div class="line">    // 旧值</div><div class="line">    HashMap&lt;String, String&gt; oldMap = new HashMap&lt;&gt;();</div><div class="line">    Iterator&lt;String&gt; it = DemoApplication.CONFIG.getKeys();</div><div class="line">    while (it.hasNext()) &#123;</div><div class="line">        String theKey = it.next();</div><div class="line">        oldMap.put(theKey, DemoApplication.CONFIG.getString(theKey));</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">	// 获取新值与旧值的异同，以便获得更新后的值</div><div class="line">    MapDifference&lt;String, Object&gt; oldAndNewDiff = Maps.difference(oldMap, newMap);</div><div class="line">    Map&lt;String, Object&gt; changed = Maps.transformValues(oldAndNewDiff.entriesDiffering(), new Function&lt;MapDifference.ValueDifference&lt;Object&gt;, Object&gt;() &#123;</div><div class="line">        @Nullable</div><div class="line">        @Override</div><div class="line">        public Object apply(@Nullable MapDifference.ValueDifference&lt;Object&gt; input) &#123;</div><div class="line">            return input.rightValue();</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    DynamicPropertyUpdater updater = new DynamicPropertyUpdater();</div><div class="line">    WatchedUpdateResult updateResult = WatchedUpdateResult.createIncremental(oldAndNewDiff.entriesOnlyOnRight(), changed, oldAndNewDiff.entriesOnlyOnLeft());</div><div class="line">    </div><div class="line">    // 更新配置中的值</div><div class="line">    updater.updateProperties(updateResult, DemoApplication.CONFIG, false);</div><div class="line"></div><div class="line">    return &quot;success&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="5-结语"><a href="#5-结语" class="headerlink" title="5.结语"></a>5.结语</h2><p>关于MtDefaultContextListener的配置加载原理分析到这里就全部结束了。</p>
+<p>用一句话总结：</p>
+<p>MtDefaultContextListener就是利用Servlet的Listener与Spring的PropertyPlaceholderConfigurer，通过Archaius框架，把系统变量、配置文件、mcc配置在web app启动时加载到spring容器中的。</p>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/美团点评组件/" rel="tag">#美团点评组件</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/07/HttpClient超时浅析/" rel="next" title="HttpClient超时浅析">
+                <i class="fa fa-chevron-left"></i> HttpClient超时浅析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/25/1步测试Thrift接口——2步测试Thrift接口-续/" rel="prev" title="1步测试Thrift接口——2步测试Thrift接口(续)">
+                1步测试Thrift接口——2步测试Thrift接口(续) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/24/自动加载配置 - 美团组件MtDefaultContextListener分析/"
+           data-title="自动加载配置 - 美团组件MtDefaultContextListener分析" data-url="http://coderec.github.io/2017/04/24/自动加载配置 - 美团组件MtDefaultContextListener分析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/logo.jpg"
+               alt="Coderec" />
+          <p class="site-author-name" itemprop="name">Coderec</p>
+          <p class="site-description motion-element" itemprop="description">成长的积累</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/coderec" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1803236563" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:baosencumt@126.com" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> Email
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://caltyang.cn/" target="_blank">CaltYang的博客</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://ll-fly.com/" target="_blank">了了的博客</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://miaoxinguo.github.io" target="_blank">老苗的博客</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.dozer.cc/" target="_blank">Dozer的博客</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-疑惑"><span class="nav-number">1.</span> <span class="nav-text">1.疑惑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-追查"><span class="nav-number">2.</span> <span class="nav-text">2.追查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Web-xml"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Web.xml</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-Web-xml加载顺序"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 Web.xml加载顺序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Spring配置文件的加载"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Spring配置文件的加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-MCC以及普通配置文件的加载"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 MCC以及普通配置文件的加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-MtDefaultContextListener的加载过程"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 MtDefaultContextListener的加载过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-1-1-initConfigUtilAdapter"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">2.3.1.1 initConfigUtilAdapter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-1-2-ConfigUtilAdapter-init"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">2.3.1.2 ConfigUtilAdapter.init()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-1-3-ConfigurationManager-install"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">2.3.1.3 ConfigurationManager.install</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-1-4-setDirect"><span class="nav-number">2.3.1.4.</span> <span class="nav-text">2.3.1.4 setDirect</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-ConfigUtilAdapterRegister"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 ConfigUtilAdapterRegister</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-1-applicationContext-xml"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">2.3.2.1 applicationContext.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-2-ConfigUtilAdapterRegister"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">2.3.2.2 ConfigUtilAdapterRegister</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-3-ConfigUtilAdapter-getGolbalConfig"><span class="nav-number">2.3.2.3.</span> <span class="nav-text">2.3.2.3 ConfigUtilAdapter.getGolbalConfig()</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-如何保证MtDefaultContextListener先于Spring加载配置到ConfigurationManager-instance"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 如何保证MtDefaultContextListener先于Spring加载配置到ConfigurationManager.instance</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-流程草图"><span class="nav-number">3.</span> <span class="nav-text">3.流程草图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-直接使用Commons-Configutation和Archaius的Demo"><span class="nav-number">4.</span> <span class="nav-text">4.直接使用Commons Configutation和Archaius的Demo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1初始化配置"><span class="nav-number">4.1.</span> <span class="nav-text">4.1初始化配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2获取配置"><span class="nav-number">4.2.</span> <span class="nav-text">4.2获取配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-结语"><span class="nav-number">5.</span> <span class="nav-text">5.结语</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Coderec</span>
+</div>
+
+<div class="welcome" >
+  <span>The quieter you become, the more you are able to hear.</span>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"coderec"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("swKI1L8ISgye1h1itMokUokE-gzGzoHsz", "Ow4Eowt3UFyLk8lbfvE5ybsd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>
